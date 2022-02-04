@@ -1,0 +1,18 @@
+
+.custom-context-menu {
+    position: absolute;
+    width: 200px;
+    height: auto;
+    background: rgb(78, 78, 78);
+}
+
+.context-btn {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 0 0 20px;
+    user-select: none;
+}
+
+.context-btn:hover {
+    background: rgb(168, 164, 164);
+}

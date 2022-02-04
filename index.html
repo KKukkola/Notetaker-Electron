@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="css/styles.css"></link>
+    <link rel="stylesheet" href="css/filebrowser.css"></link>
+    <link rel="stylesheet" href="css/contextmenu.css"></link>
+    <link rel="stylesheet" href="css/timeline.css"></link>
+
+    <script src="https://kit.fontawesome.com/16fed93f1f.js" crossorigin="anonymous"></script>
+    <!-- <link rel="import" href="/item.html" id="fb-item" ></link> -->
+  </head>
+  <body>
+    
+    <section id="topbar">
+      topbar
+    </section>
+    
+    <section id="filebrowser">
+      
+      <div class="fb-section">
+        <button class="fb-title-btn">
+          <div class="fb-title-btn-title">LOCAL NOTES</div>
+        </button>
+        <div id="local-notes"></div>
+      </div>
+
+    </section>
+
+    <section id="notepad">
+      <textarea id="notepad-textarea" spellcheck="false">text goes here</textarea>
+    </section>
+
+    <section id="timeline">
+      <div id="timeline-body">timeline body</div>
+      <div id="timeline-top-buttons">
+        <div id="timeline-new-event-btn">New Event</div>
+      </div>
+    </section>
+
+    <div id="timeline-new-event-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <form>
+          <div id='t-modal-newevent-container'> 
+            <div class='tme-title'>
+              <label for='t-newevent-title'>Title</label>
+              <input type="text" id="t-newevent-title">
+            </div>
+            <div class='tme-start'>
+              <label for='t-newevent-start'>Start</label>
+              <input type="text" id="t-newevent-start">
+            </div>
+            <div class='tme-end'>
+              <label for='t-newevent-end'>End</label>
+              <input type="text" id="t-newevent-end">
+            </div>
+          </div>
+          <button type="submit" id='tme-submit-btn'>Create</button>
+        </form>
+      </div>
+    </div>
+    
+  </body>
+
+  <template id="template-fb-item">
+    <div class="fb-item">
+        <button class="fb-item-btn">
+          <i class=""></i>
+          <div class="fb-item-title">
+            TITLE
+          </div>
+        </button>
+        <section class="fb-item-children"></section>
+    </div>
+  </template>
+
+  <template id="template-fb-item-dragging">
+    <div class="fb-item-dragging fb-item-btn"></div>
+  </template>
+
+  <template id="template-context-menu">
+    <div class="custom-context-menu">
+      <button class="context-btn">click me</button>
+    </div>
+  </template>
+
+  
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script type="module">
+
+    import {FileBrowser} from "./renderer-process/FileBrowser.js"
+    import {Notepad} from "./renderer-process/Notepad.js"
+    import {Timeline} from "./renderer-process/Timeline.js"
+
+    let keydowns = new Object();
+    $(document).keydown(function(event) {
+      keydowns[event.which] = true
+      if (keydowns[17] && keydowns[83]) {
+        Notepad.Save()
+      }
+    })
+    $(document).keyup(function(event) {
+      keydowns[event.which] = false
+    })
+
+    $(function() {
+
+      FileBrowser.Refresh()
+      Notepad.Refresh()
+      Timeline.Refresh()
+
+    })
+    
+  </script>
+
+</html>

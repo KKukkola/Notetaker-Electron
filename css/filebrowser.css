@@ -1,0 +1,56 @@
+
+#filebrowser {
+    background-color: #3a3a3a;
+}
+
+.fb-section {
+    padding: .5em 0;
+}
+
+.fb-title-btn {
+    width: 100%;
+    background-color: transparent;
+    border-style: none;
+}
+.fb-title-btn:hover {
+    background-color: lightgray;
+}
+.fb-title-btn-title {
+    font-family: 'Segoe UI';
+    text-align: center;
+    text-align: left;
+    padding-left: 1em;
+    color: rgb(216, 216, 216);
+}
+
+.fb-item-btn {
+    width: 100%;
+    background-color: transparent;
+    border-style: none;
+    display: flex;
+    align-items: center;
+    padding: 1px 0px;
+}
+.fb-item-btn:hover {
+    background-color: #464646;
+}
+
+.fb-item-title {
+    white-space: nowrap;
+    font-family: 'Segoe UI';
+    text-align: center;
+    text-align: left;
+    padding-left: 7px;
+    color: rgb(216, 216, 216);
+}
+
+.fb-item-dragging {
+    width: auto;
+    height: auto;
+    color: rgb(216,216,216);
+    background-color: rgb(57, 81, 102);
+    padding: 0px 6px;
+    border: 1px solid rgb(72, 141, 202);
+    opacity: .86;
+    font-size: smaller;
+}
