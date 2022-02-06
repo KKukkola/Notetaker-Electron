@@ -1,9 +1,50 @@
 
 const { app, BrowserWindow, ipcMain, Menu } = require('electron')
-const path = require('path')
+const path = require('path');
+const sqlite3 = require('sqlite3');
+
+/////////// db
+let win;
+const dbpath = path.join(app.getPath('userData'), "db.db")
+let sqlDB = new sqlite3.Database(dbpath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    console.log('Connected to the application sqlite database.')
+})
+sqlDB.run(`CREATE TABLE IF NOT EXISTS events(
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    starthour INTEGER,
+    endhour INTEGER,
+    pmam TEXT 
+);`)
+
+ipcMain.on('query-events', (event, sql) => {
+    console.log('ipcMain.on() query-events')
+    sqlDB.all(sql, [], (err, rows) => {
+        win.webContents.send("query-events", rows)
+    })
+    // win.webContents.send('query-events', "done")
+})
+
+// if (sqlDB) {
+//     sqlDB.close((err) => {
+//         if (err) { 
+//             console.error(err)
+//             return;
+//         }
+//         console.log("sqlDB Closed")
+//     })
+// } else {
+//     console.error('sqlDB was not there on close?')
+// }
+console.log("CREATED DB IN MAIN PROCESS")
+///////////////////////////
 
 function createWindow() {
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
@@ -22,6 +63,7 @@ app.whenReady().then(() => {
     createWindow()
 })
 
+
 app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit()
 })
@@ -35,6 +77,12 @@ app.on('window-all-closed', function () {
 ipcMain.handle('get-user-data-path', async (event) => {
     const path = app.getPath('userData')
     return path;
+})
+
+ipcMain.on('get-database', function (event, arg) {
+    event.returnValue = sqlDB;
+    //console.log("GET DATABASE CALLED", db)
+    //event.returnValue = db.Open()
 })
 
 ipcMain.on('synchronous-message', (event, arg) => {

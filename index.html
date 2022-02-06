@@ -45,15 +45,15 @@
           <div id='t-modal-newevent-container'> 
             <div class='tme-title'>
               <label for='t-newevent-title'>Title</label>
-              <input type="text" id="t-newevent-title">
+              <input type="text" id="tmei-title">
             </div>
             <div class='tme-start'>
               <label for='t-newevent-start'>Start</label>
-              <input type="text" id="t-newevent-start">
+              <input type="text" id="tmei-start">
             </div>
             <div class='tme-end'>
               <label for='t-newevent-end'>End</label>
-              <input type="text" id="t-newevent-end">
+              <input type="text" id="tmei-end">
             </div>
           </div>
           <button type="submit" id='tme-submit-btn'>Create</button>
@@ -90,9 +90,19 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="module">
 
+//https://github.com/mapbox/node-sqlite3/issues/1370
+
     import {FileBrowser} from "./renderer-process/FileBrowser.js"
     import {Notepad} from "./renderer-process/Notepad.js"
     import {Timeline} from "./renderer-process/Timeline.js"
+
+    //console.log("IN THE INDEX FILE db IS :", db)
+    //db.Open()
+
+    window.addEventListener("beforeunload", function(ev) {
+      console.log('TODO: what to do before unload')
+      //db.Close()
+    })
 
     let keydowns = new Object();
     $(document).keydown(function(event) {
@@ -110,7 +120,7 @@
       FileBrowser.Refresh()
       Notepad.Refresh()
       Timeline.Refresh()
-
+      
     })
     
   </script>
