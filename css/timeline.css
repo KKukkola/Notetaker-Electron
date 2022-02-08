@@ -1,18 +1,22 @@
 
 
 #timeline {
+    display: flex;
+    flex-direction: column;
     background: #b5b5b5;
     position: relative;
+
 }
 
 #timeline-body {
+    flex: 1 0 auto;
     width: 100%;
-    height: 100%;
-    position: absolute;
+    background: rgb(44, 66, 85);
+    position: relative;
 }
 
 #timeline-top-buttons {
-    position: absolute;
+    /* position: relative; */
     display: flex;
     margin: 0px 5px;
 }
@@ -25,4 +29,21 @@
 
 #timeline-new-event-btn:hover {
     background: #f4f4f4;
+}
+
+.event-div {
+    position: absolute;
+    height: 20px;
+    background: lavender;
+}
+
+.event-div:hover {
+    background: blueviolet !important;
+}
+
+.timeline-line-div {
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    background: gainsboro;
 }

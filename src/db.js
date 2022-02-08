@@ -8,13 +8,15 @@ const dbpath = path.join(Files.userdataPath, "db.db")
 
 let db = new Object();
 
-// db.AddEvent = function(title, sHour, eHour, PMorAM, onFinish) {
-
-//     let random = Math.floor(1000000 * Math.random())
-//     sqlDB.run(`INSERT INTO events VALUES (?, ?, ?, ?, ?)`, random, title, sHour, eHour, PMorAM)
-
-//     onFinish()
-// }
+db.AddEvent = function(eventData, onFinish) {
+    // let sql = "INSERT INTO events VALUES (?, ?, ?, ?)", title, sHour, eHour, PMorAM,
+    //sqlDB.run(`INSERT INTO events VALUES (?, ?, ?, ?, ?)`, random, title, sHour, eHour, PMorAM)
+    //takes title, starthour, startmin, endhour, endmin, month, day
+    ipcRenderer.once('add-event', (event) => {
+        onFinish()
+    })
+    ipcRenderer.send('add-event', eventData)
+}
 
 db.EachEvent = function(onElement, onFinish) {
     let sql = "SELECT * FROM events"

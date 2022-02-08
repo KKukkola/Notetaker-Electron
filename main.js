@@ -17,8 +17,11 @@ sqlDB.run(`CREATE TABLE IF NOT EXISTS events(
     id INTEGER PRIMARY KEY,
     title TEXT,
     starthour INTEGER,
+    startmin INTEGER,
     endhour INTEGER,
-    pmam TEXT 
+    endmin INTEGER,
+    month INTEGER,
+    day INTEGER
 );`)
 
 ipcMain.on('query-events', (event, sql) => {
@@ -26,20 +29,27 @@ ipcMain.on('query-events', (event, sql) => {
     sqlDB.all(sql, [], (err, rows) => {
         win.webContents.send("query-events", rows)
     })
-    // win.webContents.send('query-events', "done")
 })
 
-// if (sqlDB) {
-//     sqlDB.close((err) => {
-//         if (err) { 
-//             console.error(err)
-//             return;
-//         }
-//         console.log("sqlDB Closed")
-//     })
-// } else {
-//     console.error('sqlDB was not there on close?')
-// }
+ipcMain.on('add-event', (event, eventInfo) => {
+    console.log('ipcMain.on() add-event')
+    sqlDB.run(`INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, 
+        null,
+        eventInfo.eventName, 
+        eventInfo.startHour, 
+        eventInfo.startMin, 
+        eventInfo.endHour,
+        eventInfo.endMin,
+        eventInfo.month,
+        eventInfo.day, 
+        )
+    
+    // for (let i in eventInfo) {
+    //     console.log(`${i} = ${eventInfo[i]} : ${typeof(eventInfo[i])}`)
+    // }
+    win.webContents.send("add-event")
+})
+
 console.log("CREATED DB IN MAIN PROCESS")
 ///////////////////////////
 
