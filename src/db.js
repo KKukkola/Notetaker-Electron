@@ -18,8 +18,11 @@ db.AddEvent = function(eventData, onFinish) {
     ipcRenderer.send('add-event', eventData)
 }
 
-db.EachEvent = function(onElement, onFinish) {
-    let sql = "SELECT * FROM events"
+db.EachEvent = function(onElement, onFinish, month, day) {
+    console.log("db.EachEvent:", month, day)
+    let sql = `SELECT * FROM events 
+        WHERE month = ${month} AND day = ${day} 
+        ORDER BY starthour, startmin`
     ipcRenderer.once('query-events', (event, rows) => {
         rows.forEach(onElement)
         if (onFinish != null ) {
@@ -28,9 +31,5 @@ db.EachEvent = function(onElement, onFinish) {
     })
     ipcRenderer.send("query-events", sql)
 }
-
-ipcRenderer.on('EachEvent', (err, rows) => {
-
-})
 
 module.exports = db;

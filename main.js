@@ -26,6 +26,7 @@ sqlDB.run(`CREATE TABLE IF NOT EXISTS events(
 
 ipcMain.on('query-events', (event, sql) => {
     console.log('ipcMain.on() query-events')
+    
     sqlDB.all(sql, [], (err, rows) => {
         win.webContents.send("query-events", rows)
     })

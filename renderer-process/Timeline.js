@@ -37,7 +37,6 @@ function NewEventElement(eventData) {
 }
 
 function AddEvent(eventData) {
-    console.log("TODO: AddEvent(), ", eventData)
     let $eventElement = NewEventElement(eventData)
     $eventElement.appendTo($timelineBody)
     return $eventElement
@@ -46,10 +45,16 @@ function AddEvent(eventData) {
 Timeline.Refresh = () => {
     $timelineBody.html() // clear
 
+    let date = new Date();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
     DrawTimelineLines()
     db.EachEvent(function(dbRow) {
         AddEvent(dbRow)
-    })
+    }, function() {
+        console.log("finished refreshing timeline")
+    }, month, day)
 }
 
 newEventBtn.click(function(ev) {
@@ -79,14 +84,18 @@ newEventSubmitBtn.click(function(ev) {
     
     console.log("EventSubmitButton Clicked")
 
+    let date = new Date();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
     let eventData = {
         eventName: newEventModal.find('#tmei-title').val(),
         startHour: parseInt(newEventModal.find('#tmei-start').val()),
         startMin: 0,
         endHour: parseInt(newEventModal.find('#tmei-end').val()),
         endMin: 0,
-        month: 2,
-        day: 8,
+        month: month,
+        day: day,
     } 
 
     db.AddEvent(eventData, () => {
