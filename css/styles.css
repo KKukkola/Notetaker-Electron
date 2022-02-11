@@ -76,9 +76,12 @@ textarea:focus, textarea:hover {
     background-color: rgb(0,0,0,0.4);
 }
 
+.flex {
+    display: flex;
+}
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 50% auto 0 auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
@@ -94,27 +97,4 @@ textarea:focus, textarea:hover {
     color: black;
     text-decoration: none;
     cursor: pointer;
-}
-
-#t-modal-newevent-container {
-    display: flex;
-} 
-
-.tme-title {
-    display: grid;
-    width: 40%;
-}
-
-.tme-start {
-    display: grid;
-    width: 20%;
-}
-
-.tme-end {
-    display: grid;
-    width: 20%;
-}
-
-#t-modal-newevent-container input {
-    width:100%;
 }
