@@ -4,6 +4,7 @@ const path = require('path');
 const sqlite3 = require('sqlite3');
 
 /////////// db
+
 let win;
 const dbpath = path.join(app.getPath('userData'), "db.db")
 let sqlDB = new sqlite3.Database(dbpath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
@@ -21,7 +22,8 @@ sqlDB.run(`CREATE TABLE IF NOT EXISTS events(
     endhour INTEGER,
     endmin INTEGER,
     month INTEGER,
-    day INTEGER
+    day INTEGER,
+    year INTEGER
 );`)
 
 ipcMain.on('query-events', (event, sql) => {
@@ -34,7 +36,7 @@ ipcMain.on('query-events', (event, sql) => {
 
 ipcMain.on('add-event', (event, eventInfo) => {
     console.log('ipcMain.on() add-event')
-    sqlDB.run(`INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, 
+    sqlDB.run(`INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
         null,
         eventInfo.eventName, 
         eventInfo.startHour, 
@@ -43,15 +45,12 @@ ipcMain.on('add-event', (event, eventInfo) => {
         eventInfo.endMin,
         eventInfo.month,
         eventInfo.day, 
+        eventInfo.year
         )
     
-    // for (let i in eventInfo) {
-    //     console.log(`${i} = ${eventInfo[i]} : ${typeof(eventInfo[i])}`)
-    // }
     win.webContents.send("add-event")
 })
 
-console.log("CREATED DB IN MAIN PROCESS")
 ///////////////////////////
 
 function createWindow() {
@@ -73,7 +72,6 @@ function createWindow() {
 app.whenReady().then(() => {
     createWindow()
 })
-
 
 app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit()

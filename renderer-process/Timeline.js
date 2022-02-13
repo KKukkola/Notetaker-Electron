@@ -18,10 +18,20 @@ let endhourDiv = $('#timeline-endhour-input')
 let $timelineBody = $('#timeline-body')
 let $timelineChange = $('#timeline-c-div')
 
+let $cSelectedEvent = null
+
 let addedEvents = []
 
 function EventClicked($eventDiv) {
-    console.log($eventDiv)
+    // Cancel the current selection
+    if ($cSelectedEvent == $eventDiv) {
+        ToggleTimelineChange(false)
+        return
+    }
+    
+    // Select the Event
+    console.log('Clicked: ', $eventDiv)
+    $cSelectedEvent = $eventDiv
     FillChangeData($eventDiv)
     ToggleTimelineChange(true)
 }
@@ -31,8 +41,10 @@ function ToggleTimelineChange(val) {
         $timelineChange.css('display', 'block')
     } else {
         $timelineChange.css('display', 'none')
+        $cSelectedEvent = null;
     }
 }
+
 function FillChangeData($eventDiv) {
     $('#tc-title').text($eventDiv.data('title'))
     $('#tc-starthour').text($eventDiv.data('starthour'))
@@ -41,24 +53,25 @@ function FillChangeData($eventDiv) {
     $('#tc-endmin').text($eventDiv.data('endmin'))
     $('#tc-month').text($eventDiv.data('month'))
     $('#tc-day').text($eventDiv.data('day'))
+    $('#tc-year').text($eventDiv.data('year'))
 }
 
-function GetChangeData($eventDiv) {
+function GetTimelineChangeData() {
     
-    // TODO: change this to the internal timeline date
-    
+    // TODO: change date to the internal timeline date
+
     let date = new Date();
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
 
     return {
-        id: $eventDiv.data('id'),
-        title: $('#tc-title').val(),
-        starthour: $('#tc-starthour').val(),
-        startmin: $('#tc-startmin').val(),
-        endhour: $('#tc-endhour').val(),
-        endmin: $('#tc-endmin').val(),
+        id: parseInt($cSelectedEvent.data('id')),
+        title: $('#tc-title').text(),
+        starthour: parseInt($('#tc-starthour').text()),
+        startmin: parseInt($('#tc-startmin').text()),
+        endhour: parseInt($('#tc-endhour').text()),
+        endmin: parseInt($('#tc-endmin').text()),
         month: month,
         day: day,
         year: year,
@@ -87,6 +100,7 @@ function NewEventElement(eventData) {
     $div.data('endmin', eventData.endmin)
     $div.data('month', eventData.month)
     $div.data('day', eventData.day)
+    $div.data('year', eventData.year)
     
     let numHours = timelineMax - timelineMin;
     let currentSeconds = (eventData.starthour*SEC_PER_HOUR) + (eventData.startmin*SEC_PER_MIN)
@@ -108,7 +122,7 @@ function NewEventElement(eventData) {
         if (e.rowNum == rowNum) {
             if (leftPercent >= e.leftPercent && leftPercent <= e.rightPercent) {
                 rowNum += 1;
-                top += 10*rowNum + 2*rowNum;
+                top = 10*rowNum + 2 + 2*rowNum;
             }
         }
     })
@@ -154,6 +168,7 @@ Timeline.Refresh = () => {
     addedEvents = [] // clear
 
     let date = new Date();
+    let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
 
@@ -162,7 +177,7 @@ Timeline.Refresh = () => {
         AddEvent(dbRow)
     }, function() {
         console.log("finished refreshing timeline")
-    }, month, day)
+    }, month, day, year)
 }
 
 newEventBtn.click(function(ev) {
@@ -175,6 +190,7 @@ newEventSubmitBtn.click(function(ev) {
     
     console.log("EventSubmitButton Clicked")
 
+    // TODO: Get the Timeline Date
     let date = new Date();
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
@@ -270,24 +286,19 @@ let $tcSubmit = $('#tc-submit')
 let $tcCancel = $('#tc-cancel')
 
 $tcRemove.on('click', function(event) {
-    console.log("TODO: REMOVE CURRENT FROM THE DATABASE")
-    ToggleTimelineChange(false)
-    Timeline.Refresh()
+    let eventData = GetTimelineChangeData();
+    db.RemoveEvent(eventData, () => {
+        ToggleTimelineChange(false)
+        Timeline.Refresh()
+    })
 })
 
 $tcSubmit.on('click', function(event) {
-    console.log('TODO: EDIT CURRENT IN THE DATABASE')
-
-    let eventData = GetTCEventData();
-
-    db.AddEvent(eventData, () => {
-        console.log("OnFinish()")
-        HideNewEventModal()
+    let eventData = GetTimelineChangeData();
+    db.ChangeEvent(eventData, () => {
+        ToggleTimelineChange(false)
         Timeline.Refresh()
     })
-
-    ToggleTimelineChange(false)
-    Timeline.Refresh()
 })
 
 $tcCancel.on('click', function(event) {
