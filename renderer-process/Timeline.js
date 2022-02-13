@@ -12,12 +12,57 @@ let newEventModal = $('#timeline-new-event-modal')
 let newEventModalClose = newEventModal.find('span').first()
 let newEventSubmitBtn = $('#tme-submit-btn')
 
+let starthourDiv = $('#timeline-starthour-input')
+let endhourDiv = $('#timeline-endhour-input')
+
 let $timelineBody = $('#timeline-body')
+let $timelineChange = $('#timeline-c-div')
 
 let addedEvents = []
 
-function EventClicked($div) {
-    console.log("An Event Was Clicked!")
+function EventClicked($eventDiv) {
+    console.log($eventDiv)
+    FillChangeData($eventDiv)
+    ToggleTimelineChange(true)
+}
+
+function ToggleTimelineChange(val) {
+    if (val === true) {
+        $timelineChange.css('display', 'block')
+    } else {
+        $timelineChange.css('display', 'none')
+    }
+}
+function FillChangeData($eventDiv) {
+    $('#tc-title').text($eventDiv.data('title'))
+    $('#tc-starthour').text($eventDiv.data('starthour'))
+    $('#tc-startmin').text($eventDiv.data('startmin'))
+    $('#tc-endhour').text($eventDiv.data('endhour'))
+    $('#tc-endmin').text($eventDiv.data('endmin'))
+    $('#tc-month').text($eventDiv.data('month'))
+    $('#tc-day').text($eventDiv.data('day'))
+}
+
+function GetChangeData($eventDiv) {
+    
+    // TODO: change this to the internal timeline date
+    
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    return {
+        id: $eventDiv.data('id'),
+        title: $('#tc-title').val(),
+        starthour: $('#tc-starthour').val(),
+        startmin: $('#tc-startmin').val(),
+        endhour: $('#tc-endhour').val(),
+        endmin: $('#tc-endmin').val(),
+        month: month,
+        day: day,
+        year: year,
+    }
 }
 
 function DrawTimelineLines() {
@@ -25,7 +70,6 @@ function DrawTimelineLines() {
     for (let i = 0; i < timelineMax - timelineMin; i++) {
         let $div = $("<div></div>")
         $div.addClass('timeline-line-div')
-        //$div.html(i)
         $div.css({
             left: `${(i/timelineHours)*100}%`
         })
@@ -35,7 +79,14 @@ function DrawTimelineLines() {
 
 function NewEventElement(eventData) {
     let $div = $("<div></div>")
-    $div.data('event-id', eventData.id)
+    $div.data('id', eventData.id)
+    $div.data('title', eventData.title)
+    $div.data('starthour', eventData.starthour)
+    $div.data('startmin', eventData.startmin)
+    $div.data('endhour', eventData.endhour)
+    $div.data('endmin', eventData.endmin)
+    $div.data('month', eventData.month)
+    $div.data('day', eventData.day)
     
     let numHours = timelineMax - timelineMin;
     let currentSeconds = (eventData.starthour*SEC_PER_HOUR) + (eventData.startmin*SEC_PER_MIN)
@@ -81,6 +132,7 @@ function NewEventElement(eventData) {
     $div.on('click', (event) => {
         EventClicked($div)
     })
+
     return $div
 }
 
@@ -124,6 +176,7 @@ newEventSubmitBtn.click(function(ev) {
     console.log("EventSubmitButton Clicked")
 
     let date = new Date();
+    let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
 
@@ -135,6 +188,7 @@ newEventSubmitBtn.click(function(ev) {
         endMin: 0,
         month: month,
         day: day,
+        year: year,
     } 
 
     db.AddEvent(eventData, () => {
@@ -160,9 +214,6 @@ newEventModal.click(function(ev) {
 /************************ */
 // Timeline Min / Max
 
-let starthourDiv = $('#timeline-starthour-input')
-let endhourDiv = $('#timeline-endhour-input')
-
 starthourDiv.text(timelineMin)
 endhourDiv.text(timelineMax)
 
@@ -185,6 +236,7 @@ starthourDiv.on('focusout', function(event) {
     } else if (num < 0 || num >= timelineMax) {
         starthourDiv.text(timelineMin)
     } else {
+        if (num == timelineMin) { return; }
         // good min
         timelineMin = num;
         starthourDiv.text(num)
@@ -196,16 +248,50 @@ endhourDiv.on('focusout', function(event) {
     let num = parseInt(endhourDiv.text())
     if (num == null || num % 1 !== 0) {
         endhourDiv.text(timelineMax)
-    } else if (num >= timelineMax) {
+    } else if (num <= timelineMin) {
         endhourDiv.text(timelineMax)
     } else if (num > 24 || num <= timelineMin) {
         endhourDiv.text(timelineMax)
     } else {
+        if (num == timelineMax) { return; }
         // good max
         timelineMax = num;
         endhourDiv.text(num)
         Timeline.Refresh();
     }
+})
+
+
+/************************ */
+// Timeline change remove/submit/cancel 
+
+let $tcRemove = $('#tc-remove') 
+let $tcSubmit = $('#tc-submit') 
+let $tcCancel = $('#tc-cancel')
+
+$tcRemove.on('click', function(event) {
+    console.log("TODO: REMOVE CURRENT FROM THE DATABASE")
+    ToggleTimelineChange(false)
+    Timeline.Refresh()
+})
+
+$tcSubmit.on('click', function(event) {
+    console.log('TODO: EDIT CURRENT IN THE DATABASE')
+
+    let eventData = GetTCEventData();
+
+    db.AddEvent(eventData, () => {
+        console.log("OnFinish()")
+        HideNewEventModal()
+        Timeline.Refresh()
+    })
+
+    ToggleTimelineChange(false)
+    Timeline.Refresh()
+})
+
+$tcCancel.on('click', function(event) {
+    ToggleTimelineChange(false)
 })
 
 export {Timeline}

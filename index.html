@@ -42,19 +42,30 @@
       <div id="timeline-c-div">
         <form>
           <div id='timeline-c-container'> 
-            <div class='tc-title tc-input-container'>
-              <label for='tce-title'>Title</label>
-              <input type="text" name="timeline-changeevent" id="tc-title">
+            <div class='tc-title-input tc-input-container'>
+              <label>Title</label>
+              <div id="tc-title" contenteditable="true" class="tc-input-title tc-input"></div>
             </div>
             <div class='tc-input-container'>
               <label>Start</label>
-              <input type="text" id="tc-starthour" class="tc-input">
-              <input type="text" id="tc-startmin" class="tc-input">
+              <div id="tc-starthour" contenteditable="true" class="tc-input"></div>
+              <div id="tc-startmin" contenteditable="true" class="tc-input"></div>
             </div>
             <div class='tc-input-container'>
               <label>End</label>
-              <input type="text" id="tc-endhour" class="tc-input">
-              <input type="text" id="tc-endmin" class="tc-input">
+              <div id="tc-endhour" contenteditable="true" class="tc-input"></div>
+              <div id="tc-endmin" contenteditable="true" class="tc-input"></div>
+            </div>
+            <div class="tc-date-input tc-input-container">
+              <label>Date</label>
+              <div id="tc-month" contenteditable="true" class="tc-input"></div>
+              <div id="tc-day" contenteditable="true" class="tc-input"></div>
+              <div id="tc-year" contenteditable="true" class="tc-input"></div>
+            </div>
+            <div class="fill-div">
+              <div id='tc-remove' class="tc-button cursornone"></div>
+              <div id='tc-submit' class="tc-button cursornone"></div>
+              <div id='tc-cancel' class="tc-button cursornone"></div>
             </div>
           </div>
         </form>

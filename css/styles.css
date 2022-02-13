@@ -98,3 +98,16 @@ textarea:focus, textarea:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+.break {
+    flex-basis: 100%;
+    height: 0;
+}
+
+.fill-div {
+    flex: 1 0 auto;
+}
+
+.cursornone {
+    cursor: default;
+}

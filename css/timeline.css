@@ -66,6 +66,7 @@
     top: -56px;
     height: 40px;
     padding: 5px 0;
+    display: none;
 }
 
 #timeline-c-container {
@@ -74,24 +75,40 @@
 
 #timeline-c-container label {
     display: block;
+    flex: 1 0 100%;
 }
 
 .tc-input-container {
     margin: 0 5px;
     height: 100%;
     width: 10%;
+    min-width: 50px;
     box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.tc-title {
-    width: 25%;
-}
-.tc-title input {
+#tc-title {
     width: 90%;
 }
 
-.tc-input {
+.tc-title-input {
     width: 30%;
+}
+
+.tc-date-input {
+    width: 20%;
+}
+
+.tc-date-input #tc-year { 
+    flex: 2 0 auto;
+}
+
+.tc-input {
+    flex: 1 0 auto;
+    border: 1px solid black;
+    text-align: center;
+    padding: 1px 0;
 }
 
 
@@ -120,4 +137,24 @@
     width: 1px;
     height: 100%;
     background: gainsboro;
+}
+
+.tc-button {
+    width: 20%;
+    height: 100%;
+    float: right;
+    margin-left: 3px;
+}
+.tc-button:hover {
+    opacity: .8;
+}
+
+#tc-submit {
+    background: green;
+}
+#tc-remove {
+    background: red;
+}
+#tc-cancel {
+    background: palevioletred;
 }
