@@ -1,5 +1,5 @@
 
-const { app, BrowserWindow, ipcMain, Menu } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, webContents } = require('electron')
 const path = require('path');
 const sqlite3 = require('sqlite3');
 
@@ -28,21 +28,42 @@ sqlDB.run(`CREATE TABLE IF NOT EXISTS events(
 
 ipcMain.on('query-events', (event, sql) => {
     console.log('ipcMain.on() query-events')
-    
     sqlDB.all(sql, [], (err, rows) => {
         win.webContents.send("query-events", rows)
     })
+})
+
+ipcMain.on("remove-event", (event, eventInfo) => {
+    console.log('ipcmain.on() remove-event')
+    sqlDB.run('DELETE FROM events WHERE id=?', eventInfo.id)
+    win.webContents.send("remove-event")
+})
+
+ipcMain.on('change-event', (event, eventInfo) => {
+    console.log('ipcMain.on() change-event')
+    sqlDB.run("UPDATE events SET title=?, starthour=?, startmin=?, endhour=?, endmin=?, month=?, day=?, year=? WHERE id=?",
+        eventInfo.title, 
+        eventInfo.starthour, 
+        eventInfo.startmin, 
+        eventInfo.endhour,
+        eventInfo.endmin,
+        eventInfo.month,
+        eventInfo.day, 
+        eventInfo.year,
+        eventInfo.id
+        )
+    win.webContents.send('change-event')
 })
 
 ipcMain.on('add-event', (event, eventInfo) => {
     console.log('ipcMain.on() add-event')
     sqlDB.run(`INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
         null,
-        eventInfo.eventName, 
-        eventInfo.startHour, 
-        eventInfo.startMin, 
-        eventInfo.endHour,
-        eventInfo.endMin,
+        eventInfo.title, 
+        eventInfo.starthour, 
+        eventInfo.startmin, 
+        eventInfo.endhour,
+        eventInfo.endmin,
         eventInfo.month,
         eventInfo.day, 
         eventInfo.year

@@ -120,7 +120,7 @@ function NewEventElement(eventData) {
     let rowNum = 0;
     addedEvents.forEach(e => {
         if (e.rowNum == rowNum) {
-            if (leftPercent >= e.leftPercent && leftPercent <= e.rightPercent) {
+            if (leftPercent >= e.leftPercent && leftPercent < e.rightPercent) {
                 rowNum += 1;
                 top = 10*rowNum + 2 + 2*rowNum;
             }
@@ -197,11 +197,11 @@ newEventSubmitBtn.click(function(ev) {
     let day = date.getDate();
 
     let eventData = {
-        eventName: newEventModal.find('#tmei-title').val(),
-        startHour: parseInt(newEventModal.find('#tmei-start').val()),
-        startMin: 0,
-        endHour: parseInt(newEventModal.find('#tmei-end').val()),
-        endMin: 0,
+        title: newEventModal.find('#tmei-title').val(),
+        starthour: parseInt(newEventModal.find('#tmei-start').val()),
+        startmin: 0,
+        endhour: parseInt(newEventModal.find('#tmei-end').val()),
+        endmin: 0,
         month: month,
         day: day,
         year: year,

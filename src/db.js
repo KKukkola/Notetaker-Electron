@@ -16,7 +16,6 @@ db.AddEvent = function(eventData, onFinish) {
 }
 
 db.EachEvent = function(onElement, onFinish, month, day, year) {
-    console.log("db.EachEvent:", month, day)
     let sql = `SELECT * FROM events 
         WHERE month = ${month} AND day = ${day} AND year = ${year}
         ORDER BY starthour, startmin`
@@ -30,7 +29,7 @@ db.EachEvent = function(onElement, onFinish, month, day, year) {
 }
 
 db.ChangeEvent = function(eventData, onFinish) {
-    console.log('TODO: db.ChngeEvent')
+    console.log(eventData)
     ipcRenderer.once('change-event', (event) => {
         onFinish()
     })
@@ -38,7 +37,6 @@ db.ChangeEvent = function(eventData, onFinish) {
 }
 
 db.RemoveEvent = function(eventData, onFinish) {
-    console.log("TODO: db.RemoveEvent")
     ipcRenderer.once('remove-event', (event) => {
         onFinish()
     })
