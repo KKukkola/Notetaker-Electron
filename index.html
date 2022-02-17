@@ -2,13 +2,12 @@
 <html>
   <head>
     <title>Hello World!</title>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css"></link>
     <link rel="stylesheet" href="css/filebrowser.css"></link>
     <link rel="stylesheet" href="css/contextmenu.css"></link>
     <link rel="stylesheet" href="css/main.css"></link>
-
     <script src="https://kit.fontawesome.com/16fed93f1f.js" crossorigin="anonymous"></script>
-    <!-- <link rel="import" href="/item.html" id="fb-item" ></link> -->
   </head>
   <body>
     
@@ -27,7 +26,9 @@
     </section>
 
     <section id="notepad">
-      <textarea id="notepad-textarea" spellcheck="false">text goes here</textarea>
+        <div id="editorcontainer">
+          <div id="editor">text text testx text</div>
+        </div>
     </section>
 
     <section id="timeline">
@@ -76,19 +77,19 @@
       <div class="modal-content">
         <span class="close">&times;</span>
         <form>
-          <div id='t-modal-newevent-container'> 
-            <div class='tme-title'>
-              <label for='t-newevent-title'>Title</label>
+          <div id='timeline-n-container'> 
+
+            <div class='tn-input-title tn-input-container'>
+              <label>Title</label>
               <input type="text" id="tmei-title">
             </div>
-            <div class='tme-start'>
-              <label for='t-newevent-start'>Start</label>
-              <input type="text" id="tmei-start">
+
+            <div class='tn-input-container'>
+              <label>Start</label>
+              <div id="tc-starthour" contenteditable="true" class="tc-input"></div>
+              <div id="tc-startmin" contenteditable="true" class="tc-input"></div>
             </div>
-            <div class='tme-end'>
-              <label for='t-newevent-end'>End</label>
-              <input type="text" id="tmei-end">
-            </div>
+            
           </div>
           <button type="submit" id='tme-submit-btn'>Create</button>
         </form>
@@ -120,13 +121,14 @@
   </template>
 
   <!-- SCRIPTS -->
-  
+
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script type="module">
     import {FileBrowser} from "./renderer-process/FileBrowser.js"
     import {Notepad} from "./renderer-process/Notepad.js"
     import {Timeline} from "./renderer-process/Timeline.js"
-
+    
     window.addEventListener("beforeunload", function(ev) {
       console.log('TODO: what to do before unload')
     })
@@ -148,6 +150,32 @@
       Notepad.Refresh()
       Timeline.Refresh()
       
+      var quill = new Quill("#editor",{
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', {
+              'color': []
+              }, {
+                  "background": []
+                }, {
+                    "font": []
+                }, {
+                    "size": []
+                }, {
+                    align: []
+                }, 'image', 'code-block']]
+            },
+            scrollingContainer: "#editorcontainer",
+            theme: "snow"
+        });
+
+      let $notepad = $('#notepad')
+      let $editorcontainer = $('#editorcontainer')
+      $editorcontainer.height($notepad.height()-70)
+      window.addEventListener('resize', function(event) {
+        $editorcontainer.height($notepad.height()-70)
+      }, true);
+
     })
     
   </script>

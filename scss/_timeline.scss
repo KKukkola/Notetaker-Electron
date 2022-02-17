@@ -8,14 +8,40 @@
 }
 
 #timeline-top-buttons {
-    /* position: relative; */
     display: flex;
-    /* margin: 0px 5px; */
     padding: 0px 0;
     border: 0px solid #333D3A;
     border-bottom-width: thin;
     background: #4F5F5A;
     height: 26px;
+
+    #timeline-new-event-btn {
+        background: #6A7C76;
+        color: aliceblue;
+        padding: 5px 10px;
+        cursor: pointer;
+        display: inline-flex;
+        margin: 0 5px;
+        align-items: center;
+        padding: 0.25rem 1rem;
+        font-family: sans-serif;
+
+        &:hover {
+            background: #313131;
+
+        }
+    }
+    
+    .timeline-hour-input {
+        display: inline-flex;
+        background: #6A7C76;
+        color:aliceblue;
+        width: 30px;
+        padding: 0 .25rem;
+        align-items: center;
+        justify-content: center;
+    }
+
 }
 
 #timeline-body {
@@ -30,64 +56,47 @@
         height: 100%;
         background: #8F9F9A;
     }
-
 }
 
-#timeline-new-event-btn {
-    /* background: #222222; */
-    /* border: 1px solid transparent; */
-    background: #6A7C76;
-    color: aliceblue;
-    padding: 5px 10px;
-    cursor: pointer;
-    display: inline-flex;
-    margin: 0 5px;
-    align-items: center;
-    padding: 0.25rem 1rem;
-    /* border-radius: 4px; */
-    /* font-weight: 500; */
-    /* height: 26px; */
-    font-family: sans-serif;
-}
+#timeline-n-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
 
-#timeline-new-event-btn:hover {
-    background: #313131;
-}
+    input {
+        width: 100%;
+    }
 
-.timeline-hour-input {
-    display: inline-flex;
-    background: #6A7C76;
-    color:aliceblue;
-    width: 30px;
-    padding: 0 .25rem;
-    align-items: center;
-    justify-content: center;
-}
+    .tn-input-title {
+        width: 25%;
+    }
 
-#t-modal-newevent-container {
-    display: flex;
+    .tn-input-container {
+        margin: 0 5px;
+        height: 100%;
+        width: 10%;
+        min-width: 50px;
+        box-sizing: border-box;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .tn-input {
+        width: 10%;
+    }
+
+    .tn-input-date {
+
+    }
 } 
-
-#t-modal-newevent-container input {
-    width:100%;
-}
 
 .flex-gap {
     margin: 0 5px;
 }
 
-.tme-title {
-    width: 25%;
-}
-.tme-start {
-    width: 10%;
-}
-.tme-end {
-    width: 10%;
-}
 #tmei-start {
     width: 40%;
 }
+
 
 /* Timeline Change Event Container */
 
@@ -99,49 +108,73 @@
     height: 40px;
     padding: 5px 0;
     display: none;
+
+    #timeline-c-container {
+        display: flex;
+
+        label {
+            display: block;
+            flex: 1 0 100%;
+        }
+    }
+
+    #tc-title {
+        width: 90%;
+    }
+    
+    .tc-input-container {
+        margin: 0 5px;
+        height: 100%;
+        width: 10%;
+        min-width: 50px;
+        box-sizing: border-box;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .tc-title-input {
+        width: 30%;
+    }
+    
+    .tc-date-input {
+        width: 20%;
+    }
+    
+    .tc-date-input #tc-year { 
+        flex: 2 0 auto;
+    }
+    
+    .tc-input {
+        flex: 1 0 auto;
+        border: 1px solid black;
+        text-align: center;
+        padding: 1px 0;
+    }
+
+    .tc-button {
+        width: 20%;
+        height: 100%;
+        float: right;
+        margin-left: 3px;
+
+        &:hover {
+            opacity: .8;
+        }
+    }
+    
+    #tc-submit {
+        background: green;
+    }
+    
+    #tc-remove {
+        background: red;
+    }
+    
+    #tc-cancel {
+        background: palevioletred;
+    }
 }
 
-#timeline-c-container {
-    display: flex;
-}
-
-#timeline-c-container label {
-    display: block;
-    flex: 1 0 100%;
-}
-
-.tc-input-container {
-    margin: 0 5px;
-    height: 100%;
-    width: 10%;
-    min-width: 50px;
-    box-sizing: border-box;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-#tc-title {
-    width: 90%;
-}
-
-.tc-title-input {
-    width: 30%;
-}
-
-.tc-date-input {
-    width: 20%;
-}
-
-.tc-date-input #tc-year { 
-    flex: 2 0 auto;
-}
-
-.tc-input {
-    flex: 1 0 auto;
-    border: 1px solid black;
-    text-align: center;
-    padding: 1px 0;
-}
 
 .event-div {
     position: absolute;
@@ -153,23 +186,3 @@
     background: blueviolet !important;
 }
 
-
-.tc-button {
-    width: 20%;
-    height: 100%;
-    float: right;
-    margin-left: 3px;
-}
-.tc-button:hover {
-    opacity: .8;
-}
-
-#tc-submit {
-    background: green;
-}
-#tc-remove {
-    background: red;
-}
-#tc-cancel {
-    background: palevioletred;
-}

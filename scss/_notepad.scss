@@ -1,0 +1,16 @@
+
+#notepad {
+    position: relative;
+}
+
+#editorcontainer {
+    // height: $notepad-base-height;
+    overflow-y: auto;
+    margin-top: 3em;
+    border: 1px solid red;
+}
+
+#editor {
+    min-height: 100%;
+    height: auto;
+}

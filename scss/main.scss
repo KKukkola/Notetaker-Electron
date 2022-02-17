@@ -1,4 +1,20 @@
 @import "_var";
 
+body {
+    margin:0;
+    height: 100%;
+    background-color: rgb(80, 92, 69);
+
+    display: grid;
+    grid-template-areas: 
+        "top top"
+        "filebrowser notepad"
+        "timeline timeline";
+
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 10px 1fr $notepad-base-height 5px;
+}
 
 @import "_timeline";
+@import "_quill";
+@import "_notepad";
