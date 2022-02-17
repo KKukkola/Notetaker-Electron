@@ -30,6 +30,7 @@
     display: flex;
     align-items: center;
     padding: 1px 0px;
+    /* transition: all 0.1s ease; */
 }
 .fb-item-btn:hover {
     background-color: #464646;

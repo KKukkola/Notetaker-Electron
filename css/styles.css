@@ -7,11 +7,16 @@ html {
 body {
     margin:0;
     height: 100%;
-    background-color: bisque;
+    background-color: rgb(80, 92, 69);
 
     display: grid;
+    grid-template-areas: 
+        "top top"
+        "filebrowser notepad"
+        "timeline timeline";
+
     grid-template-columns: 200px 1fr;
-    grid-template-rows: 100px 1fr .2fr 5px;
+    grid-template-rows: 10px 1fr .3fr 5px;
 }
 
 h5 {
@@ -24,20 +29,21 @@ h5 {
 
 #topbar {
     background-color: greenyellow;
-    grid-column: 1 / 3;
-    grid-row: 1 / 2;
+    grid-area: top;
 }
 
 #filebrowser {
     background-color: grey;
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
+    grid-area: filebrowser;
+}
+
+#timeline {
+    grid-area: timeline;
 }
 
 #notepad {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
     background-color: aliceblue;
+    grid-area: notepad;
 }
 
 textarea:focus, textarea:hover {
@@ -54,12 +60,6 @@ textarea:focus, textarea:hover {
     width: 100%;
     box-sizing: border-box;
     border: none;
-}
-
-#timeline {
-    background-color: pink;
-    grid-column: 1 / 3;
-    grid-row: 3 / 4;
 }
 
 

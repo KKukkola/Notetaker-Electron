@@ -1,34 +1,67 @@
-
+@import "_var";
 
 #timeline {
     display: flex;
     flex-direction: column;
     background: #b5b5b5;
     position: relative;
-
-}
-
-#timeline-body {
-    flex: 1 0 auto;
-    width: 100%;
-    background: rgb(44, 66, 85);
-    position: relative;
 }
 
 #timeline-top-buttons {
     /* position: relative; */
     display: flex;
-    margin: 0px 5px;
+    /* margin: 0px 5px; */
+    padding: 0px 0;
+    border: 0px solid #333D3A;
+    border-bottom-width: thin;
+    background: #4F5F5A;
+    height: 26px;
+}
+
+#timeline-body {
+    flex: 1 0 auto;
+    width: 100%;
+    background: #141A18;
+    position: relative;
+
+    .timeline-line-div {
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        background: #8F9F9A;
+    }
+
 }
 
 #timeline-new-event-btn {
-    background:teal;
+    /* background: #222222; */
+    /* border: 1px solid transparent; */
+    background: #6A7C76;
+    color: aliceblue;
     padding: 5px 10px;
-    cursor: default;
+    cursor: pointer;
+    display: inline-flex;
+    margin: 0 5px;
+    align-items: center;
+    padding: 0.25rem 1rem;
+    /* border-radius: 4px; */
+    /* font-weight: 500; */
+    /* height: 26px; */
+    font-family: sans-serif;
 }
 
 #timeline-new-event-btn:hover {
-    background: #f4f4f4;
+    background: #313131;
+}
+
+.timeline-hour-input {
+    display: inline-flex;
+    background: #6A7C76;
+    color:aliceblue;
+    width: 30px;
+    padding: 0 .25rem;
+    align-items: center;
+    justify-content: center;
 }
 
 #t-modal-newevent-container {
@@ -55,7 +88,6 @@
 #tmei-start {
     width: 40%;
 }
-
 
 /* Timeline Change Event Container */
 
@@ -111,33 +143,16 @@
     padding: 1px 0;
 }
 
-
-.timeline-hour-input {
-    background: darkolivegreen;
-    color:aliceblue;
-    margin:1px;
-    width: 30px;
-    border: 1px solid gray;
-    padding: 3px 0;
-    text-align: center;
-}
-
 .event-div {
     position: absolute;
     height: 10px;
-    background: lavender;
+    background: #8F9F9A;
 }
 
 .event-div:hover {
     background: blueviolet !important;
 }
 
-.timeline-line-div {
-    position: absolute;
-    width: 1px;
-    height: 100%;
-    background: gainsboro;
-}
 
 .tc-button {
     width: 20%;
