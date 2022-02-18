@@ -19,7 +19,8 @@ function CreateTabFor(filepath) {
   })
 
   $clone.find('.close-tab').first().on('click', function(event) {
-    console.log('close-clicekd!')
+    event.stopPropagation();
+    $clone.remove();
   })
 
   return $clone;
