@@ -241,14 +241,65 @@ body {
   right: 0;
 }
 
+.ql-toolbar.ql-snow {
+  padding: 1px;
+}
+
+#editor.ql-container.ql-snow {
+  border: none;
+}
+
+.tab-div {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: auto;
+  padding: 5px 5px 5px 10px;
+  text-align: center;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  white-space: nowrap;
+}
+
+.tab-div span {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.tab-div .close-tab:hover {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.tab-div i {
+  font-size: small;
+  padding: 2px 4px;
+}
+
 #notepad {
   position: relative;
 }
 
+#notepad #notepad-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+}
+
+#notepad #notepad-bottom {
+  position: relative;
+  padding-top: 2em;
+}
+
 #editorcontainer {
   overflow-y: auto;
-  margin-top: 3em;
-  border: 1px solid red;
+  border: 1px solid #ccc;
 }
 
 #editor {

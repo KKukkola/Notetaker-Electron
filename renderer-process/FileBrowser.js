@@ -152,16 +152,6 @@ function CreateItem(name, path, $parent, depth) {
         window.addEventListener('mousemove', movehandler)
         window.addEventListener('mouseup', uphandler)
   })
-//   $button.on('dragstart', function (event) {
-//       console.log("drag start")
-//   })
-//   $title.on('dragover', function(event) {
-//       event.preventDefault();
-//       console.log('dragover')
-//   })
-//   $button.on('drop', function(event) {
-//       console.log("drop")
-//   })
   
   // edit the content
   let itemIsClosed = closedFolders[$clone.data('filepath')]

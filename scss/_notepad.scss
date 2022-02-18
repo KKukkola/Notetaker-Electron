@@ -1,13 +1,49 @@
 
+.tab-div {
+    width: fit-content;
+    height: auto;
+    padding: 5px 5px 5px 10px;
+    text-align: center;
+    cursor: pointer;
+    user-select:none;
+    white-space:nowrap;
+
+    span {
+        width: fit-content;
+    }
+
+    .close-tab {
+        &:hover {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+    }
+
+    i {
+        font-size: small;
+        padding: 2px 4px;
+    }
+}
+
 #notepad {
     position: relative;
+
+    #notepad-top {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    #notepad-bottom {
+        position: relative;
+        padding-top: $editor-top-margin;
+    }
 }
 
 #editorcontainer {
     // height: $notepad-base-height;
     overflow-y: auto;
-    margin-top: 3em;
-    border: 1px solid red;
+    // margin-top: $editor-top-margin;
+    border: 1px solid #ccc;
 }
 
 #editor {

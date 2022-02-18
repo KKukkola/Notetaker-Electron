@@ -10,4 +10,11 @@
     top: 0;
     left: 0;
     right: 0;
+    &.ql-snow {
+        padding: 1px;
+    }
+}
+
+#editor.ql-container.ql-snow {
+    border: none;
 }
