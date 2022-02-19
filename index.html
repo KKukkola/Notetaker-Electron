@@ -127,7 +127,7 @@
 
   <template id="template-tab-div">
     <div class="tab-div">
-      <!-- <i class="far fa-file-alt"></i> -->
+      <i class="far fa-file-alt"></i>
       <span>titletitletitle</span>
       <i class="fas fa-times close-tab"></i>
     </div>
@@ -162,32 +162,6 @@
       Notepad.Refresh()
       Timeline.Refresh()
       
-      var quill = new Quill("#editor",{
-        modules: {
-          toolbar: [
-            ['bold', 'italic', 'underline', {
-              'color': []
-              }, {
-                  "background": []
-                }, {
-                    "font": []
-                }, {
-                    "size": []
-                }, {
-                    align: []
-                }, 'image', 'code-block']]
-            },
-            scrollingContainer: "#editorcontainer",
-            theme: "snow"
-        });
-
-      let $notepad = $('#notepad')
-      let $editorcontainer = $('#editorcontainer')
-      $editorcontainer.height($notepad.height()-90)
-      window.addEventListener('resize', function(event) {
-        $editorcontainer.height($notepad.height()-90)
-      }, true);
-
     })
     
   </script>

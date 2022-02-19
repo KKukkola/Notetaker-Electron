@@ -1,29 +1,102 @@
 
-let Notepad = new Object()
-Notepad.currentFile = null
+let Delta = Quill.import('delta');
 
-Notepad.openNotes = new Object();
+let Notepad = new Object()
 
 let $tabsContainer = $('#notepad-top')
 
+let ActiveTab = new Object();
+ActiveTab.path = null;
+ActiveTab.element = null;
+
 function CreateTabFor(filepath) {
-  let $clone = $($("#template-tab-div").html())
-  $clone.data('filepath', filepath)
-  $clone.find('span').first().html('title')
+    let $clone = $($("#template-tab-div").html())
+    $clone.data('filepath', filepath)
+    $clone.find('span').first().html('title')
 
-  console.log("appending..")
-  $clone.appendTo($tabsContainer)
+    $clone.appendTo($tabsContainer)
 
-  $clone.on('click', function() {
-    console.log('tab-clicked!')
-  })
+    $clone.on('click', function() {
+        console.log('tab-clicked!')
+        if (ActiveTab.path !== $clone.data('filepath')) {
+            ActivateTab($clone)
+        }
+    })
 
-  $clone.find('.close-tab').first().on('click', function(event) {
-    event.stopPropagation();
-    $clone.remove();
-  })
+    $clone.find('.close-tab').first().on('click', function(event) {
+        event.stopPropagation();
+        let index = $clone.index();
+        // Activate the next tab (either +1 or -1 to the index) if active
+        if (ActiveTab.path == $clone.data('filepath')) { 
+            console.log("WAS ACTIVE")
+            let $nextTab = $tabsContainer.children().eq(index+1)
+            if ($nextTab.length == 0) {
+                $nextTab = $tabsContainer.children().eq(index-1)
+            }
+            if ($nextTab.length > 0) {
+                ActivateTab($nextTab)
+            } else {
+            }
+        } else {
+            console.log("NOT ACTIVE")
+        }
+        $clone.remove()
+    })
 
-  return $clone;
+    return $clone;
+}
+
+function ActivateTab($tab) {
+    if ($tab.data('filepath') == ActiveTab.path) {
+        console.log("issue? - activated tab is the activePath, returining")
+        return;
+    }
+
+    if (ActiveTab.element !== null) {
+        ActiveTab.element.removeClass('tab-div-active')
+    }
+
+    ActiveTab.path = $tab.data('filepath')
+    ActiveTab.element = $tab
+    ActiveTab.element.addClass('tab-div-active')
+
+    fs.ReadFile(ActiveTab.path, function(text) {
+        Notepad.Quill.setContents(JSON.parse(text))
+    })
+}
+
+function StartQuill() {
+    Notepad.Quill = new Quill("#editor",{
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', {
+              'color': []
+              }, {
+                  "background": []
+                }, {
+                    "font": []
+                }, {
+                    "size": []
+                }, {
+                    align: []
+                }, 'image', 'code-block']]
+            },
+            scrollingContainer: "#editorcontainer",
+            theme: "snow"
+    });
+
+    // let change = new Delta();
+    // Notepad.Quill.on('text-change', function(delta) {
+    //     change = change.compose(delta)
+    // })
+
+    // Watch Size
+    let $notepad = $('#notepad')
+    let $editorcontainer = $('#editorcontainer')
+    $editorcontainer.height($notepad.height()-90)
+    window.addEventListener('resize', function(event) {
+        $editorcontainer.height($notepad.height()-90)
+    }, true);
 }
 
 function GetTabFor(filepath) {
@@ -37,39 +110,27 @@ function GetTabFor(filepath) {
     return $tab;
 }
 
-
 Notepad.Refresh = () => {
-    console.log("TODO: Notepad Refresh")
+    StartQuill()
 }
 
 Notepad.Open = function(filepath) {
     console.log("Notepad.Open")
     
-    let $tab = GetTabFor(filepath)
+    let $tab = GetTabFor(filepath) || CreateTabFor(filepath)
     
-    if ($tab !== null) {
-        console.log("HAS THAT TAB");
-    } else {
-        console.log("NOT HAS THAT TAB")
-        CreateTabFor(filepath)
-    }
-
-    // fs.ReadFile(filepath, function(text) {
-    //     console.log("this is the text:", text)
-    //     Notepad.currentFile = filepath
-    //     $('#notepad-textarea').val(text)
-    // })
+    ActivateTab($tab)
 }
 
 Notepad.Save = function() {
-    console.log("Notepad.Save")
-    // if (Notepad.currentFile !== null) {
-    //     let text = $('#notepad-textarea').val() 
-    //     console.log("Tet=xt: ", text)
-    //     fs.OverwriteFile(Notepad.currentFile, text, function() {
-    //         console.log("Successfull save!")
-    //     })
-    // }
+    if (ActiveTab.path !== null) {
+        console.log("TODO: SAVE")
+        const data = JSON.stringify(Notepad.Quill.getContents())
+        console.log(data)
+        fs.OverwriteFile(ActiveTab.path, data, function() {
+            console.log("Successfull save!")
+        })
+    }
 }
 
 export {Notepad}

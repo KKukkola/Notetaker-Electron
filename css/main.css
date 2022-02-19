@@ -254,7 +254,7 @@ body {
   width: -moz-fit-content;
   width: fit-content;
   height: auto;
-  padding: 5px 5px 5px 10px;
+  padding: 5px 5px 5px 5px;
   text-align: center;
   cursor: pointer;
   -webkit-user-select: none;
@@ -262,12 +262,22 @@ body {
       -ms-user-select: none;
           user-select: none;
   white-space: nowrap;
+  margin-right: 1px;
+  background: #ccc;
 }
 
 .tab-div span {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+}
+
+.tab-div:hover .close-tab {
+  color: #4d4d4d;
+}
+
+.tab-div .close-tab {
+  color: transparent;
 }
 
 .tab-div .close-tab:hover {
@@ -280,6 +290,14 @@ body {
   padding: 2px 4px;
 }
 
+.tab-div.tab-div-active {
+  background: aliceblue;
+}
+
+.tab-div.tab-div-active .close-tab {
+  color: #4d4d4d;
+}
+
 #notepad {
   position: relative;
 }
@@ -290,6 +308,7 @@ body {
   display: flex;
   -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
+  background: #dddddd;
 }
 
 #notepad #notepad-bottom {

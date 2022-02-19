@@ -2,17 +2,26 @@
 .tab-div {
     width: fit-content;
     height: auto;
-    padding: 5px 5px 5px 10px;
+    padding: 5px 5px 5px 5px;
     text-align: center;
     cursor: pointer;
     user-select:none;
     white-space:nowrap;
-
+    margin-right:1px;
+    background: #ccc;
     span {
         width: fit-content;
     }
 
+    &:hover {
+       .close-tab {
+           color: rgb(77, 77, 77);
+       } 
+    }
+
     .close-tab {
+        // color: rgb(153, 153, 153);
+        color: transparent;
         &:hover {
             background: rgba(0, 0, 0, 0.1);
             border-radius: 4px;
@@ -23,6 +32,14 @@
         font-size: small;
         padding: 2px 4px;
     }
+
+}
+
+.tab-div.tab-div-active {
+    background: aliceblue;
+    .close-tab {
+        color: rgb(77,77,77);
+    }
 }
 
 #notepad {
@@ -31,6 +48,7 @@
     #notepad-top {
         display: flex;
         flex-wrap: nowrap;
+        background: #dddddd
     }
 
     #notepad-bottom {
