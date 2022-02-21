@@ -311,17 +311,22 @@ body {
   background: #dddddd;
 }
 
-#notepad #notepad-bottom {
+#notepad .notepad-body {
   position: relative;
+  display: none;
   padding-top: 2em;
 }
 
-#editorcontainer {
+#notepad .notepad-body.active {
+  display: block;
+}
+
+.quill-editor-container {
   overflow-y: auto;
   border: 1px solid #ccc;
 }
 
-#editor {
+.quill-editor {
   min-height: 100%;
   height: auto;
 }

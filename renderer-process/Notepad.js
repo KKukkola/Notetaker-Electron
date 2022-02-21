@@ -3,11 +3,37 @@ let Delta = Quill.import('delta');
 
 let Notepad = new Object()
 
+let $notepad = $('#notepad')
 let $tabsContainer = $('#notepad-top')
+
+let Tabs = {}
+Tabs.allTabs = {} // [path]
+Tabs.cTab = {
+    $e: null,
+    $body: null,
+    path: null,
+    Quill: null,
+}
 
 let ActiveTab = new Object();
 ActiveTab.path = null;
 ActiveTab.element = null;
+
+function RemoveTab(filepath) {
+    console.log(Tabs.allTabs, filepath)
+    let tabObj = Tabs.allTabs[filepath]
+    if (tabObj == null) { console.error('RemoveTab() null tab'); return; }
+    tabObj.$e.remove()
+    tabObj.$body.remove()
+    delete Tabs.allTabs[filepath]
+
+    // if there are no tabs open
+    let numTabs = Object.keys(Tabs.allTabs).length
+    if (numTabs === 0) {
+        console.log("THERE ARE NO TABS OPEN")
+        //$('#notepad-bottom').css('display', 'none')
+    }
+}
 
 function CreateTabFor(filepath) {
     let $clone = $($("#template-tab-div").html())
@@ -18,7 +44,8 @@ function CreateTabFor(filepath) {
 
     $clone.on('click', function() {
         console.log('tab-clicked!')
-        if (ActiveTab.path !== $clone.data('filepath')) {
+        // if this is not the active tab
+        if (Tabs.cTab.path !== $clone.data('filepath')) {
             ActivateTab($clone)
         }
     })
@@ -26,8 +53,9 @@ function CreateTabFor(filepath) {
     $clone.find('.close-tab').first().on('click', function(event) {
         event.stopPropagation();
         let index = $clone.index();
+        let path = $clone.data('filepath')
         // Activate the next tab (either +1 or -1 to the index) if active
-        if (ActiveTab.path == $clone.data('filepath')) { 
+        if (Tabs.cTab.path == path) { 
             console.log("WAS ACTIVE")
             let $nextTab = $tabsContainer.children().eq(index+1)
             if ($nextTab.length == 0) {
@@ -40,33 +68,58 @@ function CreateTabFor(filepath) {
         } else {
             console.log("NOT ACTIVE")
         }
-        $clone.remove()
+        RemoveTab(path)
     })
+
+    // Creating the text-editor portion
+    let $body = $($("#template-notepad-body").html())
+    $body.appendTo($notepad)
+    let quill = NewQuill($body.find('.quill-editor').get(0))
+    
+    // Set Size
+    let $editorcontainer = $body.find('.quill-editor-container')
+    $editorcontainer.height($notepad.height()-90)
+
+    Tabs.allTabs[filepath] = {
+        path: filepath,
+        $e: $clone,
+        $body: $body,
+        Quill: quill,
+    }
+
+    // Fill the info
+    fs.ReadFile(filepath, function(text) {
+        // quill.setText('here is the test text')
+        quill.setContents(JSON.parse(text))
+    })
+    
+    console.log(Tabs)
 
     return $clone;
 }
 
 function ActivateTab($tab) {
-    if ($tab.data('filepath') == ActiveTab.path) {
+    if ($tab.data('filepath') == Tabs.cTab.path) {
         console.log("issue? - activated tab is the activePath, returining")
         return;
     }
 
-    if (ActiveTab.element !== null) {
-        ActiveTab.element.removeClass('tab-div-active')
+    // Deactivate last tab
+    if (Tabs.cTab.$e !== null) {
+        Tabs.cTab.$e.removeClass('tab-div-active')
+        Tabs.cTab.$body.removeClass('active')
     }
 
-    ActiveTab.path = $tab.data('filepath')
-    ActiveTab.element = $tab
-    ActiveTab.element.addClass('tab-div-active')
+    // Activate this one
+    Tabs.cTab = Tabs.allTabs[$tab.data('filepath')]
+    Tabs.cTab.$e.addClass('tab-div-active')
+    Tabs.cTab.$body.find('.quill-editor-container').height($notepad.height()-90)
+    Tabs.cTab.$body.addClass('active')
 
-    fs.ReadFile(ActiveTab.path, function(text) {
-        Notepad.Quill.setContents(JSON.parse(text))
-    })
 }
 
-function StartQuill() {
-    Notepad.Quill = new Quill("#editor",{
+function NewQuill(element) {
+    return new Quill(element,{
         modules: {
           toolbar: [
             ['bold', 'italic', 'underline', {
@@ -84,22 +137,10 @@ function StartQuill() {
             scrollingContainer: "#editorcontainer",
             theme: "snow"
     });
-
-    // let change = new Delta();
-    // Notepad.Quill.on('text-change', function(delta) {
-    //     change = change.compose(delta)
-    // })
-
-    // Watch Size
-    let $notepad = $('#notepad')
-    let $editorcontainer = $('#editorcontainer')
-    $editorcontainer.height($notepad.height()-90)
-    window.addEventListener('resize', function(event) {
-        $editorcontainer.height($notepad.height()-90)
-    }, true);
 }
 
 function GetTabFor(filepath) {
+    // TODO: UPDATE
     let $tab = null;
     $tabsContainer.find('.tab-div').each(function(index) {
         let $e = $(this)
@@ -111,7 +152,16 @@ function GetTabFor(filepath) {
 }
 
 Notepad.Refresh = () => {
-    StartQuill()
+    // let change = new Delta();
+    // Notepad.Quill.on('text-change', function(delta) {
+    //     change = change.compose(delta)
+    // })
+    function resizewindow(e) {
+        if (Tabs.cTab.path === null) { console.log('none to resize'); return; }
+        Tabs.cTab.$body.find('.quill-editor-container').height($notepad.height()-90)
+        // $editorcontainer.height($notepad.height()-90)
+    }
+    window.addEventListener('resize', resizewindow, true)
 }
 
 Notepad.Open = function(filepath) {
@@ -123,14 +173,14 @@ Notepad.Open = function(filepath) {
 }
 
 Notepad.Save = function() {
-    if (ActiveTab.path !== null) {
-        console.log("TODO: SAVE")
-        const data = JSON.stringify(Notepad.Quill.getContents())
-        console.log(data)
-        fs.OverwriteFile(ActiveTab.path, data, function() {
-            console.log("Successfull save!")
-        })
-    }
+    if (Tabs.cTab.path == null) { return; }
+
+    console.log("TODO: SAVE")
+    
+    const data = JSON.stringify(Tabs.cTab.Quill.getContents())
+    fs.OverwriteFile(Tabs.cTab.path, data, function() {
+        console.log("*Save Successfull")
+    })
 }
 
 export {Notepad}
