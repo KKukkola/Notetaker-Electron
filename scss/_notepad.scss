@@ -56,6 +56,7 @@
         display: none;
         padding-top: $editor-top-margin;
     }
+
     .notepad-body.active {
         display: block;
     }
@@ -65,6 +66,7 @@
 .quill-editor-container {
     // height: $notepad-base-height;
     overflow-y: auto;
+    overflow-x: auto;
     // margin-top: $editor-top-margin;
     border: 1px solid #ccc;
 }

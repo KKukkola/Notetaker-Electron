@@ -323,6 +323,7 @@ body {
 
 .quill-editor-container {
   overflow-y: auto;
+  overflow-x: auto;
   border: 1px solid #ccc;
 }
 

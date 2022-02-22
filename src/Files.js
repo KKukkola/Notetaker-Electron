@@ -47,7 +47,7 @@ function TryCreateNote(filePath, func) {
     fs.access(filePath, fs.constants.F_OK, (err) => {
         // THE FILE DOES NOT EXIST, create it
         if (err) { 
-            fs.writeFile(filePath, `{"ops":[{"insert":"Hello World\n"}]}`, func)
+            fs.writeFile(filePath, `{"ops":[{"insert":"Hello World\\n"}]}`, func)
         
         // THE FILE EXISTS, add to its number
         } else { 
@@ -91,10 +91,10 @@ class Files {
     NewNote = (filePath, func) => {
         fs.access(filePath, (err) => {
             if (err) {
-                fs.writeFile(filePath, `{"ops":[{"insert":"Hello World\n"}]}`, func)
+                fs.writeFile(filePath, `{"ops":[{"insert":"Hello World\\n"}]}`, func)
             } else {
                 let newNotePath = GetNextFilePath(filePath)
-                fs.writeFile(newNotePath, `{"ops":[{"insert":"Hello World\n"}]}`, func)
+                fs.writeFile(newNotePath, `{"ops":[{"insert":"Hello World\\n"}]}`, func)
             }
         })
     }
