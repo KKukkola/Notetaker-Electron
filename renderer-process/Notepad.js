@@ -1,10 +1,11 @@
-
 let Delta = Quill.import('delta');
 
 let Notepad = new Object()
 
 let $notepad = $('#notepad')
 let $tabsContainer = $('#notepad-top')
+
+/////////////////////////////////
 
 let Tabs = {
     allTabs: {},
@@ -20,7 +21,7 @@ let Tabs = {
 
     NewTabFor: function(filepath) {
         let tabObj = new Tab(filepath)
-        tabObj.$e.on('click', (event) => { TabClicked(event, tabObj.$e) })
+        tabObj.$e.on('click', (event) => { TabClicked(event, tabObj) })
         tabObj.$e.find('.close-tab').first().on('click', (event) => { TabCloseClicked(event, tabObj)})
         this.allTabs[filepath] = tabObj
         return tabObj;
@@ -35,9 +36,17 @@ let Tabs = {
         delete Tabs.allTabs[tabObj.path]
     },
 
-    SetActive: function() {
-
-    }
+    SetActive: function(tabObj) {
+        if (tabObj == this.cTab) {
+            console.log("activated tab is already activated")
+            return;
+        }
+        if (this.cTab !== null) {
+            this.cTab.SetActive(false)
+        }
+        this.cTab = tabObj
+        this.cTab.SetActive(true)
+    },
 }
 
 /////////////////////////////////
@@ -75,6 +84,17 @@ class Tab {
         this.Quill = quill;
     }
 
+    SetActive(v) {
+        if (v == false) {
+            this.$e.removeClass('tab-div-active')
+            this.$body.removeClass('active')
+        } else {
+            this.$e.addClass('tab-div-active')
+            this.$body.find('.quill-editor-container').height($notepad.height()-90)
+            this.$body.addClass('active')
+        }
+    }
+
     Destroy() {
         this.$e.remove();
         this.$body.remove();
@@ -84,10 +104,10 @@ class Tab {
 ////////////////////////////////////
 
 // Tab Clicked
-function TabClicked(event, $tab) {
+function TabClicked(event, tabObj) {
     // if this is not the active tab
-    if (Tabs.cTab.path !== $tab.data('filepath')) {
-        ActivateTab($tab)
+    if (Tabs.cTab != tabObj) {
+        Tabs.SetActive(tabObj)
     }
 }
 
@@ -103,7 +123,8 @@ function TabCloseClicked(event, tabObj) {
             $nextTab = $tabsContainer.children().eq(index-1)
         }
         if ($nextTab.length > 0) {
-            ActivateTab($nextTab)
+            let tabObj = Tabs.FindFor($nextTab.data('filepath'))
+            Tabs.SetActive(tabObj)
         } else {
 
         }
@@ -136,39 +157,21 @@ function NewQuill(element) {
     });
 }
 
-function ActivateTab($tab) {
-    let tabObj = Tabs.allTabs[$tab.data('filepath')]
-    if (tabObj == Tabs.cTab) {
-        console.log("issue? - activated tab is the activePath, returining")
-        return;
-    }
-
-    // Deactivate last tab
-    if (Tabs.cTab !== null) {
-        Tabs.cTab.$e.removeClass('tab-div-active')
-        Tabs.cTab.$body.removeClass('active')
-    }
-
-    // Activate this one
-    Tabs.cTab = Tabs.allTabs[$tab.data('filepath')]
-    Tabs.cTab.$e.addClass('tab-div-active')
-    Tabs.cTab.$body.find('.quill-editor-container').height($notepad.height()-90)
-    Tabs.cTab.$body.addClass('active')
-
-}
-
 ///////////////////////////////////////
 
 Notepad.Refresh = () => {
-    // let change = new Delta();
-    // Notepad.Quill.on('text-change', function(delta) {
-    //     change = change.compose(delta)
-    // })
-    function resizewindow(e) {
+    function resizewindow(cr) {
         if (Tabs.cTab == null) { console.log('none to resize'); return; }
-        Tabs.cTab.$body.find('.quill-editor-container').height($notepad.height()-90)
+        let $container = Tabs.cTab.$body.find('.quill-editor-container')
+        $container.height(cr.height-90)
+        // $container.width(cr.width-5)
     }
-    window.addEventListener('resize', resizewindow, true)
+    var ro = new ResizeObserver( entries => {
+        for (let entry of entries) {
+            resizewindow(entry.contentRect)
+        }
+    });
+    ro.observe($notepad.get(0))
 }
 
 Notepad.Open = function(filepath) {
@@ -176,7 +179,7 @@ Notepad.Open = function(filepath) {
     
     let tabObj = Tabs.FindFor(filepath) || Tabs.NewTabFor(filepath)
     
-    ActivateTab(tabObj.$e)
+    Tabs.SetActive(tabObj)
 }
 
 Notepad.Save = function() {
