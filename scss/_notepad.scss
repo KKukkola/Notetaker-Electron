@@ -52,6 +52,7 @@
     }
 
     .notepad-body {
+        height: calc(100% - 4em);
         position: relative;
         display: none;
         padding-top: $editor-top-margin;
@@ -64,7 +65,7 @@
 
 
 .quill-editor-container {
-    // height: $notepad-base-height;
+    height: 100%;
     overflow-y: auto;
     overflow-x: auto;
     // margin-top: $editor-top-margin;

@@ -2,13 +2,14 @@ body {
   margin: 0;
   height: 100%;
   background-color: #505c45;
+  overflow: hidden;
   display: -ms-grid;
   display: grid;
       grid-template-areas: "top top" "filebrowser notepad" "timeline timeline";
-  -ms-grid-columns: 200px 1fr;
-      grid-template-columns: 200px 1fr;
-  -ms-grid-rows: 10px 1fr 135px 5px;
-      grid-template-rows: 10px 1fr 135px 5px;
+  -ms-grid-columns: 200px minmax(0, 1fr);
+      grid-template-columns: 200px minmax(0, 1fr);
+  -ms-grid-rows: 10px minmax(0, 1fr) 135px 5px;
+      grid-template-rows: 10px minmax(0, 1fr) 135px 5px;
 }
 
 #timeline {
@@ -312,6 +313,7 @@ body {
 }
 
 #notepad .notepad-body {
+  height: calc(100% - 4em);
   position: relative;
   display: none;
   padding-top: 2em;
@@ -322,6 +324,7 @@ body {
 }
 
 .quill-editor-container {
+  height: 100%;
   overflow-y: auto;
   overflow-x: auto;
   border: 1px solid #ccc;

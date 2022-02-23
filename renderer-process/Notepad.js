@@ -75,8 +75,6 @@ class Tab {
         // Creating the Body
         let $body = $($("#template-notepad-body").html())
         let quill = NewQuill($body.find('.quill-editor').get(0))
-        let $editorcontainer = $body.find('.quill-editor-container')
-        $editorcontainer.height($notepad.height()-90)
         
         // Fill with text
         fs.ReadFile(filepath, function(text) {
@@ -98,7 +96,6 @@ class Tab {
             this.$body.removeClass('active')
         } else {
             this.$e.addClass('tab-div-active')
-            this.$body.find('.quill-editor-container').height($notepad.height()-90)
             this.$body.addClass('active')
         }
     }
@@ -172,18 +169,18 @@ function NewQuill(element) {
 ///////////////////////////////////////
 
 Notepad.Refresh = () => {
-    function resizewindow(cr) {
-        if (Tabs.cTab == null) { console.log('none to resize'); return; }
-        let $container = Tabs.cTab.$body.find('.quill-editor-container')
-        $container.height(cr.height-90)
-        // $container.width(cr.width-5)
-    }
-    var ro = new ResizeObserver( entries => {
-        for (let entry of entries) {
-            resizewindow(entry.contentRect)
-        }
-    });
-    ro.observe($notepad.get(0))
+    // function resizewindow(cr) {
+    //     if (Tabs.cTab == null) { console.log('none to resize'); return; }
+    //     let $container = Tabs.cTab.$body.find('.quill-editor-container')
+    //     // $container.height(cr.height-NOTEPAD_HEIGHT_OFFSET)
+    //     // $container.width(cr.width-5)
+    // }
+    // var ro = new ResizeObserver( entries => {
+    //     for (let entry of entries) {
+    //         resizewindow(entry.contentRect)
+    //     }
+    // });
+    // ro.observe($notepad.get(0))
 }
 
 Notepad.Open = function(filepath) {
