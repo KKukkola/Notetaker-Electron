@@ -46,6 +46,11 @@ let Tabs = {
         if (this.cTab !== null) {
             this.cTab.SetActive(false)
         }
+        if (tabObj == null) { // if we are closing the last tab
+            this.cTab = null
+            FileBrowser.SetActive(null)
+            return
+        }
         this.cTab = tabObj
         this.cTab.SetActive(true)
         FileBrowser.SetActive(this.cTab.path)
@@ -126,8 +131,12 @@ function TabCloseClicked(event, tabObj) {
             $nextTab = $tabsContainer.children().eq(index-1)
         }
         if ($nextTab.length > 0) {
-            let tabObj = Tabs.FindFor($nextTab.data('filepath'))
-            Tabs.SetActive(tabObj)
+            let nextTabObj = Tabs.FindFor($nextTab.data('filepath'))
+            if (nextTabObj == tabObj) {
+                Tabs.SetActive(null)
+            } else {
+                Tabs.SetActive(nextTabObj)
+            }
         } else {
 
         }

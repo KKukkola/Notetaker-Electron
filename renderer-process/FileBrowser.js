@@ -16,7 +16,7 @@ let FBItems = {
   activeItem: null,
 
   FindFor: function(path) {
-    return this.allItems[path]
+    return this.allItems[path] || null
   },
 
   NewItem: function(name, path, $parent, padding) {
@@ -47,7 +47,9 @@ let FBItems = {
       this.activeItem.SetActive(false)
     }
     this.activeItem = item;
-    item.SetActive(true)
+    if (item != null) {
+      item.SetActive(true)
+    }
   },
 }
 
