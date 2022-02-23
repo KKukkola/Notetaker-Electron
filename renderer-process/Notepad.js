@@ -168,26 +168,12 @@ function NewQuill(element) {
 
 ///////////////////////////////////////
 
-Notepad.Refresh = () => {
-    // function resizewindow(cr) {
-    //     if (Tabs.cTab == null) { console.log('none to resize'); return; }
-    //     let $container = Tabs.cTab.$body.find('.quill-editor-container')
-    //     // $container.height(cr.height-NOTEPAD_HEIGHT_OFFSET)
-    //     // $container.width(cr.width-5)
-    // }
-    // var ro = new ResizeObserver( entries => {
-    //     for (let entry of entries) {
-    //         resizewindow(entry.contentRect)
-    //     }
-    // });
-    // ro.observe($notepad.get(0))
+Notepad.Refresh = () => { 
+    // TODO: refresh notepad
 }
 
 Notepad.Open = function(filepath) {
-    console.log("Notepad.Open")
-    
     let tabObj = Tabs.FindFor(filepath) || Tabs.NewTabFor(filepath)
-    
     Tabs.SetActive(tabObj)
 }
 

@@ -7,6 +7,7 @@ let FileBrowser = new Object();
 let closedFolders = new Object();
 
 const PADDING_INCREASE = 10;
+
 const folderOpenIcon = "fas fa-folder-open"
 const folderClosedIcon = "fas fa-folder"
 const noteIcon = "far fa-file-alt"
@@ -37,9 +38,12 @@ let FBItems = {
 
   SaveOpened: function() {
     closedFolders = new Object();
-    for (let item in this.allItems) {
+
+    for (let path in this.allItems) {
+      let item = this.allItems[path]
       closedFolders[item.path] = item.isClosed;
     }
+    console.log(closedFolders)
   },
 
   SetActiveItem: function(item) {
@@ -84,7 +88,7 @@ class FBItem {
     $title.html(name)
   
     // Close the folder if so
-    if (isClosed) {
+    if (isClosed == true) {
       $item.find('section').first().slideUp(1)
     }
   
@@ -235,14 +239,6 @@ function ItemDrag(e1, item) {
 
   window.addEventListener('mousemove', movehandler)
   window.addEventListener('mouseup', uphandler)
-}
-
-function CreateItem(name, path, $parent, depth) {
-  
-  // add click and drag events to the clone
-  $button.mousedown((e1) => {
-        
-  })
 }
 
 function BuildFolder(path) {
