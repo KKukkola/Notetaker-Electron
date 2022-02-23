@@ -1,210 +1,278 @@
 // 1-27-2022
 
 import {ContextMenu} from "./ContextMenu.js"
-import { Notepad } from "./Notepad.js";
+import {Notepad} from "./Notepad.js";
 
 let FileBrowser = new Object();
 let closedFolders = new Object();
 
+const PADDING_INCREASE = 10;
 const folderOpenIcon = "fas fa-folder-open"
 const folderClosedIcon = "fas fa-folder"
 const noteIcon = "far fa-file-alt"
 
-function SaveOpened() {
-  closedFolders = new Object();
-  $("#filebrowser").find('.fb-item').each((index, element) => {
-    let $e = $(element)
-    if ($e.data('isFile') == "false") {
-      closedFolders[$e.data('filepath')] = $e.data('isUp')
+let FBItems = {
+  allItems: {},
+  activeItem: null,
+
+  FindFor: function(path) {
+    return this.allItems[path]
+  },
+
+  NewItem: function(name, path, $parent, padding) {
+    let item = new FBItem(name, path, $parent, padding)
+
+    item.$button.mousedown(event => {
+      switch(event.which) {
+        case 1: ItemLeftClick(event, item); break;
+        case 3: ItemRightClick(event, item); break;
+      }
+    })
+
+    item.$button.mousedown(event => { ItemDrag(event, item) })
+
+    this.allItems[item.path] = item;
+    return item;
+  },
+
+  SaveOpened: function() {
+    closedFolders = new Object();
+    for (let item in this.allItems) {
+      closedFolders[item.path] = item.isClosed;
     }
-  })
+  },
+
+  SetActiveItem: function(item) {
+    if (this.activeItem != null) {
+      this.activeItem.SetActive(false)
+    }
+    this.activeItem = item;
+    item.SetActive(true)
+  },
 }
 
-function ItemLeftClick(event, $item) {
-  if ($item.data('isFile') == "true") {
-    Notepad.Open($item.data('filepath'))
-  } else {
-    if ($item.data('isUp') == true) {
-      $item.find('section').first().slideDown(150)
-      $item.data('isUp', false)
-      $item.find('i').first().attr('class', folderOpenIcon)
+//////////////////////////////////////////
+
+class FBItem {
+  $e = null;
+  $section = null;
+  $icon = null;
+  $button = null;
+  path = null;
+  isClosed = null;
+  isFolder = null;
+  isFile = null;
+  padding = null;
+  name = null;
+
+  constructor(name, path, $parent, padding) {
+    let $item = $($("#template-fb-item").html())
+    let $title = $item.find(".fb-item-title")
+    let $button = $item.find(".fb-item-btn")
+    let $section = $item.find('section').first()
+    let $icon = $item.find('i').first()
+    
+    $button.css('padding-left', padding + 'px')
+    // let nextPadding = parseInt( 25 + (depth * 10))
+    // $button.css("padding-left", nextPadding.toString() + "px")
+
+    let isFile = name.includes('.');
+    let isClosed = closedFolders[path];
+
+    $title.html(name)
+  
+    // Close the folder if so
+    if (isClosed) {
+      $item.find('section').first().slideUp(1)
+    }
+  
+    // Edit the icon
+    if (isFile == true) {
+      $icon.attr('class', noteIcon)
+    } else { 
+      $icon.attr('class', (isClosed ? folderClosedIcon : folderOpenIcon))
+    }
+
+    $item.data('filepath', path)
+    $item.data('isFile', isFile)
+
+    $item.appendTo($parent)
+
+    this.$e = $item;
+    this.$section = $section;
+    this.$icon = $icon;
+    this.$button = $button;
+    this.path = path;
+    this.isClosed = isClosed
+    this.isFolder = !isFile;
+    this.isFile = isFile;
+    this.padding = padding;
+    this.name = name;
+  }
+
+  GetParentPath() {
+    return this.path.slice(0, this.path.lastIndexOf('\\'))
+  }
+
+  SetActive(v) {
+    if (v) {
+      this.$button.addClass('isActive')
     } else {
-      $item.find('section').first().slideUp(150)
-      $item.data('isUp', true)
-      $item.find('i').first().attr('class', folderClosedIcon)
+      this.$button.removeClass('isActive')
+    }
+  }
+
+  ToggleFolderClosed() {
+    if (this.isClosed) {
+      this.$section.slideDown(150)
+      this.isClosed = false
+      this.$icon.attr('class', folderOpenIcon)
+    } else {
+      this.$section.slideUp(150)
+      this.isClosed = true
+      this.$icon.attr('class', folderClosedIcon)
     }
   }
 }
 
-function ItemRightClick(event, $item) {
-  
-  ContextMenu.show(event.pageX, event.pageY, [])
+//////////////////////////////////////////
 
-  if ($item.data('filepath') != fs.localFilesPath) {
+function ItemLeftClick(event, item) {
+  FBItems.SetActiveItem(item)
+  return item.isFile ? Notepad.Open(item.path) : item.ToggleFolderClosed()
+}
+
+function ItemRightClick(event, item) {
+  ContextMenu.show(event.pageX, event.pageY, [])
+  if (item.path != fs.localFilesPath) {
     ContextMenu.add([
-      ["Delete", () => {
-        let filePath = $item.data('filepath')
-        fs.DeleteFile(filePath, (err) => {
-          if (err) {console.log("ERR:", err)}
-          ClearFileBrowser()
-          FillFileBrowser()
-        })
-      }],
-      ["Rename", () => {
-        let filePth = $item.data('filepath')
-        console.log("TODO: RENAME")
-      }]
+      ["Delete", () => {DeleteItem(item)}],
+      ["Rename", () => {RenameItem(Item)}],
     ]);
   }
-  
-  if ($item.data('isFile') == "false") {
+  if (item.isFolder) {
     ContextMenu.add([
-      ["New Note", () => {
-        let notePath = $item.data('filepath') + "\\new note.txt" 
-        fs.NewNote(notePath, (err) => { 
-          if (err) {console.log("ERR:", err)}
-          $item.data('isUp', false)
-          ClearFileBrowser()
-          FillFileBrowser()
-        })
-      }],
-      ["New Folder", () => {
-        let folderPath = $item.data('filepath') + "\\new folder"
-        fs.NewFolder(folderPath, (err) => {
-          if (err) console.log("ERR: ", err)
-          $item.data('isUp', false)
-          ClearFileBrowser()
-          FillFileBrowser()
-        })
-      }]
+      ["New Note", () => {NewNote(item)}],
+      ["New Folder", () => {NewFolder(item)}]
     ])
   }
 }
 
-function CreateItem(name, path, $parent, depth) {
-  let $clone = $($("#template-fb-item").html())
-  let $title = $clone.find(".fb-item-title")
-  let $button = $clone.find(".fb-item-btn")
-  let $icon = $clone.find('i').first()
-
-  // edit the clone
-  $title.html(name)
-  let nextPadding = parseInt( 25 + (depth * 10))
-  $button.css("padding-left", nextPadding.toString() + "px")
-  $clone.data('filepath', `${path}\\${name}`)
-  $clone.data('isFile', ($title.html().includes('.')).toString() )
-  $clone.data('isUp', false)
-
-  // add click events to the clone
-  $button.mousedown((event) => {
-    switch(event.which) {
-      case 1: ItemLeftClick(event, $clone); break;
-      case 3: ItemRightClick(event, $clone); break;
-    }
+function DeleteItem(item) {
+  fs.DeleteFile(item.path, (err) => {
+    if (err) {console.log("ERR:", err)}
+    FileBrowser.Refresh()
   })
-
-  // add click and drag events to the clone
-  $button.mousedown((e1) => {
-        let isDragging = false;
-        let $dragclone = null
-        let offsetX = 10;
-        let offsetY = 10;
-
-        function movehandler(e2) {
-            if (isDragging) {
-                $dragclone.css({top: e2.pageY + offsetY, left: e2.pageX + offsetX})
-            } else {
-                const diffX = Math.abs(e1.pageX - e2.pageX)
-                const diffY = Math.abs(e1.pageY - e2.pageY)
-                if (diffX > 2 || diffY > 2) {
-                    isDragging = true;
-                    $dragclone = $($('#template-fb-item-dragging').html())
-                    $dragclone.css({top: e2.pageY + offsetY, left: e2.pageX + offsetX})
-                    $dragclone.text(name)
-                    $dragclone.css('position', 'absolute') 
-                    $dragclone.appendTo($('body'))
-                }
-            }
-        }
-      
-        function uphandler(e2) {
-            if (isDragging) {
-                $dragclone.remove()
-                let $t = $(document.elementFromPoint(e2.pageX, e2.pageY)).parents('.fb-item').first()
-                if ($t.data('isFile') === "false") {
-                  // DROPEED OVER A FOLDER
-                  fs.Move($clone.data('filepath'), $t.data('filepath'), (err) => {
-                      if (err) {
-                          console.error(err)
-                      } else {
-                          ClearFileBrowser()
-                          FillFileBrowser()
-                      }
-                  })
-                } else {
-                  // DSROPEPD OVER A FILE
-                }
-            }
-            window.removeEventListener('mouseup', uphandler)
-            window.removeEventListener('mousemove', movehandler)
-        }
-
-        window.addEventListener('mousemove', movehandler)
-        window.addEventListener('mouseup', uphandler)
-  })
-  
-  // edit the content
-  let itemIsClosed = closedFolders[$clone.data('filepath')]
-  let itemIsFile = $clone.data('isFile')
-
-  // make folder open or closed
-  if (itemIsClosed == true) {
-    $clone.find('section').first().slideUp(1)
-    $clone.data('isUp', true)
-  }
-
-  // edit the icon
-  if (itemIsFile == "false") { // is a folder
-    if (itemIsClosed == true) {
-      $icon.attr('class', folderClosedIcon)
-    } else {
-      $icon.attr('class', folderOpenIcon)
-    }
-  } else { // is a file
-    $clone.find('i').first().attr('class', noteIcon)
-  }
-  $icon.css('color', '#939393')
-
-  $clone.appendTo($parent)
-  return $clone
 }
 
-function BuildDirectory(dirPath, $parent, depth) {
-  fs.ReadDirOrdered(dirPath).forEach(fileName => {
-    let $item = CreateItem(fileName, dirPath, $parent, depth)
-    if ($item.data('isFile') == "false") {
-      let nextPath = dirPath + "\\" + fileName
-      let nextParent = $item.find("section")
-      BuildDirectory(nextPath, nextParent, depth + 1)
+function RenameItem(item) {
+  console.log("TODO: RENAME")
+}
+
+function NewNote(folderItem) {
+  let itemPath = folderItem.path + "\\new note.txt" 
+  fs.NewNote(itemPath, (err) => { 
+    if (err) {console.log("ERR:", err)}
+    folderItem.isClosed = false
+    FileBrowser.Refresh()
+  })
+}
+
+function NewFolder(folderItem) {
+  let itemPath = folderItem.path + "\\new folder"
+  fs.NewFolder(itemPath, (err) => {
+    if (err) console.log("ERR: ", err)
+    folderItem.isClosed = false
+    FileBrowser.Refresh()
+  })
+}
+
+//////////////////////////////////////////////////////
+
+function ItemDrag(e1, item) {
+  let isDragging = false;
+  let $dragclone = null
+  let offsetX = 10;
+  let offsetY = 10;
+
+  function movehandler(e2) {
+      if (isDragging) {
+          $dragclone.css({top: e2.pageY + offsetY, left: e2.pageX + offsetX})
+      } else {
+          const diffX = Math.abs(e1.pageX - e2.pageX)
+          const diffY = Math.abs(e1.pageY - e2.pageY)
+          if (diffX > 2 || diffY > 2) {
+              isDragging = true;
+              $dragclone = $($('#template-fb-item-dragging').html())
+              $dragclone.css({top: e2.pageY + offsetY, left: e2.pageX + offsetX})
+              $dragclone.text(item.name)
+              $dragclone.css('position', 'absolute') 
+              $dragclone.appendTo($('body'))
+          }
+      }
+  }
+
+  function uphandler(e2) {
+      if (isDragging) {
+          $dragclone.remove()
+          let $t = $(document.elementFromPoint(e2.pageX, e2.pageY)).parents('.fb-item').first()
+
+          if ($t.data('isFile') == false) {
+            // DROPEED OVER A FOLDER
+            fs.Move(item.path, $t.data('filepath'), (err) => {
+              if (err) { console.error("ERR:", err); return; }
+              FileBrowser.Refresh()
+            })
+          } else {
+            // DSROPEPD OVER A FILE
+          }
+      }
+      window.removeEventListener('mouseup', uphandler)
+      window.removeEventListener('mousemove', movehandler)
+  }
+
+  window.addEventListener('mousemove', movehandler)
+  window.addEventListener('mouseup', uphandler)
+}
+
+function CreateItem(name, path, $parent, depth) {
+  
+  // add click and drag events to the clone
+  $button.mousedown((e1) => {
+        
+  })
+}
+
+function BuildFolder(path) {
+  let parentItem = FBItems.allItems[path]
+  fs.ReadDirOrdered(path).forEach(fileName => {
+    let filePath = `${path}\\${fileName}`
+    let item = FBItems.NewItem(fileName, filePath, parentItem.$section, parentItem.padding + PADDING_INCREASE)
+    if (item.isFolder) {
+      BuildFolder(filePath)
     }
   })
 }
 
 function ClearFileBrowser() {
-  SaveOpened()
+  FBItems.SaveOpened()
   $('#local-notes').html('')
 }
 
 function FillFileBrowser() {
-    $('#filebrowser').html('')
-    let $localnotes = CreateItem("LOCAL NOTES", fs.localFilesPath, $('#filebrowser'))
-    $localnotes.data('filepath', fs.localFilesPath)
-    BuildDirectory(fs.localFilesPath, $localnotes.find('section'), 0)
+    $('#filebrowser').html('') // Hard Clear
+    FBItems.NewItem("LOCAL NOTES", fs.localFilesPath, $('#filebrowser'), 0)
+    BuildFolder(fs.localFilesPath);
 }
 
 FileBrowser.Refresh = function() {
     ClearFileBrowser()
     FillFileBrowser()
+}
+
+FileBrowser.SetActive = function(path) {
+  let item = FBItems.FindFor(path)
+  FBItems.SetActiveItem(item)
 }
 
 export {FileBrowser}

@@ -3,6 +3,10 @@
     background-color: #3a3a3a;
 }
 
+#filebrowser i {
+    color: #939393;
+}
+
 .fb-section {
     padding: .5em 0;
 }
@@ -24,16 +28,20 @@
 }
 
 .fb-item-btn {
+    cursor: pointer;
     width: 100%;
     background-color: transparent;
     border-style: none;
     display: flex;
     align-items: center;
-    padding: 1px 0px;
+    padding: 1.4px 0px;
     /* transition: all 0.1s ease; */
 }
 .fb-item-btn:hover {
     background-color: #464646;
+}
+.fb-item-btn.isActive {
+    background-color: #616161;
 }
 
 .fb-item-title {

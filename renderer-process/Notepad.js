@@ -1,5 +1,7 @@
 let Delta = Quill.import('delta');
 
+import {FileBrowser} from "./FileBrowser.js";
+
 let Notepad = new Object()
 
 let $notepad = $('#notepad')
@@ -46,6 +48,7 @@ let Tabs = {
         }
         this.cTab = tabObj
         this.cTab.SetActive(true)
+        FileBrowser.SetActive(this.cTab.path)
     },
 }
 
