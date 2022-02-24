@@ -6,10 +6,10 @@ body {
   display: -ms-grid;
   display: grid;
       grid-template-areas: "top top" "filebrowser notepad" "timeline timeline";
-  -ms-grid-columns: 200px minmax(0, 1fr);
-      grid-template-columns: 200px minmax(0, 1fr);
-  -ms-grid-rows: 10px minmax(0, 1fr) 135px 5px;
-      grid-template-rows: 10px minmax(0, 1fr) 135px 5px;
+  -ms-grid-columns: 170px minmax(0, 1fr);
+      grid-template-columns: 170px minmax(0, 1fr);
+  -ms-grid-rows: 0px minmax(0, 1fr) 135px 5px;
+      grid-template-rows: 0px minmax(0, 1fr) 135px 5px;
 }
 
 #timeline {
@@ -31,7 +31,7 @@ body {
   padding: 0px 0;
   border: 0px solid #333D3A;
   border-bottom-width: thin;
-  background: #4F5F5A;
+  background: #8cb;
   height: 26px;
 }
 
@@ -76,7 +76,7 @@ body {
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
   width: 100%;
-  background: #141A18;
+  background: #111;
   position: relative;
 }
 
@@ -244,10 +244,11 @@ body {
 
 .ql-toolbar.ql-snow {
   padding: 1px;
+  border-width: 1px 0px;
 }
 
-#editor.ql-container.ql-snow {
-  border: none;
+.ql-container.ql-snow {
+  border: 0px;
 }
 
 .tab-div {
@@ -327,11 +328,12 @@ body {
   height: 100%;
   overflow-y: auto;
   overflow-x: auto;
-  border: 1px solid #ccc;
+  border: 0px solid #ccc;
 }
 
 .quill-editor {
   min-height: 100%;
   height: auto;
+  border: 0px solid black;
 }
 /*# sourceMappingURL=main.css.map */

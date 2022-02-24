@@ -12,8 +12,8 @@ body {
         "filebrowser notepad"
         "timeline timeline";
 
-    grid-template-columns: 200px minmax(0,1fr);
-    grid-template-rows: 10px minmax(0, 1fr) $notepad-base-height 5px;
+    grid-template-columns: 170px minmax(0,1fr);
+    grid-template-rows: 0px minmax(0, 1fr) $notepad-base-height 5px;
 }
 
 @import "_timeline";

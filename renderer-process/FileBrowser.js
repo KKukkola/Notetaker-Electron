@@ -6,6 +6,9 @@ import {Notepad} from "./Notepad.js";
 let FileBrowser = new Object();
 let closedFolders = new Object();
 
+let $filebrowserbody = $('#fb-body')
+
+const BASE_PADDING = 15;
 const PADDING_INCREASE = 10;
 
 const folderOpenIcon = "fas fa-folder-open"
@@ -51,7 +54,7 @@ let FBItems = {
       this.activeItem.SetActive(false)
     }
     this.activeItem = item;
-    if (item != null) {
+    if (item != null && !item.isFolder) {
       item.SetActive(true)
     }
   },
@@ -79,8 +82,6 @@ class FBItem {
     let $icon = $item.find('i').first()
     
     $button.css('padding-left', padding + 'px')
-    // let nextPadding = parseInt( 25 + (depth * 10))
-    // $button.css("padding-left", nextPadding.toString() + "px")
 
     let isFile = name.includes('.');
     let isClosed = closedFolders[path];
@@ -258,8 +259,8 @@ function ClearFileBrowser() {
 }
 
 function FillFileBrowser() {
-    $('#filebrowser').html('') // Hard Clear
-    FBItems.NewItem("LOCAL NOTES", fs.localFilesPath, $('#filebrowser'), 0)
+    $filebrowserbody.html('') // Hard Clear
+    FBItems.NewItem("LOCAL NOTES", fs.localFilesPath, $filebrowserbody, BASE_PADDING)
     BuildFolder(fs.localFilesPath);
 }
 

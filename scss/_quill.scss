@@ -12,9 +12,10 @@
     right: 0;
     &.ql-snow {
         padding: 1px;
+        border-width: 1px 0px;
     }
 }
 
-#editor.ql-container.ql-snow {
-    border: none;
+.ql-container.ql-snow {
+    border: 0px;
 }
