@@ -169,7 +169,7 @@ function NewQuill(element) {
 ///////////////////////////////////////
 
 Notepad.Refresh = () => { 
-    // TODO: refresh notepad
+    // TODO: open last session notes
 }
 
 Notepad.Open = function(filepath) {
@@ -180,8 +180,6 @@ Notepad.Open = function(filepath) {
 Notepad.Save = function() {
     if (Tabs.cTab == null) { return; }
 
-    console.log("TODO: SAVE")
-    
     const data = JSON.stringify(Tabs.cTab.Quill.getContents())
     fs.OverwriteFile(Tabs.cTab.path, data, function() {
         console.log("*Save Successfull")

@@ -1,7 +1,7 @@
 body {
   margin: 0;
   height: 100%;
-  background-color: #505c45;
+  background-color: #3a3a3a;
   overflow: hidden;
   display: -ms-grid;
   display: grid;
@@ -87,45 +87,73 @@ body {
   background: #8F9F9A;
 }
 
-#timeline-n-container {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (1fr)[12];
-      grid-template-columns: repeat(12, 1fr);
-}
-
-#timeline-n-container input {
+/* Timeline New Event Modal */
+.tn-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
   width: 100%;
-}
-
-#timeline-n-container .tn-input-title {
-  width: 25%;
-}
-
-#timeline-n-container .tn-input-container {
-  margin: 0 5px;
   height: 100%;
-  width: 10%;
-  min-width: 50px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.tn-modal-content {
+  background-color: #fefefe;
+  margin: 20% auto 0 auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+#timeline-n-div {
+  background: transparent;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
 }
 
-#timeline-n-container .tn-input {
-  width: 10%;
+#timeline-n-div label {
+  display: block;
+  background: transparent;
+  grid-column: span 2;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.flex-gap {
-  margin: 0 5px;
+#timeline-n-div input {
+  border: 1px solid black;
+  grid-column: span 1;
+  text-align: center;
 }
 
-#tmei-start {
-  width: 40%;
+#timeline-n-div .tn-input-div {
+  border: 0px solid black;
+  width: 100%;
+  margin: 0px 3px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(0, 1fr))[2];
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+  -ms-grid-rows: (minmax(0, 1fr))[2];
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+#timeline-n-div .tn-input-div.title > input {
+  grid-column: span 2;
+}
+
+#timeline-n-div .tn-input-div.date {
+  -ms-grid-columns: (minmax(0, 1fr))[3];
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#timeline-n-div .tn-input-div.date > label {
+  grid-column: span 3;
 }
 
 /* Timeline Change Event Container */

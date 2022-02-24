@@ -65,29 +65,50 @@
       </div>
     </section>
 
-    <div id="timeline-new-event-modal" class="modal">
-      <div class="modal-content">
+    <div id="timeline-new-event-modal" class="tn-modal">
+      <div class="tn-modal-content">
         <span class="close">&times;</span>
         <form>
-          <div id='timeline-n-container'> 
 
+          <div id='timeline-n-div'> 
+            <div class='tn-input-div title'>
+              <label>Title</label>
+              <input type='text' class='span2'>
+            </div>
+            <div class="tn-input-div">
+              <label>Start</label>
+              <input type='text'>
+              <input type='text'>
+            </div>
+            <div class="tn-input-div">
+              <label>End</label>
+              <input type='text'>
+              <input type='text'>
+            </div>
+            <div class="tn-input-div date">
+              <label>Date</label>
+              <input type='text'>
+              <input type='text'>
+              <input type='text'>        
+            </div>
+          </div>
+          <button type="submit" id='tme-submit-btn'>Create</button>
+
+          <!-- <div id='timeline-n-container'> 
             <div class='tn-input-title tn-input-container'>
               <label>Title</label>
               <input type="text" id="tmei-title">
             </div>
-
             <div class='tn-input-container'>
               <label>Start</label>
               <div id="tc-starthour" contenteditable="true" class="tc-input"></div>
               <div id="tc-startmin" contenteditable="true" class="tc-input"></div>
             </div>
-            
           </div>
-          <button type="submit" id='tme-submit-btn'>Create</button>
+          <button type="submit" id='tme-submit-btn'>Create</button> -->
         </form>
       </div>
     </div>
-    
   </body>
 
   <!-- TEMPLATES -->
@@ -138,9 +159,10 @@
     import {Timeline} from "./renderer-process/Timeline.js"
     
     window.addEventListener("beforeunload", function(ev) {
-      console.log('TODO: what to do before unload')
+      console.log('TODO: before window close')
     })
 
+    // Hotkeys
     let keydowns = new Object();
     $(document).keydown(function(event) {
       keydowns[event.which] = true
@@ -151,13 +173,12 @@
     $(document).keyup(function(event) {
       keydowns[event.which] = false
     })
+    //
 
     $(function() {
-
       FileBrowser.Refresh()
       Notepad.Refresh()
       Timeline.Refresh()
-      
     })
     
   </script>

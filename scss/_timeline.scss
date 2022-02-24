@@ -58,45 +58,64 @@
     }
 }
 
-#timeline-n-container {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
+/* Timeline New Event Modal */
+
+.tn-modal {
+    display: none;
+    position: fixed;
+    z-index:1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.tn-modal-content {
+    background-color: #fefefe;
+    margin: 20% auto 0 auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+#timeline-n-div {
+    background: transparent;
+    display: flex;
+
+    label {
+        display: block;
+        background: transparent;
+        grid-column: span 2;
+        user-select: none;
+    }
 
     input {
+        border: 1px solid black;
+        grid-column: span 1;
+        text-align: center;
+    }
+
+    .tn-input-div {
+        border: 0px solid black;
         width: 100%;
+        margin: 0px 3px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+
+        &.title > input{
+            grid-column: span 2;
+        }
+        &.date {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            & > label {
+                grid-column: span 3;
+            }
+        }
     }
-
-    .tn-input-title {
-        width: 25%;
-    }
-
-    .tn-input-container {
-        margin: 0 5px;
-        height: 100%;
-        width: 10%;
-        min-width: 50px;
-        box-sizing: border-box;
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .tn-input {
-        width: 10%;
-    }
-
-    .tn-input-date {
-
-    }
-} 
-
-.flex-gap {
-    margin: 0 5px;
 }
-
-#tmei-start {
-    width: 40%;
-}
-
 
 /* Timeline Change Event Container */
 

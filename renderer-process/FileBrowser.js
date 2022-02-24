@@ -154,7 +154,7 @@ function ItemRightClick(event, item) {
   if (item.path != fs.localFilesPath) {
     ContextMenu.add([
       ["Delete", () => {DeleteItem(item)}],
-      ["Rename", () => {RenameItem(Item)}],
+      ["Rename", () => {RenameItem(item)}],
     ]);
   }
   if (item.isFolder) {
