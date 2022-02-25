@@ -8,10 +8,12 @@
 }
 
 #timeline-top-buttons {
+    // display: grid;
+    // grid-template-columns: repeat(12, 1fr);
     display: flex;
     padding: 0px 0;
     border: 0px solid #333D3A;
-    border-bottom-width: thin;
+    border-width: thin 0;
     background: #8cb;
     height: 26px;
 
@@ -47,14 +49,14 @@
 #timeline-body {
     flex: 1 0 auto;
     width: 100%;
-    background: #111;
+    background: #0e0e0e;
     position: relative;
 
     .timeline-line-div {
         position: absolute;
         width: 1px;
         height: 100%;
-        background: #8F9F9A;
+        background: #3a3a3a;
     }
 }
 
@@ -126,6 +128,8 @@
     top: -56px;
     height: 40px;
     padding: 5px 0;
+    border: 0px solid black;
+    border-width: 1px 0px;
     display: none;
 
     #timeline-c-container {
@@ -174,7 +178,13 @@
         width: 20%;
         height: 100%;
         float: right;
-        margin-left: 3px;
+        margin-right: 5px;
+        cursor: pointer;
+
+        display: inline-flex;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
 
         &:hover {
             opacity: .8;
@@ -198,7 +208,7 @@
 .event-div {
     position: absolute;
     height: 10px;
-    background: #8F9F9A;
+    background: rgba(89, 126, 117, 0.72);
 }
 
 .event-div:hover {

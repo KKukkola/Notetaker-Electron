@@ -78,6 +78,28 @@ function GetTimelineChangeData() {
     }
 }
 
+function GetTimelineNewData() {
+    
+    // TODO: change date to the internal timeline date
+
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    return {
+        id: 0,
+        title: $('#tn-title').val(),
+        starthour: parseInt($('#tn-starthour').val()),
+        startmin: parseInt($('#tn-startmin').val()),
+        endhour: parseInt($('#tn-endhour').val()),
+        endmin: parseInt($('#tn-endmin').val()),
+        month: month,
+        day: day,
+        year: year,
+    }
+}
+
 function DrawTimelineLines() {
     let timelineHours = timelineMax - timelineMin
     for (let i = 0; i < timelineMax - timelineMin; i++) {
@@ -182,40 +204,23 @@ Timeline.Refresh = () => {
 
 newEventBtn.click(function(ev) {
     newEventModal.css('display', 'block') 
-    console.log('asdf')
-})
-
-newEventSubmitBtn.click(function(ev) {
-    ev.preventDefault()
-    
-    console.log("EventSubmitButton Clicked")
-
-    // TODO: Get the Timeline Date
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-
-    let eventData = {
-        title: newEventModal.find('#tmei-title').val(),
-        starthour: parseInt(newEventModal.find('#tmei-start').val()),
-        startmin: 0,
-        endhour: parseInt(newEventModal.find('#tmei-end').val()),
-        endmin: 0,
-        month: month,
-        day: day,
-        year: year,
-    } 
-
-    db.AddEvent(eventData, () => {
-        console.log("OnFinish()")
-        HideNewEventModal()
-        Timeline.Refresh()
-    })
 })
 
 /************************ */
 // Timeline New Event Modal
+
+newEventSubmitBtn.click(function(ev) {
+    ev.preventDefault()
+
+    let eventData = GetTimelineNewData()
+
+    console.log(eventData)
+
+    db.AddEvent(eventData, () => {
+        HideNewEventModal()
+        Timeline.Refresh()
+    })
+})
 
 newEventModalClose.click(function(ev) {
     newEventModal.css('display', 'none')

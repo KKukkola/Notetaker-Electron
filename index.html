@@ -14,7 +14,7 @@
     <section id="topbar">topbar</section>
     
     <section id="filebrowser">
-      <div class="fb-title">FILES</div>
+      <div class="fb-title">NOTES</div>
       <div id="fb-body"></div>
     </section>
 
@@ -56,9 +56,15 @@
               <div id="tc-year" contenteditable="true" class="tc-input"></div>
             </div>
             <div class="fill-div">
-              <div id='tc-remove' class="tc-button cursornone"></div>
-              <div id='tc-submit' class="tc-button cursornone"></div>
-              <div id='tc-cancel' class="tc-button cursornone"></div>
+              <div id='tc-remove' class="tc-button cursornone">
+                <i class="fas fa-trash"></i>
+              </div>
+              <div id='tc-submit' class="tc-button cursornone">
+                <i class="fas fa-check"></i>
+              </div>
+              <div id='tc-cancel' class="tc-button cursornone">
+                <i class="fas fa-times"></i>
+              </div>
             </div>
           </div>
         </form>
@@ -73,39 +79,27 @@
           <div id='timeline-n-div'> 
             <div class='tn-input-div title'>
               <label>Title</label>
-              <input type='text' class='span2'>
+              <input type='text' id="tn-title" class='span2'>
             </div>
             <div class="tn-input-div">
               <label>Start</label>
-              <input type='text'>
-              <input type='text'>
+              <input type='text' id="tn-starthour">
+              <input type='text' id="tn-startmin">
             </div>
             <div class="tn-input-div">
               <label>End</label>
-              <input type='text'>
-              <input type='text'>
+              <input type='text' id="tn-endhour">
+              <input type='text' id="tn-endmin">
             </div>
             <div class="tn-input-div date">
               <label>Date</label>
-              <input type='text'>
-              <input type='text'>
-              <input type='text'>        
+              <input type='text' id="tn-month">
+              <input type='text' id="tn-day">
+              <input type='text' id="tn-year">        
             </div>
           </div>
           <button type="submit" id='tme-submit-btn'>Create</button>
 
-          <!-- <div id='timeline-n-container'> 
-            <div class='tn-input-title tn-input-container'>
-              <label>Title</label>
-              <input type="text" id="tmei-title">
-            </div>
-            <div class='tn-input-container'>
-              <label>Start</label>
-              <div id="tc-starthour" contenteditable="true" class="tc-input"></div>
-              <div id="tc-startmin" contenteditable="true" class="tc-input"></div>
-            </div>
-          </div>
-          <button type="submit" id='tme-submit-btn'>Create</button> -->
         </form>
       </div>
     </div>
@@ -162,7 +156,7 @@
       console.log('TODO: before window close')
     })
 
-    // Hotkeys
+    // Hotkey
     let keydowns = new Object();
     $(document).keydown(function(event) {
       keydowns[event.which] = true

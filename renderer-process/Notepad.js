@@ -161,7 +161,7 @@ function NewQuill(element) {
                     align: []
                 }, 'image', 'code-block']]
             },
-            scrollingContainer: "#editorcontainer",
+            scrollingContainer: $(element).parent().get(0),
             theme: "snow"
     });
 }

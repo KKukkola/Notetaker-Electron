@@ -8,8 +8,8 @@ body {
       grid-template-areas: "top top" "filebrowser notepad" "timeline timeline";
   -ms-grid-columns: 170px minmax(0, 1fr);
       grid-template-columns: 170px minmax(0, 1fr);
-  -ms-grid-rows: 0px minmax(0, 1fr) 135px 5px;
-      grid-template-rows: 0px minmax(0, 1fr) 135px 5px;
+  -ms-grid-rows: 0px minmax(0, 1fr) 110px 5px;
+      grid-template-rows: 0px minmax(0, 1fr) 110px 5px;
 }
 
 #timeline {
@@ -30,7 +30,7 @@ body {
   display: flex;
   padding: 0px 0;
   border: 0px solid #333D3A;
-  border-bottom-width: thin;
+  border-width: thin 0;
   background: #8cb;
   height: 26px;
 }
@@ -76,7 +76,7 @@ body {
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
   width: 100%;
-  background: #111;
+  background: #0e0e0e;
   position: relative;
 }
 
@@ -84,7 +84,7 @@ body {
   position: absolute;
   width: 1px;
   height: 100%;
-  background: #8F9F9A;
+  background: #3a3a3a;
 }
 
 /* Timeline New Event Modal */
@@ -164,6 +164,8 @@ body {
   top: -56px;
   height: 40px;
   padding: 5px 0;
+  border: 0px solid black;
+  border-width: 1px 0px;
   display: none;
 }
 
@@ -225,7 +227,19 @@ body {
   width: 20%;
   height: 100%;
   float: right;
-  margin-left: 3px;
+  margin-right: 5px;
+  cursor: pointer;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 #timeline-c-div .tc-button:hover {
@@ -247,7 +261,7 @@ body {
 .event-div {
   position: absolute;
   height: 10px;
-  background: #8F9F9A;
+  background: rgba(89, 126, 117, 0.72);
 }
 
 .event-div:hover {
@@ -363,5 +377,17 @@ body {
   min-height: 100%;
   height: auto;
   border: 0px solid black;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.quill-editor:focus {
+  outline: 4px dashed black;
+}
+
+.quill-editor:focus-visible {
+  outline: none;
 }
 /*# sourceMappingURL=main.css.map */

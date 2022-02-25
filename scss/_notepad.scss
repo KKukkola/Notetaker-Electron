@@ -75,4 +75,11 @@
     min-height: 100%;
     height: auto;
     border: 0px solid black;
+    user-select: none;
+    &:focus {
+        outline: 4px dashed black;
+    }
+    &:focus-visible {
+        outline: none;
+    }
 }
