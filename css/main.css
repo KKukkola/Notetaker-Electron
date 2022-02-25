@@ -416,6 +416,23 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
+  background: aliceblue;
+  z-index: 100;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: grey;
+  font-size: xx-large;
+}
+
+#homepage.isActive {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
 }
 
 #calendarpage {
@@ -423,5 +440,22 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
+  background: aliceblue;
+  z-index: 100;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: grey;
+  font-size: xx-large;
+}
+
+#calendarpage.isActive {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
 }
 /*# sourceMappingURL=main.css.map */
