@@ -134,8 +134,6 @@ function NewEventElement(eventData) {
     let leftPercent = curSeconds/maxSeconds * 100
     let widthPercent = lengthSeconds/maxSeconds * 100
     let rightPercent = leftPercent + widthPercent
-
-    console.log(leftPercent, widthPercent, rightPercent)
     
     // get the row / top that this event goes into
     let top = 2;

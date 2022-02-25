@@ -51,6 +51,12 @@ textarea:focus, textarea:hover {
 .flex {
     display: flex;
 }
+.flexbox-right {
+    margin-left: auto;
+}
+.flex-filler {
+    flex-grow: 1;
+}
 
 .close {
     color: #aaa;

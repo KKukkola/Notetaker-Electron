@@ -41,12 +41,10 @@ let FBItems = {
 
   SaveOpened: function() {
     closedFolders = new Object();
-
     for (let path in this.allItems) {
       let item = this.allItems[path]
       closedFolders[item.path] = item.isClosed;
     }
-    console.log(closedFolders)
   },
 
   SetActiveItem: function(item) {

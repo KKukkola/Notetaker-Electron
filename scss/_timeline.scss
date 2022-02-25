@@ -8,8 +8,6 @@
 }
 
 #timeline-top-buttons {
-    // display: grid;
-    // grid-template-columns: repeat(12, 1fr);
     display: flex;
     padding: 0px 0;
     border: 0px solid #333D3A;
@@ -43,8 +41,21 @@
         align-items: center;
         justify-content: center;
     }
-
+    
+    .timeline-top-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 26px;
+        width: 26px;
+        color: #1f5444;
+        &:hover {
+            opacity: 0.6;
+            cursor: pointer;
+        }
+    }
 }
+
 
 #timeline-body {
     flex: 1 0 auto;
