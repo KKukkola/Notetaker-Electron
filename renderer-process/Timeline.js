@@ -178,9 +178,14 @@ function AddEvent(eventData) {
 
 function HideNewEventModal() {
     newEventModal.css('display', 'none')
-    newEventModal.find('#tmei-title').val('')
-    newEventModal.find('#tmei-start').val('')
-    newEventModal.find('#tmei-end').val('')
+    $('#tn-title').val('')
+    $('#tn-starthour').val('')
+    $('#tn-startmin').val('')
+    $('#tn-endhour').val('')
+    $('#tn-endmin').val('')
+    $('#tn-month').val('')
+    $('#tn-day').val('')
+    $('#tn-year').val('')
 }
 
 Timeline.Refresh = () => {
@@ -221,12 +226,12 @@ newEventSubmitBtn.click(function(ev) {
 })
 
 newEventModalClose.click(function(ev) {
-    newEventModal.css('display', 'none')
+    HideNewEventModal()
 })
 
 newEventModal.click(function(ev) {
     if ($(ev.target).attr('id') == "timeline-new-event-modal") {
-        newEventModal.css('display', 'none')
+        HideNewEventModal()
     }
 })
 
