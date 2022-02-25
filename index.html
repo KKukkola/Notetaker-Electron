@@ -10,7 +10,9 @@
     <script src="https://kit.fontawesome.com/16fed93f1f.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    
+    <div id="#homepage"></div>
+    <div id="#calendarpage"></div>
+
     <section id="topbar">topbar</section>
     
     <section id="filebrowser">
@@ -35,7 +37,7 @@
           <div id="to-homepage" class="timeline-top-btn">
             <i class="fas fa-home"></i>
           </div>
-          <div id="to-calendar" class="timeline-top-btn">
+          <div id="to-calendarpage" class="timeline-top-btn">
             <i class="fas fa-calendar"></i>
           </div>
         </div>
@@ -158,10 +160,12 @@
     import {FileBrowser} from "./renderer-process/FileBrowser.js"
     import {Notepad} from "./renderer-process/Notepad.js"
     import {Timeline} from "./renderer-process/Timeline.js"
-    
-    window.addEventListener("beforeunload", function(ev) {
-      console.log('TODO: before window close')
-    })
+    import {HomePage} from "./renderer-process/HomePage.js"
+    import {CalendarPage} from "./renderer-process/CalendarPage.js"
+
+    // window.addEventListener("beforeunload", function(ev) {
+    //   console.log('TODO: before window close')
+    // })
 
     // Hotkey
     let keydowns = new Object();

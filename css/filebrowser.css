@@ -18,6 +18,10 @@
     font-family: 'Segoe UI';
     font-weight: bolder;
     padding: 10px 15px;
+
+    /* border: 0px solid grey;
+    border-bottom-width: thin;
+    margin-bottom: 10px; */
 }
 
 .fb-section {

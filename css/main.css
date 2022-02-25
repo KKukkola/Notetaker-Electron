@@ -410,4 +410,18 @@ body {
 .quill-editor:focus-visible {
   outline: none;
 }
+
+#homepage {
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+#calendarpage {
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
 /*# sourceMappingURL=main.css.map */
