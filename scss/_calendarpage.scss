@@ -1,19 +1,40 @@
 
 #calendarpage {
+    box-sizing: border-box;
     display: none;
+    grid-template-columns: repeat(12, minmax(0,1fr));
+    grid-template-rows: 1fr 2fr; 
+
     position: absolute;
     height: 100%;
     width: 100%;
     background: aliceblue;
     z-index: 100;
+    padding: 3rem 0;
 
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    align-items: center;
-    justify-content: center;
     color: grey;
     font-size:xx-large;
 
     &.isActive {
-        display: inline-flex;
+        display: grid;
+    }
+
+    #calendar-month-title {
+        font-size: 5vw;
+        font-weight: bold;
+        grid-column: 2 / span 3;
+    }
+
+    #calendar-day-overview {
+        grid-column: 5 / 12;
+        background: green;
+    }
+
+    #calendar-month-div {
+        background: pink;
+        grid-row: 2;
+        grid-column: 2 / 12;
     }
 }
+

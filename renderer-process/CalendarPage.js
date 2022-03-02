@@ -6,7 +6,8 @@ let MONTHS = [
     "July", "August", "September", "November", "December",
 ]
 
-let $monthText = $("calendar-month-title")
+let $monthText = $("#calendar-month-title")
+
 
 $('#to-calendarpage').click(function(event) {
     CalendarPage.Show()
@@ -21,9 +22,7 @@ CalendarPage.Show = function() {
     let month = date.getMonth() + 1;
     let day = date.getDate();
 
-    $monthText.Text = MONTHS[month]
-
-
+    $monthText.text(MONTHS[month])
 }
 
 export {CalendarPage}
