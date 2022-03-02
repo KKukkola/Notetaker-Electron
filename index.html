@@ -10,8 +10,27 @@
     <script src="https://kit.fontawesome.com/16fed93f1f.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div id="homepage">TODO: HOMEPAGE</div>
-    <div id="calendarpage">TODO: CALENDARPAGE</div>
+    <div id="homepage">
+      <div class="flex-div">
+        <button class="h-button" id="h-notepad-btn">
+          <i class="fas fa-marker"></i>
+        </button>
+        <button class="h-button" id="h-calendar-btn">
+          <i class="fas fa-calendar"></i>
+        </button>
+        <button class="h-button" id="h-settings-btn">
+          <i class="fas fa-cog"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div id="calendarpage">
+      TODO: CALENDAR PAGE
+    </div>
+
+    <div id="settingspage">
+      TODO: SETTINGS PAGE
+    </div>
 
     <section id="topbar">topbar</section>
     
@@ -39,6 +58,9 @@
           </div>
           <div id="to-calendarpage" class="timeline-top-btn">
             <i class="fas fa-calendar"></i>
+          </div>
+          <div id="to-settingspage" class="timeline-top-btn">
+            <i class="fas fa-cog"></i>
           </div>
         </div>
       </div>
@@ -162,6 +184,7 @@
     import {Timeline} from "./renderer-process/Timeline.js"
     import {HomePage} from "./renderer-process/HomePage.js"
     import {CalendarPage} from "./renderer-process/CalendarPage.js"
+    import {SettingsPage} from "./renderer-process/SettingsPage.js"
 
     // window.addEventListener("beforeunload", function(ev) {
     //   console.log('TODO: before window close')

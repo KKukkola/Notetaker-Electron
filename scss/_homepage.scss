@@ -17,3 +17,28 @@
         display: inline-flex;
     }
 }
+
+.flex-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.h-button { 
+    margin: 10px;
+    background: #3d5452;
+    outline: none;
+    border: 0px solid black;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 4px;
+    color: white;
+
+    i {
+        font-size: xxx-large;
+    }
+
+    &:hover {
+        opacity: 0.5;
+    }
+}
