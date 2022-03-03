@@ -3,7 +3,7 @@
     box-sizing: border-box;
     display: none;
     grid-template-columns: repeat(12, minmax(0,1fr));
-    grid-template-rows: 1fr 2fr; 
+    grid-template-rows: minmax(0, 1fr) minmax(0, 2fr); 
 
     position: absolute;
     height: 100%;
@@ -35,6 +35,42 @@
         background: pink;
         grid-row: 2;
         grid-column: 2 / 12;
+    }
+}
+
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-rows: repeat(6, minmax(0, 1fr));
+    padding: 4px;
+    background: #ccc;
+    box-sizing: border-box;
+
+    height: 100%;
+    width: 100%;
+    
+    .calendar-day {
+        background: aliceblue;
+        box-sizing: border-box;
+        margin: 4px;
+
+        &.non-day {
+            background: #ddd;
+            &:hover {
+                opacity: 1;
+            }
+        }
+        &:hover {
+            opacity: 0.5;
+        }
+
+        .c-num {
+            text-align: end;
+            padding: 0px 5px;
+            font-size: 2vh;
+            font-weight: bold;
+            user-select: none;
+        }
     }
 }
 

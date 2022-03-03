@@ -6,7 +6,7 @@ $('#to-homepage').click(function(event) {
 })
 
 $('#h-notepad-btn').click(function(event) {
-    console.log("notes button clicked!");
+    $("#homepage").removeClass('isActive')
 })
 
 $('#h-calendar-btn').click(function(event) {
