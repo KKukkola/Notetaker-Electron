@@ -491,18 +491,11 @@ body {
 }
 
 #calendarpage #calendar-month-title {
-  font-size: 5vw;
+  font-size: 6vh;
   font-weight: bold;
   -ms-grid-column: 2;
   -ms-grid-column-span: 3;
   grid-column: 2 / span 3;
-}
-
-#calendarpage #calendar-day-overview {
-  -ms-grid-column: 5;
-  -ms-grid-column-span: 7;
-  grid-column: 5 / 12;
-  background: green;
 }
 
 #calendarpage #calendar-month-div {
@@ -512,6 +505,28 @@ body {
   -ms-grid-column: 2;
   -ms-grid-column-span: 10;
   grid-column: 2 / 12;
+}
+
+#calendar-day-overview {
+  -ms-grid-column: 5;
+  -ms-grid-column-span: 7;
+  grid-column: 5 / 12;
+  padding-bottom: 8px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+#calendar-day-overview .container {
+  background: #426059;
+  height: 100%;
+  width: 100%;
+}
+
+#calendar-day-overview .day-title {
+  background: #426059;
+  padding: 0px 1rem;
+  font-size: 4vh;
+  color: aliceblue;
 }
 
 #calendar {

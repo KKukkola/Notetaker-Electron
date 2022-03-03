@@ -7,30 +7,52 @@ let MONTHS = [
 ]
 let DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
+let $calendarpage = $("#calendarpage")
 let $monthText = $("#calendar-month-title")
 
+let DATE_OBJ = new Date()
+
 let daysList = []
+
+let DayOverview = {
+
+    Set: function(dayObj) {
+        
+        console.log("SET:", dayObj.day, dayObj.dayText)
+        $calendarpage.find(".day-title").first().html(dayObj.day + " " + dayObj.dayText)
+    }
+}
 
 class CalendarDay {
     $e = null;
     day = null;
+    invalid = false;
+    dayText = null;
     
     constructor(day, invalidDay) {
         let $day = $($("#template-calendar-day").html())
-        $day.find('.c-num').html(day+1)
+        $day.find('.c-num').html(day)
         $day.appendTo($('#calendar'))
-
+        
         if (invalidDay) {
             $day.find('.c-num').html('')
             $day.addClass('non-day')
         }
 
+        $day.click((event) => { CalendarDayClicked(this) })
+
         daysList.push(this)
         
         this.$e = $day;
         this.day = day;
+        this.invalid = invalidDay;
+        this.dayText = DAYS[new Date(DATE_OBJ.getFullYear(), DATE_OBJ.getMonth(), day).getDay()];
     }
+}
 
+function CalendarDayClicked(dayObj) {
+    if (dayObj.invalid === true) return;
+    DayOverview.Set(dayObj)
 }
 
 $('#to-calendarpage').click(function(event) {
@@ -56,9 +78,9 @@ CalendarPage.Show = function() {
     $monthText.text(MONTHS[month])
 
     // Fill the calendar with its 42 divs
-    let cDay = 0 - firstDay.getDay()
+    let cDay = 0 - firstDay.getDay() // will be 0-indexxed
     for (let i = 0; i < 42; i++) {
-        let day = new CalendarDay(cDay, cDay < 0 || cDay >= lastDay.getDate())
+        let day = new CalendarDay(cDay+1, cDay < 0 || cDay >= lastDay.getDate())
         cDay += 1;
     }
 
