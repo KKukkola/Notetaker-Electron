@@ -520,6 +520,10 @@ body {
   background: #426059;
   height: 100%;
   width: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 6vh 1fr;
+      grid-template-rows: 6vh 1fr;
 }
 
 #calendar-day-overview .day-title {
@@ -527,6 +531,10 @@ body {
   padding: 0px 1rem;
   font-size: 4vh;
   color: aliceblue;
+}
+
+#calendar-day-overview .day-overview-timeline {
+  background: grey;
 }
 
 #calendar {
