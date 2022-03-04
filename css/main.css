@@ -535,6 +535,11 @@ body {
 
 #calendar-day-overview .day-overview-timeline {
   background: grey;
+  position: relative;
+}
+
+#calendar-day-overview .day-overview-timeline .event-div.calendar-overview-event {
+  background: white;
 }
 
 #calendar {

@@ -112,7 +112,7 @@ function DrawTimelineLines() {
     }
 }
 
-function NewEventElement(eventData) {
+function NewEventElement(eventData, calendarObj) {
     let $div = $("<div></div>")
     $div.data('id', eventData.id)
     $div.data('title', eventData.title)
@@ -125,6 +125,10 @@ function NewEventElement(eventData) {
     $div.data('year', eventData.year)
     
     let numHours = timelineMax - timelineMin;
+    if (calendarObj != null) {
+        numHours = calendarObj.Max - calendarObj.Min
+    }
+    
     let currentSeconds = (eventData.starthour*SEC_PER_HOUR) + (eventData.startmin*SEC_PER_MIN)
     let lengthSeconds = (eventData.endhour*SEC_PER_HOUR) + (eventData.endmin*SEC_PER_MIN) - currentSeconds
 
@@ -135,36 +139,47 @@ function NewEventElement(eventData) {
     let widthPercent = lengthSeconds/maxSeconds * 100
     let rightPercent = leftPercent + widthPercent
     
-    // get the row / top that this event goes into
     let top = 2;
     let rowNum = 0;
-    addedEvents.forEach(e => {
-        if (e.rowNum == rowNum) {
-            if (leftPercent >= e.leftPercent && leftPercent < e.rightPercent) {
-                rowNum += 1;
-                top = 10*rowNum + 2 + 2*rowNum;
+    if (calendarObj) {
+        calendarObj.addedEvents.forEach(e => {
+            if (e.rowNum == rowNum) {
+                if (leftPercent >= e.leftPercent && leftPercent < e.rightPercent) {
+                    rowNum += 1;
+                    top = 10*rowNum + 2 + 2*rowNum;
+                }
             }
-        }
-    })
-
-    // add it to the html
+        })
+        calendarObj.addedEvents.push({
+            rowNum: rowNum,
+            leftPercent: leftPercent,
+            rightPercent: rightPercent,
+        })
+    } else {
+        addedEvents.forEach(e => {
+            if (e.rowNum == rowNum) {
+                if (leftPercent >= e.leftPercent && leftPercent < e.rightPercent) {
+                    rowNum += 1;
+                    top = 10*rowNum + 2 + 2*rowNum;
+                }
+            }
+        })
+        addedEvents.push({
+            rowNum: rowNum,
+            leftPercent: leftPercent,
+            rightPercent: rightPercent,
+        })
+        $div.on('click', (event) => {
+            EventClicked($div)
+        })
+    }
+    
+    // add our html to it
     $div.addClass('event-div')
     $div.css({
         width: `${widthPercent}%`,
         left: `${leftPercent}%`,
         top: `${top}px`
-    })
-
-    // log the element as a part of our data
-    addedEvents.push({
-        rowNum: rowNum,
-        leftPercent: leftPercent,
-        rightPercent: rightPercent,
-    })
-
-    // add the event to it
-    $div.on('click', (event) => {
-        EventClicked($div)
     })
 
     return $div
@@ -201,7 +216,7 @@ Timeline.Refresh = () => {
     db.EachEvent(function(dbRow) {
         AddEvent(dbRow)
     }, function() {
-        console.log("finished refreshing timeline")
+        console.log("Timeline draw finished: ", month, day, year)
     }, month, day, year)
 }
 
@@ -312,5 +327,26 @@ $tcSubmit.on('click', function(event) {
 $tcCancel.on('click', function(event) {
     ToggleTimelineChange(false)
 })
+
+//////////////////
+
+Timeline.FillContainerWithDay = function($container, dayObj) {
+    console.log("TODO: FILL CONTAINER WITH DAY")
+    
+    let calendarObj = {
+        Max: 24,
+        Min: 0,
+        addedEvents: [],
+    }
+
+    db.EachEvent(function(eventData) {
+        let $eventElement = NewEventElement(eventData, calendarObj)
+        $eventElement.addClass("calendar-overview-event")
+        $eventElement.appendTo($container)
+    }, function() {
+        console.log("finished Filling Contaienr with day", dayObj.day, dayObj.month, dayObj.year)
+    }, dayObj.day, dayObj.month, dayObj.year)
+}
+
 
 export {Timeline}

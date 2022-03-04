@@ -1,4 +1,6 @@
 
+import {Timeline} from "./Timeline.js"
+
 let CalendarPage = new Object()
 
 let MONTHS = [
@@ -9,6 +11,7 @@ let DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
 
 let $calendarpage = $("#calendarpage")
 let $monthText = $("#calendar-month-title")
+let $overviewTimelineDiv = $calendarpage.find(".day-overview-timeline")
 
 let DATE_OBJ = new Date()
 
@@ -17,19 +20,23 @@ let daysList = []
 let DayOverview = {
 
     Set: function(dayObj) {
-        
-        console.log("SET:", dayObj.day, dayObj.dayText)
+        console.log("Set Overview:", dayObj.day, dayObj.dayText)
         $calendarpage.find(".day-title").first().html(dayObj.day + " " + dayObj.dayText)
+        $overviewTimelineDiv.html('')
+        Timeline.FillContainerWithDay($overviewTimelineDiv, dayObj)
     }
+
 }
 
 class CalendarDay {
     $e = null;
     day = null;
+    month = null;
+    year = null;
     invalid = false;
     dayText = null;
     
-    constructor(day, invalidDay) {
+    constructor(day, month, year, invalidDay) {
         let $day = $($("#template-calendar-day").html())
         $day.find('.c-num').html(day)
         $day.appendTo($('#calendar'))
@@ -45,6 +52,8 @@ class CalendarDay {
         
         this.$e = $day;
         this.day = day;
+        this.month = month;
+        this.year = year;
         this.invalid = invalidDay;
         this.dayText = DAYS[new Date(DATE_OBJ.getFullYear(), DATE_OBJ.getMonth(), day).getDay()];
     }
@@ -80,10 +89,10 @@ CalendarPage.Show = function() {
     // Fill the calendar with its 42 divs
     let cDay = 0 - firstDay.getDay() // will be 0-indexxed
     for (let i = 0; i < 42; i++) {
-        let day = new CalendarDay(cDay+1, cDay < 0 || cDay >= lastDay.getDate())
+        let day = new CalendarDay(cDay+1, date.getMonth()+1, date.getFullYear(), 
+            cDay < 0 || cDay >= lastDay.getDate())
         cDay += 1;
     }
-
 }
 
 export {CalendarPage}
