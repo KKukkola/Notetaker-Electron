@@ -490,12 +490,51 @@ body {
   display: grid;
 }
 
-#calendarpage #calendar-month-title {
+#calendarpage #calendar-month-title-area {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: minmax(0, 10vh) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 10vh) minmax(0, 1fr);
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
   font-size: 6vh;
   font-weight: bold;
   -ms-grid-column: 2;
   -ms-grid-column-span: 3;
   grid-column: 2 / span 3;
+}
+
+#calendarpage .calendar-button-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: end;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+}
+
+#calendarpage #calendar-home-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-grid-row: 2;
+  grid-row: 2;
+  width: 50px;
+  height: 50px;
+}
+
+#calendarpage #calendar-home-button i {
+  font-size: 32px;
 }
 
 #calendarpage #calendar-month-div {
@@ -505,6 +544,36 @@ body {
   -ms-grid-column: 2;
   -ms-grid-column-span: 10;
   grid-column: 2 / 12;
+}
+
+#calendarpage .calendar-arrow-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#calendarpage .calendar-arrow-button:hover {
+  opacity: 0.5;
+}
+
+#calendarpage #calendar-left-button {
+  -ms-grid-row: 2;
+  grid-row: 2;
+  -ms-grid-column: 1;
+  grid-column: 1;
+}
+
+#calendarpage #calendar-right-button {
+  -ms-grid-row: 2;
+  grid-row: 2;
+  -ms-grid-column: 12;
+  grid-column: 12;
 }
 
 #calendar-day-overview {

@@ -2,10 +2,12 @@
 import {Timeline} from "./Timeline.js"
 
 let CalendarPage = new Object()
+CalendarPage.Month = 1;
+CalendarPage.Year = 2022;
 
 let MONTHS = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "November", "December",
+    "NONE", "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
 ]
 let DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
@@ -73,29 +75,53 @@ function CalendarDayClicked(dayObj) {
     DayOverview.Set(dayObj)
 }
 
+$('#calendar-left-button').click(function(event) {
+    let prevMonth = CalendarPage.Month - 1
+    if (prevMonth <= 0) prevMonth = 12
+    CalendarPage.SetMonthYearDay(
+        prevMonth,
+        CalendarPage.Year, 
+        1)
+})
+
+$("#calendar-right-button").click(function(event) {
+    let nextMonth = CalendarPage.Month + 1
+    if (nextMonth >= 13) nextMonth = 1
+    CalendarPage.SetMonthYearDay(
+        nextMonth,
+        CalendarPage.Year, 
+        1)
+})
+
 $('#to-calendarpage').click(function(event) {
     CalendarPage.Show()
 })
 
-CalendarPage.Show = function() {
+$('#calendar-home-button').click(function(event) {
+    CalendarPage.Hide()
+})
+
+CalendarPage.ClearCalendar = function() {
+    for (let dayNumber in daysList) {
+        daysList[dayNumber].$e.remove()
+    }
+    daysList = new Object()
     $('#calendar').html('')
-    $("#calendarpage").addClass('isActive')
+}
 
-    // Set the Month to the current month
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-
-    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
-    // console.log(DAYS[firstDay.getDay()], firstDay.getDate())
-    // console.log(DAYS[lastDay.getDay()], lastDay.getDate())
+CalendarPage.SetMonthYearDay = function(month, year, day) {
+    CalendarPage.ClearCalendar()
+    CalendarPage.Month = month;
+    CalendarPage.Year = year;
+    
+    var firstDay = new Date(year, month - 1, 1); // because of indexes / offsets
+    var lastDay = new Date(year, month, 0);
 
     $monthText.text(MONTHS[month])
 
-    daysList = new Object();
+    //daysList = new Object();
+
+    console.log(month, year, day, firstDay, lastDay)
 
     // Fill the calendar with its 42 divs
     let cDay = 0 - firstDay.getDay() // 0-indexxed
@@ -103,18 +129,38 @@ CalendarPage.Show = function() {
         
         // Create the Day Object
         let isInvalid = cDay < 0 || cDay >= lastDay.getDate()
-        let dayObj = new CalendarDay(cDay+1, date.getMonth()+1, date.getFullYear(), isInvalid)
+        let dayObj = new CalendarDay(cDay+1, month, year, isInvalid)
 
         daysList[dayObj.day] = dayObj
         
         // Set to our current day
-        if (dayObj.day == date.getDate()) 
+        if (dayObj.day == day)//date.getDate()) 
             DayOverview.Set(dayObj)
         
         cDay += 1;
     }
 
     Timeline.FillCalendarWithEvents(daysList, month, year)
+}
+
+CalendarPage.Hide = function() {
+    $calendarpage.removeClass('isActive')
+}
+
+CalendarPage.Show = function() {
+    CalendarPage.ClearCalendar()
+
+    // Set the Month to the current month
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    console.log(year, month, day)
+
+    CalendarPage.SetMonthYearDay(month, year, day)
+    
+    $("#calendarpage").addClass('isActive')
 }
 
 export {CalendarPage}
