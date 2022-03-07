@@ -57,8 +57,13 @@
         background:grey;
         position: relative;
         
-        .event-div.calendar-overview-event {
+        .calendar-event-div {
             background: white;
+            height: 2vh;
+
+            &:hover {
+                background: brown;
+            }
         }
     }
 }
@@ -78,6 +83,8 @@
         background: aliceblue;
         box-sizing: border-box;
         margin: 4px;
+        display: grid;
+        grid-template-rows: 3vh 1fr;
 
         &.non-day {
             background: #ddd;
@@ -96,6 +103,19 @@
             font-weight: bold;
             user-select: none;
         }
+        .c-timeline {
+            position: relative;
+            
+            .calendar-event-div {
+                background: black;
+                height: 10%;
+            }
+        }
     }
 }
 
+.calendar-event-div {
+    position: absolute;
+    height: 1vh;
+    background: black;
+}

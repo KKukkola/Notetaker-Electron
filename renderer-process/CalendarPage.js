@@ -12,24 +12,26 @@ let DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
 let $calendarpage = $("#calendarpage")
 let $monthText = $("#calendar-month-title")
 let $overviewTimelineDiv = $calendarpage.find(".day-overview-timeline")
+let $calendar = $('#calendar')
 
 let DATE_OBJ = new Date()
 
-let daysList = []
+let daysList = new Object()
 
 let DayOverview = {
 
     Set: function(dayObj) {
-        console.log("Set Overview:", dayObj.day, dayObj.dayText)
         $calendarpage.find(".day-title").first().html(dayObj.day + " " + dayObj.dayText)
         $overviewTimelineDiv.html('')
         Timeline.FillContainerWithDay($overviewTimelineDiv, dayObj)
+        console.log("DayOverview:Set() date: ", dayObj.month, dayObj.day, dayObj.year)
     }
 
 }
 
 class CalendarDay {
     $e = null;
+    $timeline = null;
     day = null;
     month = null;
     year = null;
@@ -38,19 +40,17 @@ class CalendarDay {
     
     constructor(day, month, year, invalidDay) {
         let $day = $($("#template-calendar-day").html())
+        $day.data('dayNumber', day)
         $day.find('.c-num').html(day)
         $day.appendTo($('#calendar'))
         
-        if (invalidDay) {
+        if (invalidDay == true) {
             $day.find('.c-num').html('')
             $day.addClass('non-day')
         }
 
-        $day.click((event) => { CalendarDayClicked(this) })
-
-        daysList.push(this)
-        
         this.$e = $day;
+        this.$timeline = $day.find('.c-timeline').first()
         this.day = day;
         this.month = month;
         this.year = year;
@@ -58,6 +58,15 @@ class CalendarDay {
         this.dayText = DAYS[new Date(DATE_OBJ.getFullYear(), DATE_OBJ.getMonth(), day).getDay()];
     }
 }
+
+$calendar.click((event) => {
+    let $target = $(event.target)
+    let $day = $target.parents('.calendar-day')
+    if ($day.length > 0) {
+        let dayObj = daysList[$day.data('dayNumber')]
+        CalendarDayClicked(dayObj)
+    }
+})
 
 function CalendarDayClicked(dayObj) {
     if (dayObj.invalid === true) return;
@@ -81,18 +90,31 @@ CalendarPage.Show = function() {
     var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-    console.log(DAYS[firstDay.getDay()], firstDay.getDate())
-    console.log(DAYS[lastDay.getDay()], lastDay.getDate())
+    // console.log(DAYS[firstDay.getDay()], firstDay.getDate())
+    // console.log(DAYS[lastDay.getDay()], lastDay.getDate())
 
     $monthText.text(MONTHS[month])
 
+    daysList = new Object();
+
     // Fill the calendar with its 42 divs
-    let cDay = 0 - firstDay.getDay() // will be 0-indexxed
+    let cDay = 0 - firstDay.getDay() // 0-indexxed
     for (let i = 0; i < 42; i++) {
-        let day = new CalendarDay(cDay+1, date.getMonth()+1, date.getFullYear(), 
-            cDay < 0 || cDay >= lastDay.getDate())
+        
+        // Create the Day Object
+        let isInvalid = cDay < 0 || cDay >= lastDay.getDate()
+        let dayObj = new CalendarDay(cDay+1, date.getMonth()+1, date.getFullYear(), isInvalid)
+
+        daysList[dayObj.day] = dayObj
+        
+        // Set to our current day
+        if (dayObj.day == date.getDate()) 
+            DayOverview.Set(dayObj)
+        
         cDay += 1;
     }
+
+    Timeline.FillCalendarWithEvents(daysList, month, year)
 }
 
 export {CalendarPage}

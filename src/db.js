@@ -16,6 +16,7 @@ db.AddEvent = function(eventData, onFinish) {
 }
 
 db.EachEvent = function(onElement, onFinish, month, day, year) {
+    console.log("db.EachEvent: ", month, day, year)
     let sql = `SELECT * FROM events 
         WHERE month = ${month} AND day = ${day} AND year = ${year}
         ORDER BY starthour, startmin`
@@ -28,6 +29,20 @@ db.EachEvent = function(onElement, onFinish, month, day, year) {
     ipcRenderer.send("query-events", sql)
 }
 
+db.EachEventOfMonth = function(onElement, onFinish, month, year) {
+    console.log("db.EachEventOfMonth: ", month, year)
+    let sql = `SELECT * FROM events 
+        WHERE month = ${month} AND year = ${year}
+        ORDER BY day, starthour, startmin`
+    ipcRenderer.once('query-events-month', (event, rows) => {
+        rows.forEach(onElement)
+        if (onFinish != null ) {
+            onFinish()
+        }
+    })
+    ipcRenderer.send("query-events-month", sql)
+}
+ 
 db.ChangeEvent = function(eventData, onFinish) {
     console.log(eventData)
     ipcRenderer.once('change-event', (event) => {

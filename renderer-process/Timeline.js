@@ -331,8 +331,6 @@ $tcCancel.on('click', function(event) {
 //////////////////
 
 Timeline.FillContainerWithDay = function($container, dayObj) {
-    console.log("TODO: FILL CONTAINER WITH DAY")
-    
     let calendarObj = {
         Max: 24,
         Min: 0,
@@ -341,11 +339,37 @@ Timeline.FillContainerWithDay = function($container, dayObj) {
 
     db.EachEvent(function(eventData) {
         let $eventElement = NewEventElement(eventData, calendarObj)
-        $eventElement.addClass("calendar-overview-event")
+        $eventElement.removeClass("event-div")
+        $eventElement.addClass("calendar-event-div")
         $eventElement.appendTo($container)
     }, function() {
-        console.log("finished Filling Contaienr with day", dayObj.day, dayObj.month, dayObj.year)
-    }, dayObj.day, dayObj.month, dayObj.year)
+        console.log("Finished Filling Container with day:", dayObj.day)
+    }, dayObj.month, dayObj.day, dayObj.year)
+}
+
+Timeline.FillCalendarWithEvents = function(daysList, month, year) {
+    
+    let calendarObj = {
+        Max: 24, 
+        Min: 0,
+        addedEvents: [],
+    }
+    let cDay = 1;
+    db.EachEventOfMonth(function(eventData) {
+        let dayObj = daysList[eventData.day]
+        if (dayObj.day !== cDay) {
+            calendarObj.addedEvents = []
+            cDay = dayObj.day
+        }
+        console.log(calendarObj)
+        console.log(eventData)
+        let $eventElement = NewEventElement(eventData, calendarObj)
+        $eventElement.removeClass("event-div")
+        $eventElement.addClass("calendar-event-div")
+        $eventElement.appendTo(dayObj.$timeline)
+    }, function() {
+        console.log("Finished Fill Calendar")
+    }, month, year)
 }
 
 

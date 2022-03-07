@@ -538,8 +538,13 @@ body {
   position: relative;
 }
 
-#calendar-day-overview .day-overview-timeline .event-div.calendar-overview-event {
+#calendar-day-overview .day-overview-timeline .calendar-event-div {
   background: white;
+  height: 2vh;
+}
+
+#calendar-day-overview .day-overview-timeline .calendar-event-div:hover {
+  background: brown;
 }
 
 #calendar {
@@ -562,6 +567,10 @@ body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   margin: 4px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 3vh 1fr;
+      grid-template-rows: 3vh 1fr;
 }
 
 #calendar .calendar-day.non-day {
@@ -585,6 +594,21 @@ body {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+}
+
+#calendar .calendar-day .c-timeline {
+  position: relative;
+}
+
+#calendar .calendar-day .c-timeline .calendar-event-div {
+  background: black;
+  height: 10%;
+}
+
+.calendar-event-div {
+  position: absolute;
+  height: 1vh;
+  background: black;
 }
 
 #settingspage {

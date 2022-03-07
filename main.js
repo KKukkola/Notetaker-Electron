@@ -26,8 +26,15 @@ sqlDB.run(`CREATE TABLE IF NOT EXISTS events(
     year INTEGER
 );`)
 
+ipcMain.on('query-events-month', async (event, sql) => {
+    console.log("query-events-month SQL: ", sql)
+    sqlDB.all(sql, [], (err, rows) => {
+        win.webContents.send("query-events-month", rows)
+    })
+})
+
 ipcMain.on('query-events', (event, sql) => {
-    console.log('ipcMain.on() query-events')
+    console.log('ipcMain.on() query-events SQL: ', sql)
     sqlDB.all(sql, [], (err, rows) => {
         win.webContents.send("query-events", rows)
     })
