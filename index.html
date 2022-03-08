@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="light-theme">
   <head>
     <title>Hello World!</title>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
@@ -51,7 +51,19 @@
     </div>
 
     <div id="settingspage">
-      TODO: SETTINGS PAGE
+      <div class="topbar">
+        <div class="h-button" id="settings-home-button">
+          <i class="fas fa-marker"></i>
+        </div>
+        <div id="settings-title">Settings</div>
+      </div>
+      <div class="body">
+        <div class="settings-theme-body">
+          <div>Theme:</div>
+          <div class="settings-option" id="settings-light-theme-button">light</div>
+          <div class="settings-option" id="settings-dark-theme-button">dark</div>
+        </div>
+      </div>
     </div>
 
     <section id="topbar">topbar</section>

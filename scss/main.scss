@@ -16,6 +16,21 @@ body {
     grid-template-rows: 0px minmax(0, 1fr) $notepad-base-height 5px;
 }
 
+.light-theme {
+    --color-primary: aliceblue;
+    --color-secondary: #ccc;
+    --color-tertiary: #ddd;
+    --color-accent: #555;
+    --color-font-color:
+}
+
+.dark-theme {
+    --color-primary: #15181a;
+    --color-secondary: #242424;
+    --color-tertiary: #333;
+    --color-text-primary: rgb(175, 175, 175);
+}
+
 @import "_timeline";
 @import "_quill";
 @import "_notepad";

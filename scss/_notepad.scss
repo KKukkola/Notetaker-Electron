@@ -8,7 +8,7 @@
     user-select:none;
     white-space:nowrap;
     margin-right:1px;
-    background: #ccc;
+    background: var(--color-secondary);
     span {
         width: fit-content;
     }
@@ -36,7 +36,7 @@
 }
 
 .tab-div.tab-div-active {
-    background: aliceblue;
+    background: var(--color-primary);
     .close-tab {
         color: rgb(77,77,77);
     }
@@ -44,11 +44,13 @@
 
 #notepad {
     position: relative;
+    background: var(--color-primary);
+    color: var(--color-text-primary);
 
     #notepad-top {
         display: flex;
         flex-wrap: nowrap;
-        background: #dddddd
+        background: var(--color-tertiary);
     }
 
     .notepad-body {

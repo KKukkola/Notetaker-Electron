@@ -131,7 +131,9 @@ CalendarPage.SetMonthYearDay = function(month, year, day) {
         
         // Set to our current day
         if (dayObj.day == day)//date.getDate()) 
+        {
             DayOverview.Set(dayObj)
+        }
         
         cDay += 1;
     }

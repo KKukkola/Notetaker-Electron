@@ -12,6 +12,22 @@ body {
       grid-template-rows: 0px minmax(0, 1fr) 110px 5px;
 }
 
+.light-theme {
+  --color-primary: aliceblue;
+  --color-secondary: #ccc;
+  --color-tertiary: #ddd;
+  --color-accent: #555;
+  --color-font-color:
+;
+}
+
+.dark-theme {
+  --color-primary: #15181a;
+  --color-secondary: #242424;
+  --color-tertiary: #333;
+  --color-text-primary: rgb(175, 175, 175);
+}
+
 #timeline {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -327,7 +343,7 @@ body {
           user-select: none;
   white-space: nowrap;
   margin-right: 1px;
-  background: #ccc;
+  background: var(--color-secondary);
 }
 
 .tab-div span {
@@ -355,7 +371,7 @@ body {
 }
 
 .tab-div.tab-div-active {
-  background: aliceblue;
+  background: var(--color-primary);
 }
 
 .tab-div.tab-div-active .close-tab {
@@ -364,6 +380,8 @@ body {
 
 #notepad {
   position: relative;
+  background: var(--color-primary);
+  color: var(--color-text-primary);
 }
 
 #notepad #notepad-top {
@@ -372,7 +390,7 @@ body {
   display: flex;
   -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
-  background: #dddddd;
+  background: var(--color-tertiary);
 }
 
 #notepad .notepad-body {
@@ -681,8 +699,11 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
-  background: aliceblue;
+  background: var(--color-primary);
   z-index: 100;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 3rem 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -695,8 +716,80 @@ body {
 }
 
 #settingspage.isActive {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(0, 1fr))[12];
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+  -ms-grid-rows: minmax(0, 80px) 1fr;
+      grid-template-rows: minmax(0, 80px) 1fr;
+}
+
+#settingspage .topbar {
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 6;
+  grid-column: 2 / span 6;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 0px solid #3d5452;
+  border-bottom-width: thick;
+}
+
+#settingspage .body {
+  -ms-grid-row: 2;
+  grid-row: 2;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 10;
+  grid-column: 2 / 12;
+  width: 100%;
+  height: 100%;
+  font-size: 27px;
+  padding-top: 2rem;
+}
+
+#settingspage .body .settings-theme-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#settingspage #settings-home-button {
+  height: 50px;
+  width: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#settingspage #settings-home-button i {
+  font-size: 30px;
+}
+
+#settingspage #settings-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.settings-option {
+  margin-left: 20px;
+}
+
+.settings-option:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }
 /*# sourceMappingURL=main.css.map */
