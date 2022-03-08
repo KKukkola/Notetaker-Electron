@@ -56,16 +56,11 @@
         display:flex;
         justify-content: center;
         align-items: center;
-        &:hover {
-            opacity: 0.5;
-        }
     }
+    
     #calendar-left-button {
         grid-row: 2;
         grid-column: 1;
-        &:hover {
-
-        }
     }
 
     #calendar-right-button {

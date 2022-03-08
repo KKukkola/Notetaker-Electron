@@ -119,10 +119,6 @@ CalendarPage.SetMonthYearDay = function(month, year, day) {
 
     $monthText.text(MONTHS[month])
 
-    //daysList = new Object();
-
-    console.log(month, year, day, firstDay, lastDay)
-
     // Fill the calendar with its 42 divs
     let cDay = 0 - firstDay.getDay() // 0-indexxed
     for (let i = 0; i < 42; i++) {
@@ -155,8 +151,6 @@ CalendarPage.Show = function() {
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
-
-    console.log(year, month, day)
 
     CalendarPage.SetMonthYearDay(month, year, day)
     

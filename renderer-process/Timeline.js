@@ -343,7 +343,7 @@ Timeline.FillContainerWithDay = function($container, dayObj) {
         $eventElement.addClass("calendar-event-div")
         $eventElement.appendTo($container)
     }, function() {
-        console.log("Finished Filling Container with day:", dayObj.day)
+        console.log("FillContainerWithDay() Completed")
     }, dayObj.month, dayObj.day, dayObj.year)
 }
 
@@ -361,14 +361,12 @@ Timeline.FillCalendarWithEvents = function(daysList, month, year) {
             calendarObj.addedEvents = []
             cDay = dayObj.day
         }
-        console.log(calendarObj)
-        console.log(eventData)
         let $eventElement = NewEventElement(eventData, calendarObj)
         $eventElement.removeClass("event-div")
         $eventElement.addClass("calendar-event-div")
         $eventElement.appendTo(dayObj.$timeline)
     }, function() {
-        console.log("Finished Fill Calendar")
+        console.log("FillCalendarWithEvents() Completed")
     }, month, year)
 }
 

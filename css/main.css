@@ -558,10 +558,6 @@ body {
           align-items: center;
 }
 
-#calendarpage .calendar-arrow-button:hover {
-  opacity: 0.5;
-}
-
 #calendarpage #calendar-left-button {
   -ms-grid-row: 2;
   grid-row: 2;
