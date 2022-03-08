@@ -1,4 +1,5 @@
 
+import {CalendarPage} from "./CalendarPage.js"
 let HomePage = new Object()
 
 $('#to-homepage').click(function(event) {
@@ -10,7 +11,8 @@ $('#h-notepad-btn').click(function(event) {
 })
 
 $('#h-calendar-btn').click(function(event) {
-    console.log("Calendar button clicked!");
+    CalendarPage.Show()
+    $("#homepage").removeClass('isActive')
 })
 
 $('#h-settings-btn').click(function(event) {
