@@ -209,19 +209,24 @@ function NewQuill(element) {
 ///////////////////////////////////////
 
 Notepad.NotePathChanged = function(lastPath, newPath) {
-    let tabObj = Tabs.allTabs[lastPath]
-    if (tabObj != null) {
-        tabObj.path = newPath;
-        Tabs.allTabs[newPath] = tabObj;
-        Tabs.allTabs[lastPath] = null;
-        delete Tabs.allTabs[lastPath];
-        // console.log("all tabs now: ", Tabs.allTabs)
+    for (let path in Tabs.allTabs) {
+        let tabObj = Tabs.allTabs[path]
+        if (path.indexOf(lastPath) !== -1) {
+            let newTabPath = path.replace(lastPath, newPath)
+            let oldTabPath = tabObj.path
+            tabObj.path = newTabPath
+            Tabs.allTabs[newTabPath] = tabObj;
+            Tabs.allTabs[oldTabPath] = null;
+            delete Tabs.allTabs[oldTabPath];
+            console.log("now all the tabs: ", Tabs.allTabs)
+        }
     }
 }
 
 Notepad.FolderPathChanged = function(lastPath, newPath) {
     console.log(lastPath)
     console.log(newPath)
+    
 }
 
 Notepad.Refresh = () => {
