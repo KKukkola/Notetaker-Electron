@@ -208,7 +208,23 @@ function NewQuill(element) {
 
 ///////////////////////////////////////
 
-Notepad.Refresh = () => { 
+Notepad.NotePathChanged = function(lastPath, newPath) {
+    let tabObj = Tabs.allTabs[lastPath]
+    if (tabObj != null) {
+        tabObj.path = newPath;
+        Tabs.allTabs[newPath] = tabObj;
+        Tabs.allTabs[lastPath] = null;
+        delete Tabs.allTabs[lastPath];
+        // console.log("all tabs now: ", Tabs.allTabs)
+    }
+}
+
+Notepad.FolderPathChanged = function(lastPath, newPath) {
+    console.log(lastPath)
+    console.log(newPath)
+}
+
+Notepad.Refresh = () => {
     // TODO: open last session notes
 }
 

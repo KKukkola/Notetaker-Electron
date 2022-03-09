@@ -226,6 +226,7 @@ function ItemDrag(e1, item) {
             // DROPEED OVER A FOLDER
             fs.Move(item.path, $t.data('filepath'), (err) => {
               if (err) { console.error("ERR:", err); return; }
+              Notepad.NotePathChanged(item.path, $t.data('filepath') + "\\" + item.name)
               FileBrowser.Refresh()
             })
           } else {

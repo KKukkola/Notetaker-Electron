@@ -113,7 +113,7 @@ class Files {
 
     Move = (src, destParent, func) => {
         let newPath = path.join(destParent, path.basename(src))
-        console.log(newPath)
+        // console.log(newPath)
         fs.access(newPath, (err) => {
             if (err) {
                 fse.move(src, newPath, (err) => {
