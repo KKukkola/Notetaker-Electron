@@ -324,13 +324,24 @@ body {
   border-width: 1px 0px;
 }
 
-hr {
+.ql-editor > div {
   border: none;
   background: var(--color-secondary);
   color: var(--color-text-primary);
   letter-spacing: 1em;
   text-align: center;
   height: 1rem;
+  caret-color: transparent;
+}
+
+p.pagebreak, hr {
+  border: none;
+  background: var(--color-secondary);
+  color: var(--color-text-primary);
+  letter-spacing: 1em;
+  text-align: center;
+  height: 1rem;
+  caret-color: transparent;
 }
 
 .ql-container.ql-snow {

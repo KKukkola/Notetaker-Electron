@@ -152,12 +152,12 @@ function NewQuill(element) {
             ctrlKey: true,
             handler: function(range, context) {
                 if (context.empty || context.offset === 0) {
-                    this.quill.insertEmbed(range.index, 'divider', true, Quill.sources.USER);
-                    this.quill.setSelection(range.index + 1, Quill.sources.SILENT);        
+                    this.quill.insertEmbed(range.index, 'pagebreak', true, Quill.sources.USER);
+                    this.quill.setSelection(range.index + 1, Quill.sources.SILENT);       
                     return;
                 }
                 this.quill.insertText(range.index, '\n', Quill.sources.USER);
-                this.quill.insertEmbed(range.index + 1, 'divider', true, Quill.sources.USER);
+                this.quill.insertEmbed(range.index + 1, 'pagebreak', true, Quill.sources.USER);
                 this.quill.setSelection(range.index + 2, Quill.sources.SILENT);
             }
         }
@@ -186,17 +186,19 @@ function NewQuill(element) {
         theme: "snow"
     });
 
-    // Doesn't always trigger
     thisQuill.on('selection-change', function(range, oldRange, source) {
         if (range == null) return;
-        //console.log(range, oldRange, source)
         const currentLeaf = thisQuill.getLeaf(range.index)[0];
         const nextLeaf = thisQuill.getLeaf(range.index + 1)[0];    
-    
-        console.log(range, oldRange, source)
-        if (currentLeaf.constructor.name == "DividerBlot") {
+        if (currentLeaf.parent.constructor.name == "PageBreakBlot") {
+            let nextIndex = range.index;
             if (oldRange) {
-
+                let prevIndex = oldRange.index;
+                if (nextIndex > prevIndex) {
+                    thisQuill.setSelection(nextIndex + 1, Quill.sources.SILENT);
+                } else {
+                    thisQuill.setSelection(nextIndex - 1, Quill.sources.SILENT);
+                }
             }
         }
     });

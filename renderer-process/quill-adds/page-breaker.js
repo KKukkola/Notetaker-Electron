@@ -2,6 +2,7 @@
 // let Break = Quill.import('blots/break');
 // let Embed = Quill.import('blots/embed');
 let BlockEmbed = Quill.import('blots/block/embed');
+let Block = Quill.import('blots/block');
 
 class DividerBlot extends BlockEmbed {
 	static create() {
@@ -13,4 +14,16 @@ class DividerBlot extends BlockEmbed {
 DividerBlot.blotName = 'divider';
 DividerBlot.tagName = 'hr';
 
+class PageBreakBlot extends Block {
+    static create() {
+        let node = super.create();
+
+        return node;
+    }
+}
+PageBreakBlot.blotName = 'pagebreak';
+PageBreakBlot.tagName = 'div';
+// PageBreakBlot.className = 'pagebreak';
+
 Quill.register(DividerBlot);
+Quill.register(PageBreakBlot);
