@@ -57,7 +57,7 @@ class CalendarDay {
         this.month = month;
         this.year = year;
         this.invalid = invalidDay;
-        this.dayText = DAYS[new Date(DATE_OBJ.getFullYear(), DATE_OBJ.getMonth(), day).getDay()];
+        this.dayText = DAYS[new Date(year, month-1, day).getDay()];
     }
 }
 
@@ -130,7 +130,7 @@ CalendarPage.SetMonthYearDay = function(month, year, day) {
         daysList[dayObj.day] = dayObj
         
         // Set to our current day
-        if (dayObj.day == day)//date.getDate()) 
+        if (cDay+1 === day)//date.getDate()) 
         {
             DayOverview.Set(dayObj)
         }
@@ -138,6 +138,7 @@ CalendarPage.SetMonthYearDay = function(month, year, day) {
         cDay += 1;
     }
 
+    console.log(daysList)
     Timeline.FillCalendarWithEvents(daysList, month, year)
 }
 
