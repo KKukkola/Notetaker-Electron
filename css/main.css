@@ -17,8 +17,7 @@ body {
   --color-secondary: #ccc;
   --color-tertiary: #ddd;
   --color-accent: #555;
-  --color-font-color:
-;
+  --color-text-primary: black;
 }
 
 .dark-theme {
@@ -323,6 +322,15 @@ body {
 .ql-toolbar.ql-snow {
   padding: 1px;
   border-width: 1px 0px;
+}
+
+hr {
+  border: none;
+  background: var(--color-secondary);
+  color: var(--color-text-primary);
+  letter-spacing: 1em;
+  text-align: center;
+  height: 1rem;
 }
 
 .ql-container.ql-snow {

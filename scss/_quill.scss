@@ -16,6 +16,19 @@
     }
 }
 
+hr {
+    border: none;
+    background: var(--color-secondary);
+    color: var(--color-text-primary);
+    letter-spacing: 1em;
+    text-align: center;
+    height: 1rem;
+}
+
+hr:before {
+    // content: ". . .";
+}
+
 .ql-container.ql-snow {
     border: 0px;
 }

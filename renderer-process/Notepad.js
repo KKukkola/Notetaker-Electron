@@ -146,24 +146,62 @@ function TabCloseClicked(event, tabObj) {
 ///////////////////////////////////////
 
 function NewQuill(element) {
-    return new Quill(element,{
+    var bindings = { 
+        linebreak: {
+            key: 13,
+            ctrlKey: true,
+            handler: function(range, context) {
+                if (context.empty || context.offset === 0) {
+                    this.quill.insertEmbed(range.index, 'divider', true, Quill.sources.USER);
+                    this.quill.setSelection(range.index + 1, Quill.sources.SILENT);        
+                    return;
+                }
+                this.quill.insertText(range.index, '\n', Quill.sources.USER);
+                this.quill.insertEmbed(range.index + 1, 'divider', true, Quill.sources.USER);
+                this.quill.setSelection(range.index + 2, Quill.sources.SILENT);
+            }
+        }
+    }
+    let thisQuill = new Quill(element,{
         modules: {
-          toolbar: [
-            ['bold', 'italic', 'underline', {
-              'color': []
-              }, {
-                  "background": []
-                }, {
-                    "font": []
-                }, {
-                    "size": []
-                }, {
-                    align: []
-                }, 'image', 'code-block']]
-            },
-            scrollingContainer: $(element).parent().get(0),
-            theme: "snow"
+            toolbar: [
+                ['bold', 'italic', 'underline', {
+                        'color': []
+                    }, {
+                        "background": []
+                    }, {
+                        "font": []
+                    }, {
+                        "size": []
+                    }, {
+                        align: []
+                    }, 
+                ],
+            ],
+            keyboard: {
+                bindings: bindings,
+            }
+        },
+        scrollingContainer: $(element).parent().get(0),
+        theme: "snow"
     });
+
+    // Doesn't always trigger
+    thisQuill.on('selection-change', function(range, oldRange, source) {
+        if (range == null) return;
+        //console.log(range, oldRange, source)
+        const currentLeaf = thisQuill.getLeaf(range.index)[0];
+        const nextLeaf = thisQuill.getLeaf(range.index + 1)[0];    
+    
+        console.log(range, oldRange, source)
+        if (currentLeaf.constructor.name == "DividerBlot") {
+            if (oldRange) {
+
+            }
+        }
+    });
+    
+    return thisQuill; 
 }
 
 ///////////////////////////////////////
