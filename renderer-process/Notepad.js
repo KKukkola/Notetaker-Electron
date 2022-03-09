@@ -223,6 +223,37 @@ Notepad.NotePathChanged = function(lastPath, newPath) {
     }
 }
 
+Notepad.NoteDeleted = function(notePath) {
+    let allDeleted = false
+    while (!allDeleted) {
+        allDeleted = true
+        for (let path in Tabs.allTabs) {
+            let tabObj = Tabs.allTabs[path]
+            if (path.indexOf(notePath) !== -1) {
+                allDeleted = false
+                // switch to the next tab
+                if (Tabs.cTab == tabObj) { 
+                    let index = tabObj.$e.index();
+                    let $nextTab = $tabsContainer.children().eq(index+1)
+                    if ($nextTab.length == 0) {
+                        $nextTab = $tabsContainer.children().eq(index-1)
+                    }
+                    if ($nextTab.length > 0) {
+                        let nextTabObj = Tabs.FindFor($nextTab.data('filepath'))
+                        if (nextTabObj == tabObj) {
+                            Tabs.SetActive(null)
+                        } else {
+                            Tabs.SetActive(nextTabObj)
+                        }
+                    }    
+                }
+                //
+                Tabs.Remove(tabObj)
+            }
+        }
+    }
+}
+
 Notepad.FolderPathChanged = function(lastPath, newPath) {
     console.log(lastPath)
     console.log(newPath)

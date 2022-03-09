@@ -166,6 +166,7 @@ function ItemRightClick(event, item) {
 function DeleteItem(item) {
   fs.DeleteFile(item.path, (err) => {
     if (err) {console.log("ERR:", err)}
+    Notepad.NoteDeleted(item.path)
     FileBrowser.Refresh()
   })
 }
