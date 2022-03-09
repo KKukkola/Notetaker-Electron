@@ -303,6 +303,120 @@ body {
   background: blueviolet !important;
 }
 
+.custom-context-menu {
+  position: absolute;
+  width: 200px;
+  height: auto;
+  background: #4e4e4e;
+}
+
+.context-btn {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  padding: 0 0 0 20px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.context-btn:hover {
+  background: #a8a4a4;
+}
+
+#filebrowser {
+  background-color: #3a3a3a;
+  /* padding-top: 15px; */
+  /* padding-left: 15px; */
+  color: #999;
+  font-family: sans-serif;
+  font-weight: bold;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+#filebrowser i {
+  color: #939393;
+}
+
+.fb-title {
+  font-size: small;
+  font-family: 'Segoe UI';
+  font-weight: bolder;
+  padding: 10px 15px;
+  /* border: 0px solid grey;
+    border-bottom-width: thin;
+    margin-bottom: 10px; */
+}
+
+.fb-section {
+  padding: .5em 0;
+}
+
+.fb-title-btn {
+  width: 100%;
+  background-color: transparent;
+  border-style: none;
+}
+
+.fb-title-btn:hover {
+  background-color: lightgray;
+}
+
+.fb-title-btn-title {
+  font-family: 'Segoe UI';
+  text-align: center;
+  text-align: left;
+  padding-left: 1em;
+  color: #d8d8d8;
+}
+
+.fb-item-btn {
+  cursor: pointer;
+  width: 100%;
+  background-color: transparent;
+  border-style: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1.4px 0px;
+  /* transition: all 0.1s ease; */
+}
+
+.fb-item-btn:hover {
+  background-color: #464646;
+}
+
+.fb-item-btn.isActive {
+  background-color: #616161;
+}
+
+.fb-item-title {
+  white-space: nowrap;
+  font-family: 'Segoe UI';
+  text-align: center;
+  text-align: left;
+  padding-left: 7px;
+  color: #d8d8d8;
+}
+
+.fb-item-dragging {
+  width: auto;
+  height: auto;
+  color: #d8d8d8;
+  background-color: #395166;
+  padding: 0px 6px;
+  border: 1px solid #488dca;
+  opacity: .86;
+  font-size: smaller;
+}
+
 .ql-snow .ql-formats {
   display: -webkit-box;
   display: -ms-flexbox;
