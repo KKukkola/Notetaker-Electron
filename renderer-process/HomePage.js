@@ -1,5 +1,7 @@
 
 import {CalendarPage} from "./CalendarPage.js"
+import {SettingsPage} from "./SettingsPage.js"
+
 let HomePage = new Object()
 
 $('#to-homepage').click(function(event) {
@@ -16,7 +18,8 @@ $('#h-calendar-btn').click(function(event) {
 })
 
 $('#h-settings-btn').click(function(event) {
-    console.log("Settings button clicked!");
+    SettingsPage.Show()
+    $("#homepage").removeClass('isActive')
 })
 
 export {HomePage} 

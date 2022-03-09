@@ -2,7 +2,7 @@
 let SettingsPage = new Object()
 
 $("#to-settingspage").click(function(event) {
-    $("#settingspage").addClass('isActive')
+    SettingsPage.Show()
 })
 
 $('#settings-home-button').click(function(event) {
@@ -18,5 +18,9 @@ $("#settings-dark-theme-button").click(function(event) {
     $('html').addClass("dark-theme")
     $('html').removeClass("light-theme")
 })
+
+SettingsPage.Show = function() {
+    $("#settingspage").addClass('isActive')
+}
 
 export {SettingsPage}
