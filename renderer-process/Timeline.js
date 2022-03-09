@@ -30,7 +30,6 @@ function EventClicked($eventDiv) {
     }
     
     // Select the Event
-    console.log('Clicked: ', $eventDiv)
     $cSelectedEvent = $eventDiv
     FillChangeData($eventDiv)
     ToggleTimelineChange(true)
@@ -198,9 +197,9 @@ function HideNewEventModal() {
     $('#tn-startmin').val('')
     $('#tn-endhour').val('')
     $('#tn-endmin').val('')
-    $('#tn-month').val('')
-    $('#tn-day').val('')
-    $('#tn-year').val('')
+    //$('#tn-month').val('')
+    //$('#tn-day').val('')
+    //$('#tn-year').val('')
 }
 
 Timeline.Refresh = () => {
@@ -231,8 +230,6 @@ newEventSubmitBtn.click(function(ev) {
     ev.preventDefault()
 
     let eventData = GetTimelineNewData()
-
-    console.log(eventData)
 
     db.AddEvent(eventData, () => {
         HideNewEventModal()
@@ -369,6 +366,5 @@ Timeline.FillCalendarWithEvents = function(daysList, month, year) {
         console.log("FillCalendarWithEvents() Completed")
     }, month, year)
 }
-
 
 export {Timeline}
