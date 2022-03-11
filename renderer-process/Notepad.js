@@ -267,6 +267,7 @@ Notepad.Refresh = () => {
 Notepad.Open = function(filepath) {
     let tabObj = Tabs.FindFor(filepath) || Tabs.NewTabFor(filepath)
     Tabs.SetActive(tabObj)
+    return tabObj
 }
 
 Notepad.Save = function() {

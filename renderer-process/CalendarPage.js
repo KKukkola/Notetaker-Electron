@@ -26,9 +26,9 @@ let DayOverview = {
         $calendarpage.find(".day-title").first().html(dayObj.day + " " + dayObj.dayText)
         $overviewTimelineDiv.html('')
         Timeline.FillContainerWithDay($overviewTimelineDiv, dayObj)
-        console.log("DayOverview:Set() date: ", dayObj.month, dayObj.day, dayObj.year)
+        // console.log("DayOverview:Set() date: ", dayObj.month, dayObj.day, dayObj.year)
     }
-
+    
 }
 
 class CalendarDay {
@@ -138,7 +138,6 @@ CalendarPage.SetMonthYearDay = function(month, year, day) {
         cDay += 1;
     }
 
-    console.log(daysList)
     Timeline.FillCalendarWithEvents(daysList, month, year)
 }
 

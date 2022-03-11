@@ -14,6 +14,7 @@ const PADDING_INCREASE = 10;
 const folderOpenIcon = "fas fa-folder-open"
 const folderClosedIcon = "fas fa-folder"
 const noteIcon = "far fa-file-alt"
+const sectionIcon = "fas fa-star"
 
 let FBItems = {
   allItems: {},
@@ -71,6 +72,7 @@ class FBItem {
   isFile = null;
   padding = null;
   name = null;
+  noteSections = null;
 
   constructor(name, path, $parent, padding) {
     let $item = $($("#template-fb-item").html())
@@ -82,7 +84,7 @@ class FBItem {
     $button.css('padding-left', padding + 'px')
 
     let isFile = name.includes('.');
-    let isClosed = closedFolders[path];
+    let isClosed = closedFolders[path] || isFile;
 
     $title.html(name)
   
@@ -113,6 +115,7 @@ class FBItem {
     this.isFile = isFile;
     this.padding = padding;
     this.name = name;
+    this.noteSections = [];
   }
 
   GetParentPath() {
@@ -127,6 +130,16 @@ class FBItem {
     }
   }
 
+  ToggleNoteClosed() {
+    if (this.isClosed) { 
+      this.$section.slideDown(150)
+      this.isClosed = false 
+    } else {
+      this.$section.slideUp(150)
+      this.isClosed = true
+    }
+  }
+
   ToggleFolderClosed() {
     if (this.isClosed) {
       this.$section.slideDown(150)
@@ -138,13 +151,74 @@ class FBItem {
       this.$icon.attr('class', folderClosedIcon)
     }
   }
+
+  ClearSections() {
+    this.noteSections.forEach((item) => {
+      delete FBItems[item.path]
+      item.$e.remove()
+    })
+    this.$section.slideUp(1)
+    this.noteSections = []
+    this.isClosed = true
+  }
 }
 
 //////////////////////////////////////////
 
 function ItemLeftClick(event, item) {
   FBItems.SetActiveItem(item)
-  return item.isFile ? Notepad.Open(item.path) : item.ToggleFolderClosed()
+  if (item.isFile) {
+    let tabObj = Notepad.Open(item.path)
+    
+    if (item.noteSections.length > 0) {
+      item.ClearSections()
+    } else {
+      // Parse the note for sections
+      let $sections = tabObj.$body.find('.ql-editor').find('div')
+      let i = 1;
+      $sections.each((err, divNode) => {
+        let pagebreakblot = Quill.find(divNode)
+        // console.log("found blot: ", pagebreakblot)
+        // console.log("index is at: ", tabObj.Quill.getIndex(pagebreakblot) )
+        let sectionItem = FBItems.NewItem("section"+i, item.path+"section"+i, item.$section, item.padding + PADDING_INCREASE)
+        sectionItem.$icon.attr('class', sectionIcon)
+        sectionItem.isSection = true
+        sectionItem.isFile = false
+        sectionItem.isFolder = false
+        sectionItem.parentPath = item.path
+        sectionItem.offsetTop = divNode.offsetTop
+        sectionItem.sectionIndex = tabObj.Quill.getIndex(pagebreakblot)
+        item.noteSections.push(sectionItem)   
+        i++;
+      })
+      if (i > 1) {
+        item.ToggleNoteClosed()
+      }
+  
+    }
+   
+    return
+  } else if (item.isFolder) {
+    return item.ToggleFolderClosed()
+  } else if (item.isSection) {
+    let parentPath = item.parentPath 
+    let tabObj = Notepad.Open(parentPath)
+    let sectionIndex = item.sectionIndex;
+    $('.quill-editor-container').scrollTop(item.offsetTop)
+    // $('.quill-editor-container').animate({
+    //   scrollTop: item.offsetTop,
+    // }, 700)
+
+    // tabObj.$body.find('.ql-editor').css('background', '#000')
+    // tabObj.Quill.focus()
+    // console.log(tabObj.Quill.hasFocus())
+    // tabObj.Quill.setSelection(2, 0, Quill.sources.SILENT)
+
+    return 
+  }
+
+  console.log("Uknown Item Left Click")
+
 }
 
 function ItemRightClick(event, item) {
