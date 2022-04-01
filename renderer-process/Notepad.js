@@ -149,7 +149,7 @@ function NewQuill(element) {
     var bindings = { 
         linebreak: {
             key: 13,
-            ctrlKey: true,
+            altKey: true,
             handler: function(range, context) {
                 if (context.empty || context.offset === 0) {
                     this.quill.insertEmbed(range.index, 'pagebreak', true, Quill.sources.USER);
