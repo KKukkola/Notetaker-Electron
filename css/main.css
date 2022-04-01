@@ -1,7 +1,7 @@
 body {
   margin: 0;
   height: 100%;
-  background-color: #3a3a3a;
+  background-color: var(--color-highlight);
   overflow: hidden;
   display: -ms-grid;
   display: grid;
@@ -18,6 +18,7 @@ body {
   --color-secondary: #b2b2b2;
   --color-tertiary: #ddd;
   --color-text-primary: #444;
+  --color-highlight: #473737;
 }
 
 .dark-theme {
@@ -35,7 +36,7 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background: #b5b5b5;
+  background: var(--color-secondary);
   position: relative;
 }
 
@@ -46,12 +47,19 @@ body {
   padding: 0px 0;
   border: 0px solid #333D3A;
   border-width: thin 0;
-  background: #8cb;
+  background: var(--color-highlight);
   height: 26px;
 }
 
+#timeline-top-buttons > div {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
 #timeline-top-buttons #timeline-new-event-btn {
-  background: #6A7C76;
+  background: rgba(0, 0, 0, 0.3);
   color: aliceblue;
   padding: 5px 10px;
   cursor: pointer;
@@ -64,17 +72,18 @@ body {
           align-items: center;
   padding: 0.25rem 1rem;
   font-family: sans-serif;
+  border-radius: 0.5rem;
 }
 
 #timeline-top-buttons #timeline-new-event-btn:hover {
-  background: #313131;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 #timeline-top-buttons .timeline-hour-input {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  background: #6A7C76;
+  background: rgba(0, 0, 0, 0.3);
   color: aliceblue;
   width: 30px;
   padding: 0 .25rem;
@@ -98,7 +107,7 @@ body {
           justify-content: center;
   height: 26px;
   width: 26px;
-  color: #3d5452;
+  color: var(--color-primary);
 }
 
 #timeline-top-buttons .timeline-top-btn:hover {
@@ -111,7 +120,7 @@ body {
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
   width: 100%;
-  background: #0e0e0e;
+  background: var(--color-secondary);
   position: relative;
 }
 
@@ -337,7 +346,7 @@ body {
 }
 
 #filebrowser i {
-  color: #939393;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .fb-title {
@@ -465,7 +474,7 @@ body {
           user-select: none;
   white-space: nowrap;
   margin-right: 1px;
-  background: var(--color-secondary);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .tab-div span {
@@ -572,7 +581,7 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
-  background: aliceblue;
+  background: var(--color-primary);
   z-index: 100;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   -webkit-box-align: center;
@@ -605,7 +614,7 @@ body {
 
 .h-button {
   margin: 10px;
-  background: #3d5452;
+  background: var(--color-text-primary);
   outline: none;
   border: 0px solid black;
   height: 5rem;
@@ -633,11 +642,11 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
-  background: aliceblue;
+  background: var(--color-primary);
   z-index: 100;
   padding: 3rem 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: grey;
+  color: var(--color-text-primary);
   font-size: xx-large;
 }
 
@@ -752,14 +761,18 @@ body {
 }
 
 #calendar-day-overview .day-title {
-  background: #426059;
+  background: var(--color-highlight);
   padding: 0px 1rem;
   font-size: 4vh;
-  color: aliceblue;
+  color: var(--color-primary);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 #calendar-day-overview .day-overview-timeline {
-  background: grey;
+  background: var(--color-secondary);
   position: relative;
 }
 
@@ -780,7 +793,7 @@ body {
   -ms-grid-rows: (minmax(0, 1fr))[6];
       grid-template-rows: repeat(6, minmax(0, 1fr));
   padding: 4px;
-  background: #ccc;
+  background: var(--color-secondary);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   height: 100%;
@@ -788,7 +801,7 @@ body {
 }
 
 #calendar .calendar-day {
-  background: aliceblue;
+  background: white;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   margin: 4px;
@@ -853,7 +866,7 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  color: grey;
+  color: var(--color-text-primary);
   font-size: xx-large;
 }
 
@@ -873,7 +886,7 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  border: 0px solid #3d5452;
+  border: 0px solid var(--color-text-primary);
   border-bottom-width: thick;
 }
 

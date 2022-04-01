@@ -169,9 +169,9 @@ function NewQuill(element) {
                         'color': []
                     }, {
                         "background": []
-                    }, {
-                        "font": []
-                    }, {
+                    }, 
+                    // { "font": []}, 
+                    {
                         "size": []
                     }, {
                         align: []

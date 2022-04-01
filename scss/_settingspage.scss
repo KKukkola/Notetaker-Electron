@@ -12,7 +12,7 @@
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     align-items: center;
     justify-content: center;
-    color: grey;
+    color: var(--color-text-primary);
     font-size:xx-large;
 
     &.isActive {
@@ -24,7 +24,7 @@
     .topbar {
         grid-column: 2 / span 6;
         display: flex;
-        border: 0px solid #3d5452;
+        border: 0px solid var(--color-text-primary);//#3d5452;
         border-bottom-width: thick;
     }
 

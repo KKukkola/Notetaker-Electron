@@ -8,12 +8,12 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    background: aliceblue;
+    background: var(--color-primary);
     z-index: 100;
     padding: 3rem 0;
 
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: grey;
+    color: var(--color-text-primary);
     font-size:xx-large;
 
     &.isActive {
@@ -86,14 +86,15 @@
     }
 
     .day-title {
-        background: #426059;
+        background: var(--color-highlight);//#426059;
         padding: 0px 1rem;
         font-size: 4vh;
-        color: aliceblue;
+        color: var(--color-primary);
+        user-select: none;
     }
 
     .day-overview-timeline {
-        background:grey;
+        background:var(--color-secondary);
         position: relative;
         
         .calendar-event-div {
@@ -112,14 +113,14 @@
     grid-template-columns: repeat(7, minmax(0, 1fr));
     grid-template-rows: repeat(6, minmax(0, 1fr));
     padding: 4px;
-    background: #ccc;
+    background: var(--color-secondary);
     box-sizing: border-box;
 
     height: 100%;
     width: 100%;
     
     .calendar-day {
-        background: aliceblue;
+        background: white;
         box-sizing: border-box;
         margin: 4px;
         display: grid;

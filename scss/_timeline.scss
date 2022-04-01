@@ -3,7 +3,7 @@
 #timeline {
     display: flex;
     flex-direction: column;
-    background: #b5b5b5;
+    background: var(--color-secondary);//#b5b5b5;
     position: relative;
 }
 
@@ -12,11 +12,15 @@
     padding: 0px 0;
     border: 0px solid #333D3A;
     border-width: thin 0;
-    background: #8cb;
+    background: var(--color-highlight);
     height: 26px;
 
+    > div {
+        user-select: none;
+    }
+    
     #timeline-new-event-btn {
-        background: #6A7C76;
+        background: rgba(0,0,0,0.3);//#6A7C76;
         color: aliceblue;
         padding: 5px 10px;
         cursor: pointer;
@@ -25,16 +29,17 @@
         align-items: center;
         padding: 0.25rem 1rem;
         font-family: sans-serif;
+        border-radius: 0.5rem;
 
         &:hover {
-            background: #313131;
-
+            background: rgba(0,0,0,0.5);//#313131;
+            
         }
     }
     
     .timeline-hour-input {
         display: inline-flex;
-        background: #6A7C76;
+        background: rgba(0,0,0,0.3);//#6A7C76;
         color:aliceblue;
         width: 30px;
         padding: 0 .25rem;
@@ -48,7 +53,7 @@
         justify-content: center;
         height: 26px;
         width: 26px;
-        color: #3d5452;
+        color: var(--color-primary); //#3d5452;
         &:hover {
             opacity: 0.6;
             cursor: pointer;
@@ -60,7 +65,7 @@
 #timeline-body {
     flex: 1 0 auto;
     width: 100%;
-    background: #0e0e0e;
+    background: var(--color-secondary);//#0e0e0e;
     position: relative;
 
     .timeline-line-div {

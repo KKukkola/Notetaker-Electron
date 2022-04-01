@@ -4,7 +4,7 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    background: aliceblue;
+    background: var(--color-primary);
     z-index: 100;
 
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -26,13 +26,13 @@
 
 .h-button { 
     margin: 10px;
-    background: #3d5452;
+    background: var(--color-text-primary); //#3d5452;
     outline: none;
     border: 0px solid black;
     height: 5rem;
     width: 5rem;
     border-radius: 4px;
-    color: white;
+    color: white;//var(--color-primary);//white;
 
     i {
         font-size: xxx-large;
