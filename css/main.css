@@ -13,11 +13,11 @@ body {
 }
 
 .light-theme {
-  --color-primary: aliceblue;
-  --color-secondary: #ccc;
-  --color-tertiary: #ddd;
   --color-accent: #555;
-  --color-text-primary: black;
+  --color-primary: #eee;
+  --color-secondary: #b2b2b2;
+  --color-tertiary: #ddd;
+  --color-text-primary: #444;
 }
 
 .dark-theme {
@@ -326,10 +326,8 @@ body {
 }
 
 #filebrowser {
-  background-color: #3a3a3a;
-  /* padding-top: 15px; */
-  /* padding-left: 15px; */
-  color: #999;
+  background-color: var(--color-text-primary);
+  color: var(--color-primary);
   font-family: sans-serif;
   font-weight: bold;
   -webkit-user-select: none;
@@ -403,7 +401,7 @@ body {
   text-align: center;
   text-align: left;
   padding-left: 7px;
-  color: #d8d8d8;
+  color: var(--color-primary);
 }
 
 .fb-item-dragging {

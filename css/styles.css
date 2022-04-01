@@ -1,7 +1,13 @@
 
+@font-face {
+    font-family: 'Lato';
+    src: url('../fonts/Lato/Lato-Regular.ttf');
+}
+
 html {
     margin: 0;
     height: 100%;
+    /* font-family: 'Lato'; */
 }
 
 h5 {
