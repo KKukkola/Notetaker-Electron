@@ -18,7 +18,7 @@
     > div {
         user-select: none;
     }
-    
+
     #timeline-new-event-btn {
         background: rgba(0,0,0,0.3);//#6A7C76;
         color: aliceblue;
@@ -65,7 +65,7 @@
 #timeline-body {
     flex: 1 0 auto;
     width: 100%;
-    background: var(--color-secondary);//#0e0e0e;
+    background: var(--color-highlight-sub);//#0e0e0e;
     position: relative;
 
     .timeline-line-div {

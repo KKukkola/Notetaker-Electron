@@ -14,11 +14,12 @@ body {
 
 .light-theme {
   --color-accent: #555;
+  --color-text-primary: #444;
   --color-primary: #eee;
   --color-secondary: #b2b2b2;
   --color-tertiary: #ddd;
-  --color-text-primary: #444;
-  --color-highlight: #473737;
+  --color-highlight: #2e4648;
+  --color-highlight-sub: #4ea3ad33;
 }
 
 .dark-theme {
@@ -120,7 +121,7 @@ body {
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
   width: 100%;
-  background: var(--color-secondary);
+  background: var(--color-highlight-sub);
   position: relative;
 }
 
@@ -369,10 +370,6 @@ body {
   border-style: none;
 }
 
-.fb-title-btn:hover {
-  background-color: lightgray;
-}
-
 .fb-title-btn-title {
   font-family: 'Segoe UI';
   text-align: center;
@@ -397,11 +394,11 @@ body {
 }
 
 .fb-item-btn:hover {
-  background-color: #464646;
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
 .fb-item-btn.isActive {
-  background-color: #616161;
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .fb-item-title {

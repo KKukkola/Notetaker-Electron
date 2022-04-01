@@ -31,9 +31,7 @@
     width: 100%;
     background-color: transparent;
     border-style: none;
-}
-.fb-title-btn:hover {
-    background-color: lightgray;
+
 }
 .fb-title-btn-title {
     font-family: 'Segoe UI';
@@ -52,12 +50,13 @@
     align-items: center;
     padding: 1.4px 0px;
     /* transition: all 0.1s ease; */
-}
-.fb-item-btn:hover {
-    background-color: #464646;
+    
+    &:hover {
+        background-color: rgba(0,0,0,0.15); 
+    }
 }
 .fb-item-btn.isActive {
-    background-color: #616161;
+    background-color: rgba(255,255,255,0.15);//#616161;
 }  
 
 .fb-item-title {
