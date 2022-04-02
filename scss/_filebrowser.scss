@@ -51,6 +51,9 @@
     padding: 1.4px 0px;
     /* transition: all 0.1s ease; */
     
+    &.editing {
+        
+    }
     &:hover {
         background-color: rgba(0,0,0,0.15); 
     }
@@ -64,9 +67,16 @@
     font-family: 'Segoe UI';
     text-align: center;
     text-align: left;
-    padding-left: 7px;
+    margin-left: 7px;
     // color: rgb(216, 216, 216);
     color: var(--color-primary);
+    &:focus {
+        cursor: text;
+        outline: none;
+        background: white;
+        color: black;
+        border: 1px solid blue;
+    }
 }
 
 .fb-item-dragging {

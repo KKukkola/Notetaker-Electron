@@ -406,8 +406,16 @@ body {
   font-family: 'Segoe UI';
   text-align: center;
   text-align: left;
-  padding-left: 7px;
+  margin-left: 7px;
   color: var(--color-primary);
+}
+
+.fb-item-title:focus {
+  cursor: text;
+  outline: none;
+  background: white;
+  color: black;
+  border: 1px solid blue;
 }
 
 .fb-item-dragging {

@@ -150,6 +150,7 @@ function NewQuill(element) {
         linebreak: {
             key: 13,
             altKey: true,
+            ctrlKey: false,
             handler: function(range, context) {
                 if (context.empty || context.offset === 0) {
                     this.quill.insertEmbed(range.index, 'pagebreak', true, Quill.sources.USER);

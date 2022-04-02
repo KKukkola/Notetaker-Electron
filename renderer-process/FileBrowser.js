@@ -246,7 +246,39 @@ function DeleteItem(item) {
 }
 
 function RenameItem(item) {
-  console.log("TODO: RENAME")
+  console.log("TODO: RENAME", item)
+  let title = item.$e.find('.fb-item-title').eq(0)
+  if (title != undefined) {
+    item.$e.addClass('editing')
+    title.attr('contenteditable', 'true')
+    title.focus()
+    // set carat selection
+    let sel = window.getSelection()
+    let range = document.createRange()
+    range.setStart(title[0].childNodes[0], 0)
+    let caratIndex = item.name.indexOf(".")
+    caratIndex = caratIndex !== -1 ? caratIndex : item.name.length
+    range.setEnd(title[0].childNodes[0], caratIndex)
+    sel.removeAllRanges()
+    sel.addRange(range)
+    // stop editing on unfocus
+
+    title.on('keydown', function(event) {
+      if (event.keyCode == 13) {
+        console.log('TODO: check for valid file name!')
+        console.log('TODO: edit this fb item to have its name changed!')
+
+        title.blur()
+      }
+    })
+    title.one('focusout', ()=>{
+      title.blur()
+      title.attr('contenteditable', 'false')
+      sel.removeRange(range)
+      title.off('keyup')
+    })
+    
+  }
 }
 
 function NewNote(folderItem) {
