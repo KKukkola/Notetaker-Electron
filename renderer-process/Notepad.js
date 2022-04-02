@@ -90,6 +90,13 @@ class Tab {
         this.Quill = quill;
     }
 
+    // UpdatePath(oldPath, newPath) {
+    //     let path = this.path
+    //     let newTabPath = path.replace(lastPath, newPath)
+    //     let oldTabPath = tabObj.path
+    //     tabObj.path = newTabPath
+    // }
+
     SetActive(v) {
         if (v == false) {
             this.$e.removeClass('tab-div-active')
@@ -220,6 +227,8 @@ Notepad.NotePathChanged = function(lastPath, newPath) {
             Tabs.allTabs[oldTabPath] = null;
             delete Tabs.allTabs[oldTabPath];
             console.log("now all the tabs: ", Tabs.allTabs)
+            let title = newTabPath.slice(newTabPath.lastIndexOf('\\') + 1)
+            tabObj.$e.find('span').first().html(title)
         }
     }
 }
@@ -258,7 +267,7 @@ Notepad.NoteDeleted = function(notePath) {
 Notepad.FolderPathChanged = function(lastPath, newPath) {
     console.log(lastPath)
     console.log(newPath)
-    
+    // Nothing happens here
 }
 
 Notepad.Refresh = () => {

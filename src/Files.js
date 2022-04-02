@@ -73,6 +73,15 @@ class Files {
     userdataPath = userdataPath;
     localFilesPath = localFilesPath;
 
+    PathExists = (path) => {
+        try {
+            fs.accessSync(path, fs.constants.F_OK)
+            return true
+        } catch {
+            return false
+        }
+    }
+
     ReadDirOrdered = (path) => {
         var files = fs.readdirSync(path)
         var dirs = files.filter((e) => { return !e.includes('.') })
@@ -117,6 +126,22 @@ class Files {
         fs.access(newPath, (err) => {
             if (err) {
                 fse.move(src, newPath, (err) => {
+                    if (err) {
+                        console.error(err)
+                    } else {
+                        func()
+                    }
+                })
+            } else {
+                console.log('ERR: file already exists in that directory')
+            }
+        })
+    }
+
+    Rename = (oldPath, newPath, func) => {
+        fs.access(newPath, (err) => {
+            if (err) {
+                fse.move(oldPath, newPath, (err) => {
                     if (err) {
                         console.error(err)
                     } else {

@@ -246,7 +246,6 @@ function DeleteItem(item) {
 }
 
 function RenameItem(item) {
-  console.log("TODO: RENAME", item)
   let title = item.$e.find('.fb-item-title').eq(0)
   if (title != undefined) {
     item.$e.addClass('editing')
@@ -261,21 +260,82 @@ function RenameItem(item) {
     range.setEnd(title[0].childNodes[0], caratIndex)
     sel.removeAllRanges()
     sel.addRange(range)
-    // stop editing on unfocus
 
+    let enterPressed = false
+    // stop editing on unfocus
     title.on('keydown', function(event) {
       if (event.keyCode == 13) {
-        console.log('TODO: check for valid file name!')
-        console.log('TODO: edit this fb item to have its name changed!')
-
+        enterPressed = true
         title.blur()
       }
     })
+    // end the edit
     title.one('focusout', ()=>{
       title.blur()
       title.attr('contenteditable', 'false')
       sel.removeRange(range)
-      title.off('keyup')
+      title.off('keydown')
+      item.$e.removeClass('editing')
+
+      if (!enterPressed) {
+        title.text(item.name)
+        return
+      }
+
+      // Check for validity of the new name
+      let goodName = true
+
+      // Check for a good file name
+      if (item.name.endsWith('.txt')) {
+        // If it's a text file:
+        if (!title.text().endsWith('.txt')) {
+          // Must end with .txt
+          console.log("ERROR: must end with .txt")
+          goodName = false
+        } else if ((title.text().match(/\./g)||[]).length > 1) {
+          // Cannot have more than one .
+          console.log("ERROR: cannot have more than one .")
+          goodName = false
+        } else if (title.text().length == 4) {
+          console.log("ERROR: file must be named")
+          goodName = false
+        }
+      } else {
+        // If it's a folder:
+        if (title.text().includes('.')) {
+          // Cannot include a .
+          console.log("ERROR: folders cannot include a .")
+          goodName = false
+        } if (title.text().length == 0) {
+          console.log("ERROR: folder must be named")
+          goodName = false
+        }
+        
+      }
+
+      if (!goodName) {
+        title.text(item.name)
+        return
+      }
+
+      // Check for another existing file of this name
+      let pathExists = fs.PathExists(item.GetParentPath() + "\\" + title.text())
+      if (pathExists) {
+        console.log("ERROR: file already exists in this directory")
+        title.text(item.name)
+        return 
+      }
+
+      // TODO: make it change the name in the filebrowser
+      // Update the notes as well
+      console.log("Passes the tests!")
+      let newPath = item.GetParentPath() + "\\" + title.text()
+      fs.Rename(item.path, newPath, (err) => {
+        if (err) { console.error("ERR:", err); return; }
+        Notepad.NotePathChanged(item.path, newPath)
+        FileBrowser.Refresh()
+        console.log("rename successfull!")
+      })
     })
     
   }
@@ -333,7 +393,7 @@ function ItemDrag(e1, item) {
             // DROPEED OVER A FOLDER
             fs.Move(item.path, $t.data('filepath'), (err) => {
               if (err) { console.error("ERR:", err); return; }
-              Notepad.NotePathChanged(item.path, $t.data('filepath') + "\\" + item.name)
+              Notepad.NotePathChanged(item.path, $t.data('filepath') + "\\" + item.name) // lastpath, newpath
               FileBrowser.Refresh()
             })
           } else {
