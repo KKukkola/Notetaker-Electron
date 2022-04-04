@@ -513,6 +513,7 @@ body {
   white-space: nowrap;
   margin-right: 1px;
   background: rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .tab-div span {
@@ -537,6 +538,16 @@ body {
 .tab-div i {
   font-size: small;
   padding: 2px 4px;
+}
+
+.tab-div .bot-bar {
+  position: absolute;
+  height: 2px;
+  background: orange;
+  width: 50%;
+  left: 25%;
+  bottom: 0px;
+  opacity: 0;
 }
 
 .tab-div.tab-div-active {

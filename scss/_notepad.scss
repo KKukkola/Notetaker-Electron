@@ -9,6 +9,8 @@
     white-space:nowrap;
     margin-right:1px;
     background: rgba(0,0,0,0.1);//var(--color-secondary);
+    position: relative;
+
     span {
         width: fit-content;
     }
@@ -33,6 +35,15 @@
         padding: 2px 4px;
     }
 
+    .bot-bar {
+        position: absolute;
+        height: 2px;
+        background: orange;
+        width: 50%;
+        left: 25%;
+        bottom: 0px;
+        opacity: 0;
+    }
 }
 
 .tab-div.tab-div-active {

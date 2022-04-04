@@ -75,10 +75,17 @@ class Tab {
         // Creating the Body
         let $body = $($("#template-notepad-body").html())
         let quill = NewQuill($body.find('.quill-editor').get(0))
-        
+
         // Fill with text
         fs.ReadFile(filepath, function(text) {
             quill.setContents(JSON.parse(text))
+        })
+        
+        // Listen for changes to the text
+        let initial = true
+        quill.on('text-change', function(delta, oldDelta, source) {
+            if (initial) { initial = false; return; }
+            Tabs.cTab.$e.find('.bot-bar').first().css('opacity', '1')
         })
         
         $tab.appendTo($tabsContainer)
@@ -157,11 +164,10 @@ function NewQuill(element) {
         linebreak: {
             key: 13,
             altKey: true,
-            ctrlKey: false,
             handler: function(range, context) {
                 if (context.empty || context.offset === 0) {
                     this.quill.insertEmbed(range.index, 'pagebreak', true, Quill.sources.USER);
-                    this.quill.setSelection(range.index + 1, Quill.sources.SILENT);       
+                    this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
                     return;
                 }
                 this.quill.insertText(range.index, '\n', Quill.sources.USER);
@@ -193,7 +199,7 @@ function NewQuill(element) {
         scrollingContainer: $(element).parent().get(0),
         theme: "snow"
     });
-
+    
     thisQuill.on('selection-change', function(range, oldRange, source) {
         if (range == null) return;
         const currentLeaf = thisQuill.getLeaf(range.index)[0];
@@ -286,6 +292,7 @@ Notepad.Save = function() {
     const data = JSON.stringify(Tabs.cTab.Quill.getContents())
     fs.OverwriteFile(Tabs.cTab.path, data, function() {
         console.log("*Save Successfull")
+        Tabs.cTab.$e.find('.bot-bar').first().css('opacity', '0')
     })
 }
 
