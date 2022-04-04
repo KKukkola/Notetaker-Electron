@@ -7,6 +7,7 @@ let $tlResize = $('#tl-resize')
 // Current Mouse Position
 let x = 0;
 let y = 0;
+let minY = 26;
 
 let bottomSize = 0;
 
@@ -22,7 +23,8 @@ function MouseMoveHandler(e) {
             document.documentElement.style.setProperty('--fb-width', newLeftSize + 'px')
             break;
         case "vertical":
-            const newHeightSize = bottomSize + -dy; 
+            let newHeightSize = bottomSize + -dy; 
+            if (newHeightSize < 26) { newHeightSize = 26}
             console.log(bottomSize, dy, newHeightSize)
             document.documentElement.style.setProperty('--tl-height', newHeightSize + 'px')
             break;
