@@ -64,6 +64,9 @@
       </div>
     </div>
 
+    <div id="fb-resize" class="resize-line" data-dir="horizontal"></div>
+    <div id="tl-resize" class="resize-line" data-dir="vertical"></div>
+
     <section id="topbar">topbar</section>
     
     <section id="filebrowser">
@@ -73,7 +76,6 @@
 
     <section id="notepad">
       <div id="notepad-top"></div>
-      <!-- <div class="notepad-body"> -->
     </section>
 
     <section id="timeline">
@@ -225,6 +227,7 @@
     import {HomePage} from "./renderer-process/HomePage.js"
     import {CalendarPage} from "./renderer-process/CalendarPage.js"
     import {SettingsPage} from "./renderer-process/SettingsPage.js"
+    import {ResizeHandler} from "./renderer-process/ResizeHandler.js"
 
     // window.addEventListener("beforeunload", function(ev) {
     //   console.log('TODO: before window close')

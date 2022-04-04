@@ -1,15 +1,47 @@
+:root {
+  --fb-width: 170px;
+  --tl-height: 110px;
+  --bot-bar-height: 5px;
+}
+
 body {
   margin: 0;
   height: 100%;
   background-color: var(--color-highlight);
   overflow: hidden;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   display: -ms-grid;
   display: grid;
       grid-template-areas: "top top" "filebrowser notepad" "timeline timeline";
-  -ms-grid-columns: 170px minmax(0, 1fr);
-      grid-template-columns: 170px minmax(0, 1fr);
-  -ms-grid-rows: 0px minmax(0, 1fr) 110px 5px;
-      grid-template-rows: 0px minmax(0, 1fr) 110px 5px;
+  -ms-grid-columns: var(--fb-width) minmax(0, 1fr);
+      grid-template-columns: var(--fb-width) minmax(0, 1fr);
+  -ms-grid-rows: 0px minmax(0, 1fr) var(--tl-height) var(--bot-bar-height);
+      grid-template-rows: 0px minmax(0, 1fr) var(--tl-height) var(--bot-bar-height);
+}
+
+.resize-line {
+  position: absolute;
+  z-index: 1;
+}
+
+#fb-resize {
+  cursor: ew-resize;
+  background: purple;
+  left: var(--fb-width);
+  height: 100%;
+  width: 4px;
+  bottom: calc(var(--tl-height) + var(--bot-bar-height));
+}
+
+#tl-resize {
+  cursor: ns-resize;
+  background: pink;
+  bottom: calc(var(--tl-height) + var(--bot-bar-height));
+  height: 4px;
+  width: 100%;
 }
 
 .light-theme {
