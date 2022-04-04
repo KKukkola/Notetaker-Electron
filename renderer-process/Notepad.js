@@ -1,6 +1,7 @@
 let Delta = Quill.import('delta');
 
 import {FileBrowser} from "./FileBrowser.js";
+import {keydowns} from "./Keydowns.js";
 
 let Notepad = new Object()
 

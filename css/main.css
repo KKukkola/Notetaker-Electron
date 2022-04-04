@@ -571,6 +571,25 @@ body {
   -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
   background: var(--color-tertiary);
+  overflow: auto;
+  overflow-x: overlay;
+}
+
+#notepad #notepad-top::-webkit-scrollbar {
+  height: 4px;
+}
+
+#notepad #notepad-top::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  opacity: 0.25;
+}
+
+#notepad #notepad-top::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
+
+#notepad #notepad-top::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
 
 #notepad .notepad-body {

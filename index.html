@@ -229,23 +229,11 @@
     import {CalendarPage} from "./renderer-process/CalendarPage.js"
     import {SettingsPage} from "./renderer-process/SettingsPage.js"
     import {ResizeHandler} from "./renderer-process/ResizeHandler.js"
+    import {keydowns} from "./renderer-process/Keydowns.js"
 
     // window.addEventListener("beforeunload", function(ev) {
     //   console.log('TODO: before window close')
     // })
-
-    // Hotkey
-    let keydowns = new Object();
-    $(document).keydown(function(event) {
-      keydowns[event.which] = true
-      if (keydowns[17] && keydowns[83]) {
-        Notepad.Save()
-      }
-    })
-    $(document).keyup(function(event) {
-      keydowns[event.which] = false
-    })
-    //
 
     $(function() {
       FileBrowser.Refresh()
