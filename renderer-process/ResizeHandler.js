@@ -25,7 +25,6 @@ function MouseMoveHandler(e) {
         case "vertical":
             let newHeightSize = bottomSize + -dy; 
             if (newHeightSize < 26) { newHeightSize = 26}
-            console.log(bottomSize, dy, newHeightSize)
             document.documentElement.style.setProperty('--tl-height', newHeightSize + 'px')
             break;
     }
@@ -44,7 +43,6 @@ function MouseDownHandler(e) {
     x = e.clientX;
     y = e.clientY;
     bottomSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--tl-height')) //document.documentElement.style.getPropertyValue('--tl-height');
-    console.log(bottomSize)
     resizeDirection = e.target.getAttribute('data-dir') || 'horizontal'
     document.addEventListener('mousemove', MouseMoveHandler)
     document.addEventListener('mouseup', MouseUpHandler)

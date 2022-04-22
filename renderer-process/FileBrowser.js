@@ -27,6 +27,10 @@ let FBItems = {
   NewItem: function(name, path, $parent, padding) {
     let item = new FBItem(name, path, $parent, padding)
 
+    item.$button.dblclick(event => {
+      ItemDoubleClick(event, item)
+    })
+
     item.$button.mousedown(event => {
       switch(event.which) {
         case 1: ItemLeftClick(event, item); break;
@@ -165,8 +169,7 @@ class FBItem {
 
 //////////////////////////////////////////
 
-function ItemLeftClick(event, item) {
-  FBItems.SetActiveItem(item)
+function ItemDoubleClick(event, item) {
   if (item.isFile) {
     let tabObj = Notepad.Open(item.path)
     
@@ -194,8 +197,41 @@ function ItemLeftClick(event, item) {
       if (i > 1) {
         item.ToggleNoteClosed()
       }
-  
     }
+  }
+}
+
+function ItemLeftClick(event, item) {
+  FBItems.SetActiveItem(item)
+  if (item.isFile) {
+    let tabObj = Notepad.Open(item.path)
+    
+    // if (item.noteSections.length > 0) {
+    //   item.ClearSections()
+    // } else {
+    //   // Parse the note for sections
+    //   let $sections = tabObj.$body.find('.ql-editor').find('div')
+    //   let i = 1;
+    //   $sections.each((err, divNode) => {
+    //     let pagebreakblot = Quill.find(divNode)
+    //     // console.log("found blot: ", pagebreakblot)
+    //     // console.log("index is at: ", tabObj.Quill.getIndex(pagebreakblot) )
+    //     let sectionItem = FBItems.NewItem("section"+i, item.path+"section"+i, item.$section, item.padding + PADDING_INCREASE)
+    //     sectionItem.$icon.attr('class', sectionIcon)
+    //     sectionItem.isSection = true
+    //     sectionItem.isFile = false
+    //     sectionItem.isFolder = false
+    //     sectionItem.parentPath = item.path
+    //     sectionItem.offsetTop = divNode.offsetTop
+    //     sectionItem.sectionIndex = tabObj.Quill.getIndex(pagebreakblot)
+    //     item.noteSections.push(sectionItem)   
+    //     i++;
+    //   })
+    //   if (i > 1) {
+    //     item.ToggleNoteClosed()
+    //   }
+  
+    // }
    
     return
   } else if (item.isFolder) {
