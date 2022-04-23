@@ -103,13 +103,13 @@
     width: 5px;
 }
 .quill-editor-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--color-track);
 }
 .quill-editor-container::-webkit-scrollbar-thumb {
-    background: #ccc;
+    background: var(--color-thumb);
 }
 .quill-editor-container::-webkit-scrollbar-thumb:hover {
-    background: #999;
+    background: var(--color-thumb-hover);
 }
 
 .quill-editor {

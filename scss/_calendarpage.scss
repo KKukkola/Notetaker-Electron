@@ -78,7 +78,7 @@
     box-sizing: border-box;
     
     .container {
-        background: #426059;
+        background: var(--color-highlight);
         height: 100%;
         width: 100%;
         display: grid;
@@ -89,16 +89,16 @@
         background: var(--color-highlight);//#426059;
         padding: 0px 1rem;
         font-size: 4vh;
-        color: var(--color-primary);
+        color: var(--color-cal-overview-title);
         user-select: none;
     }
 
     .day-overview-timeline {
-        background:var(--color-secondary);
+        background:var(--color-cal-overview-bg);
         position: relative;
         
         .calendar-event-div {
-            background: white;
+            background: var(--color-cal-overview-event);
             height: 2vh;
 
             &:hover {
@@ -113,21 +113,21 @@
     grid-template-columns: repeat(7, minmax(0, 1fr));
     grid-template-rows: repeat(6, minmax(0, 1fr));
     padding: 4px;
-    background: var(--color-secondary);
+    background: var(--color-cal-overview-bg);
     box-sizing: border-box;
 
     height: 100%;
     width: 100%;
     
     .calendar-day {
-        background: white;
+        background: var(--color-cal-day);
         box-sizing: border-box;
         margin: 4px;
         display: grid;
         grid-template-rows: 3vh 1fr;
 
         &.non-day {
-            background: #ddd;
+            background: var(--color-cal-nonday);
             &:hover {
                 opacity: 1;
             }
@@ -147,7 +147,7 @@
             position: relative;
             
             .calendar-event-div {
-                background: black;
+                background: var(--color-cal-day-event);
                 height: 10%;
             }
         }
