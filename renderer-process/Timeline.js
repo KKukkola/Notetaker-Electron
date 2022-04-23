@@ -111,7 +111,7 @@ function DrawTimelineLines() {
     }
 }
 
-function NewEventElement(eventData, calendarObj) {
+function NewEventElement(eventData, calendarObj, offset) {
     let $div = $("<div></div>")
     $div.data('id', eventData.id)
     $div.data('title', eventData.title)
@@ -138,6 +138,7 @@ function NewEventElement(eventData, calendarObj) {
     let widthPercent = lengthSeconds/maxSeconds * 100
     let rightPercent = leftPercent + widthPercent
     
+    offset = offset || 10
     let top = 2;
     let rowNum = 0;
     if (calendarObj) {
@@ -145,7 +146,7 @@ function NewEventElement(eventData, calendarObj) {
             if (e.rowNum == rowNum) {
                 if (leftPercent >= e.leftPercent && leftPercent < e.rightPercent) {
                     rowNum += 1;
-                    top = 10*rowNum + 2 + 2*rowNum;
+                    top = offset*rowNum + 2 + 2*rowNum;
                 }
             }
         })
@@ -335,7 +336,7 @@ Timeline.FillContainerWithDay = function($container, dayObj) {
     }
 
     db.EachEvent(function(eventData) {
-        let $eventElement = NewEventElement(eventData, calendarObj)
+        let $eventElement = NewEventElement(eventData, calendarObj, 20)
         $eventElement.removeClass("event-div")
         $eventElement.addClass("calendar-event-div")
         $eventElement.appendTo($container)
@@ -351,6 +352,7 @@ Timeline.FillCalendarWithEvents = function(daysList, month, year) {
         Min: 0,
         addedEvents: [],
     }
+
     let cDay = 1;
     db.EachEventOfMonth(function(eventData) {
         let dayObj = daysList[eventData.day]
@@ -358,7 +360,7 @@ Timeline.FillCalendarWithEvents = function(daysList, month, year) {
             calendarObj.addedEvents = []
             cDay = dayObj.day
         }
-        let $eventElement = NewEventElement(eventData, calendarObj)
+        let $eventElement = NewEventElement(eventData, calendarObj, 5)
         $eventElement.removeClass("event-div")
         $eventElement.addClass("calendar-event-div")
         $eventElement.appendTo(dayObj.$timeline)

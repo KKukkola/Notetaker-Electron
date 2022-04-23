@@ -138,7 +138,8 @@
 /* Timeline Change Event Container */
 
 #timeline-c-div {
-    background: white;
+    background: var(--color-highlight);
+    color: var(--color-primary);
     width: 100%;
     position: absolute;
     top: -56px;
@@ -153,7 +154,7 @@
 
         label {
             display: block;
-            flex: 1 0 100%;
+            flex: 1 0 100%; 
         }
     }
 
