@@ -179,11 +179,17 @@ body {
 }
 
 .tn-modal-content {
-  background-color: #fefefe;
+  background-color: var(--color-highlight);
+  color: var(--color-primary);
   margin: 20% auto 0 auto;
   padding: 20px;
-  border: 1px solid #888;
+  border: 0px solid #888;
   width: 80%;
+}
+
+.tn-modal-content #tme-submit-btn {
+  color: var(--color-primary);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 #timeline-n-div {
@@ -300,6 +306,8 @@ body {
   border: 1px solid black;
   text-align: center;
   padding: 1px 0;
+  background-color: white;
+  color: black;
 }
 
 #timeline-c-div .tc-button {
