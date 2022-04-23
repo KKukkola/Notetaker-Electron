@@ -56,12 +56,12 @@
 #notepad {
     position: relative;
     background: var(--color-primary);
-    color: var(--color-text-primary);
+    color: var(--color-text);
 
     #notepad-top {
         display: flex;
         flex-wrap: nowrap;
-        background: var(--color-tertiary);
+        background: var(--color-sub-alt);
         overflow: auto;
         overflow-x: overlay;
         &::-webkit-scrollbar {

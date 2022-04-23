@@ -46,6 +46,15 @@ body {
 }
 
 .light-theme {
+  --ql-stroke: #444;
+  --ql-picker: #444;
+  --ql-toolbar-border: #ccc;
+  --color-text: #444;
+  --color-sub: #b2b2b2;
+  --color-sub-alt: #ddd;
+  --color-fb-bg: #444;
+  --color-fb-title: #ddd;
+  --color-fb-text: #eee;
   --color-accent: #555;
   --color-text-primary: #444;
   --color-primary: #eee;
@@ -53,13 +62,27 @@ body {
   --color-tertiary: #ddd;
   --color-highlight: #2e4648;
   --color-highlight-sub: #4ea3ad33;
+  --color-faded-light: rgba(255, 255, 255, 0.5);
 }
 
 .dark-theme {
-  --color-primary: #15181a;
-  --color-secondary: #242424;
-  --color-tertiary: #333;
-  --color-text-primary: rgb(175, 175, 175);
+  --ql-stroke: #a1a19a;
+  --ql-picker: #a1a19a;
+  --ql-toolbar-border: #151a21;
+  --color-text: #a1a19a;
+  --color-sub: #4b5975;
+  --color-sub-alt: #333;
+  --color-fb-bg: #333;
+  --color-fb-title: #ccc;
+  --color-fb-text: #b2b2b2;
+  --color-accent: #555;
+  --color-text-primary: #999;
+  --color-primary: #222;
+  --color-secondary: #b2b2b2;
+  --color-tertiary: #ddd;
+  --color-highlight: #2e4648;
+  --color-highlight-sub: #4ea3ad33;
+  --color-faded-light: rgba(255, 255, 255, 0.5);
 }
 
 #timeline {
@@ -180,7 +203,7 @@ body {
 
 .tn-modal-content {
   background-color: var(--color-highlight);
-  color: var(--color-primary);
+  color: var(--color-fb-text);
   margin: 20% auto 0 auto;
   padding: 20px;
   border: 0px solid #888;
@@ -188,7 +211,8 @@ body {
 }
 
 .tn-modal-content #tme-submit-btn {
-  color: var(--color-primary);
+  margin-top: 3px;
+  color: var(--color-fb-text);
   background: rgba(0, 0, 0, 0.3);
 }
 
@@ -243,7 +267,7 @@ body {
 /* Timeline Change Event Container */
 #timeline-c-div {
   background: var(--color-highlight);
-  color: var(--color-primary);
+  color: var(--color-fb-text);
   width: 100%;
   position: absolute;
   top: -56px;
@@ -378,8 +402,8 @@ body {
 }
 
 #filebrowser {
-  background-color: var(--color-text-primary);
-  color: var(--color-primary);
+  background-color: var(--color-fb-bg);
+  color: var(--color-fb-title);
   font-family: sans-serif;
   font-weight: bold;
   -webkit-user-select: none;
@@ -389,7 +413,7 @@ body {
 }
 
 #filebrowser i {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-faded-light);
 }
 
 .fb-title {
@@ -449,7 +473,7 @@ body {
   text-align: center;
   text-align: left;
   margin-left: 7px;
-  color: var(--color-primary);
+  color: var(--color-fb-text);
 }
 
 .fb-item-title:focus {
@@ -471,6 +495,14 @@ body {
   font-size: smaller;
 }
 
+.ql-snow .ql-stroke {
+  stroke: var(--ql-stroke);
+}
+
+.ql-snow .ql-picker {
+  color: var(--ql-picker);
+}
+
 .ql-snow .ql-formats {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -489,12 +521,13 @@ body {
 
 .ql-toolbar.ql-snow {
   padding: 1px;
+  border: 1px solid var(--ql-toolbar-border);
   border-width: 1px 0px;
 }
 
 .ql-editor > div {
   border: none;
-  background: var(--color-secondary);
+  background: var(--color-sub);
   color: var(--color-text-primary);
   letter-spacing: 1em;
   text-align: center;
@@ -570,7 +603,7 @@ body {
 #notepad {
   position: relative;
   background: var(--color-primary);
-  color: var(--color-text-primary);
+  color: var(--color-text);
 }
 
 #notepad #notepad-top {
@@ -579,7 +612,7 @@ body {
   display: flex;
   -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
-  background: var(--color-tertiary);
+  background: var(--color-sub-alt);
   overflow: auto;
   overflow-x: overlay;
 }
@@ -697,7 +730,7 @@ body {
   height: 5rem;
   width: 5rem;
   border-radius: 4px;
-  color: white;
+  color: var(--color-primary);
 }
 
 .h-button i {

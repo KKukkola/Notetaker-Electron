@@ -1,4 +1,13 @@
 
+.ql-snow {
+    .ql-stroke {
+        stroke: var(--ql-stroke);    
+    }
+    .ql-picker {
+        color: var(--ql-picker);
+    }
+}
+
 .ql-snow .ql-formats {
     display: flex;
     flex-wrap: nowrap;
@@ -12,13 +21,14 @@
     right: 0;
     &.ql-snow {
         padding: 1px;
+        border: 1px solid var(--ql-toolbar-border);
         border-width: 1px 0px;
     }
 }
 
 .ql-editor > div {
     border: none;
-    background: var(--color-secondary);
+    background: var(--color-sub);
     color: var(--color-text-primary);
     letter-spacing: 1em;
     text-align: center;

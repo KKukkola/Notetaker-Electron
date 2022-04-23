@@ -92,14 +92,15 @@
 
 .tn-modal-content {
     background-color: var(--color-highlight);
-    color: var(--color-primary);
+    color: var(--color-fb-text);
     margin: 20% auto 0 auto;
     padding: 20px;
     border: 0px solid #888;
     width: 80%;
 
     #tme-submit-btn {
-        color: var(--color-primary);
+        margin-top: 3px;
+        color: var(--color-fb-text);
         background: rgba(0,0,0,0.3);
     }
 }
@@ -145,7 +146,7 @@
 
 #timeline-c-div {
     background: var(--color-highlight);
-    color: var(--color-primary);
+    color: var(--color-fb-text);
     width: 100%;
     position: absolute;
     top: -56px;

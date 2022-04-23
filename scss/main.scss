@@ -47,20 +47,51 @@ body {
 }
 
 .light-theme {
+    --ql-stroke: #444;
+    --ql-picker: #444;
+    --ql-toolbar-border: #ccc;
+
+    --color-text: #444;
+    --color-sub: #b2b2b2;
+    --color-sub-alt: #ddd;
+
+    --color-fb-bg: #444;
+    --color-fb-title: #ddd;
+    --color-fb-text: #eee;
+    
     --color-accent: #555;
     --color-text-primary: #444;
     --color-primary: #eee;
     --color-secondary: #b2b2b2;
     --color-tertiary: #ddd;
-    --color-highlight: #2e4648;//#8cb;
+    --color-highlight: #2e4648;
     --color-highlight-sub: #4ea3ad33;
+    
+    --color-faded-light: rgba(255, 255, 255, 0.5);
 }
 
 .dark-theme {
-    --color-primary: #15181a;
-    --color-secondary: #242424;
-    --color-tertiary: #333;
-    --color-text-primary: rgb(175, 175, 175);
+    --ql-stroke: #a1a19a;
+    --ql-picker: #a1a19a;
+    --ql-toolbar-border: #151a21;
+
+    --color-text: #a1a19a;
+    --color-sub: #4b5975;
+    --color-sub-alt: #333;
+    
+    --color-fb-bg: #333;
+    --color-fb-title: #ccc;
+    --color-fb-text: #b2b2b2;
+
+    --color-accent: #555;
+    --color-text-primary: #999;
+    --color-primary: #222;
+    --color-secondary: #b2b2b2;
+    --color-tertiary: #ddd;
+    --color-highlight: #2e4648;
+    --color-highlight-sub: #4ea3ad33;
+
+    --color-faded-light: rgba(255, 255, 255, 0.5);
 }
 
 @import "_timeline";
