@@ -162,6 +162,7 @@ function TabCloseClicked(event, tabObj) {
 
 function NewQuill(element) {
     var bindings = { 
+
         linebreak: {
             key: 13,
             altKey: true,
@@ -176,17 +177,16 @@ function NewQuill(element) {
                 this.quill.setSelection(range.index + 2, Quill.sources.SILENT);
             }
         }
+        
     }
-    let thisQuill = new Quill(element,{
+    let thisQuill = new Quill(element, {
         modules: {
             toolbar: [
                 ['bold', 'italic', 'underline', {
                         'color': []
                     }, {
                         "background": []
-                    }, 
-                    // { "font": []}, 
-                    {
+                    }, {
                         "size": []
                     }, {
                         align: []
@@ -226,17 +226,21 @@ function NewQuill(element) {
 Notepad.NotePathChanged = function(lastPath, newPath) {
     for (let path in Tabs.allTabs) {
         let tabObj = Tabs.allTabs[path]
+
         if (path.indexOf(lastPath) !== -1) {
             let newTabPath = path.replace(lastPath, newPath)
             let oldTabPath = tabObj.path
+            
             tabObj.path = newTabPath
             Tabs.allTabs[newTabPath] = tabObj;
             Tabs.allTabs[oldTabPath] = null;
             delete Tabs.allTabs[oldTabPath];
+
             console.log("now all the tabs: ", Tabs.allTabs)
             let title = newTabPath.slice(newTabPath.lastIndexOf('\\') + 1)
             tabObj.$e.find('span').first().html(title)
         }
+
     }
 }
 

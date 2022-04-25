@@ -138,6 +138,8 @@ function NewEventElement(eventData, calendarObj, offset) {
     let widthPercent = lengthSeconds/maxSeconds * 100
     let rightPercent = leftPercent + widthPercent
     
+    // Determine Overlap 
+    
     offset = offset || 10
     let top = 2;
     let rowNum = 0;

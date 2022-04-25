@@ -1,5 +1,5 @@
 
-const { app, BrowserWindow, ipcMain, Menu, webContents } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, webContents, globalShortcut } = require('electron')
 const path = require('path');
 const sqlite3 = require('sqlite3');
 
@@ -91,15 +91,19 @@ function createWindow() {
             nodeIntegration: false,
         }
     })
-
     win.loadFile('index.html')
-
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 }
 
 app.whenReady().then(() => {
-    createWindow()
-})
+    globalShortcut.register("Alt+CommandOrControl+I", () => {
+        if (win.isMinimized()) {
+            win.restore()
+        } else {
+            win.minimize()
+        }
+    })
+}).then(createWindow)
 
 app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') app.quit()
@@ -127,21 +131,9 @@ ipcMain.on('synchronous-message', (event, arg) => {
     event.returnValue = userdataPath;
 })
 
-// // main
-// ipcMain.on('show-context-menu', (event) => {
-//     const template = [
-//         {
-//             label: 'Menu Item 1',
-//             click: () => { event.sender.send('context-menu-command', 'menu-item-1') }
-//         },
-//         { type: 'separator' },
-//         { label: 'Menu Item 2', type: 'checkbox', checked: true }
-//     ]
-//     const menu = Menu.buildFromTemplate(template)
-//     menu.popup(BrowserWindow.fromWebContents(event.sender))
-// })
 
-// can include the rest of your app's specific main [rocess
-// code. you can also put them in separate files and require them here
+
+
+
 
 console.log("Main Process Done")

@@ -206,33 +206,6 @@ function ItemLeftClick(event, item) {
   if (item.isFile) {
     let tabObj = Notepad.Open(item.path)
     
-    // if (item.noteSections.length > 0) {
-    //   item.ClearSections()
-    // } else {
-    //   // Parse the note for sections
-    //   let $sections = tabObj.$body.find('.ql-editor').find('div')
-    //   let i = 1;
-    //   $sections.each((err, divNode) => {
-    //     let pagebreakblot = Quill.find(divNode)
-    //     // console.log("found blot: ", pagebreakblot)
-    //     // console.log("index is at: ", tabObj.Quill.getIndex(pagebreakblot) )
-    //     let sectionItem = FBItems.NewItem("section"+i, item.path+"section"+i, item.$section, item.padding + PADDING_INCREASE)
-    //     sectionItem.$icon.attr('class', sectionIcon)
-    //     sectionItem.isSection = true
-    //     sectionItem.isFile = false
-    //     sectionItem.isFolder = false
-    //     sectionItem.parentPath = item.path
-    //     sectionItem.offsetTop = divNode.offsetTop
-    //     sectionItem.sectionIndex = tabObj.Quill.getIndex(pagebreakblot)
-    //     item.noteSections.push(sectionItem)   
-    //     i++;
-    //   })
-    //   if (i > 1) {
-    //     item.ToggleNoteClosed()
-    //   }
-  
-    // }
-   
     return
   } else if (item.isFolder) {
     return item.ToggleFolderClosed()
@@ -455,15 +428,15 @@ function BuildFolder(path) {
   })
 }
 
+function FillFileBrowser() {
+  $filebrowserbody.html('')
+  FBItems.NewItem("LOCAL NOTES", fs.localFilesPath, $filebrowserbody, BASE_PADDING)
+  BuildFolder(fs.localFilesPath);
+}
+
 function ClearFileBrowser() {
   FBItems.SaveOpened()
   $('#local-notes').html('')
-}
-
-function FillFileBrowser() {
-    $filebrowserbody.html('') // Hard Clear
-    FBItems.NewItem("LOCAL NOTES", fs.localFilesPath, $filebrowserbody, BASE_PADDING)
-    BuildFolder(fs.localFilesPath);
 }
 
 FileBrowser.Refresh = function() {

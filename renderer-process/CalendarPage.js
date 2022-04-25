@@ -114,24 +114,23 @@ CalendarPage.SetMonthYearDay = function(month, year, day) {
     CalendarPage.Month = month;
     CalendarPage.Year = year;
     
-    var firstDay = new Date(year, month - 1, 1); // because of indexes / offsets
-    var lastDay = new Date(year, month, 0);
-
     $monthText.text(MONTHS[month])
 
-    // Fill the calendar with its 42 divs
-    let cDay = 0 - firstDay.getDay() // 0-indexxed
+    var firstDay = new Date(year, month - 1, 1);
+    var lastDay = new Date(year, month, 0);
+
+    // Fills the calendar
+    let cDay = 0 - firstDay.getDay()
     for (let i = 0; i < 42; i++) {
         
-        // Create the Day Object
+        // Create a Day Object
         let isInvalid = cDay < 0 || cDay >= lastDay.getDate()
         let dayObj = new CalendarDay(cDay+1, month, year, isInvalid)
 
         daysList[dayObj.day] = dayObj
         
-        // Set to our current day
-        if (cDay+1 === day)//date.getDate()) 
-        {
+        // Check for current day
+        if (cDay+1 === day) {
             DayOverview.Set(dayObj)
         }
         

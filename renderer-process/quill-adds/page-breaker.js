@@ -23,7 +23,6 @@ class PageBreakBlot extends Block {
 }
 PageBreakBlot.blotName = 'pagebreak';
 PageBreakBlot.tagName = 'div';
-// PageBreakBlot.className = 'pagebreak';
 
 Quill.register(DividerBlot);
 Quill.register(PageBreakBlot);
